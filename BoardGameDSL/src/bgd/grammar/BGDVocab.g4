@@ -8,6 +8,8 @@ GAME:	'Game';
 
 //PLAYERS KEYWORDS
 PLAYERS:'Players';
+MINPLAYERS:	'MinPlayers';
+MAXPLAYERS:	'MaxPlayers';
 
 //LOCATION keywords
 LOCS: 	'Locations';
@@ -53,11 +55,15 @@ EXCL: 	'!';
 AT:		'@';
 PLUS:	'+';
 MINUS:	'-';
+IS:		'=';
+BACKSL:	'\\';
+SLASH:	'/';
+STAR:	'*';
 
 
 //Skipped token types
-//COMMENT: EXCL EXCL .*? '\n' -> skip;
-//COMMENTBLOCK: EXCL AT .*? AT EXCL -> skip;
+COMMENT: SLASH SLASH .*? '\n' -> skip;
+COMMENTBLOCK: SLASH STAR .*? STAR SLASH -> skip;
 
 WS: [ \t\r\n]+ -> skip;
 //ENTER: '\r'?'\n';
@@ -68,5 +74,5 @@ fragment LOWERCASE: [a-z];
 fragment UPPERCASE: [A-Z];
 fragment LETTER: [a-zA-Z];
 fragment DIGIT: [0-9];
-fragment NONZERO: [1-9];
+//fragment NONZERO: [1-9];
 
