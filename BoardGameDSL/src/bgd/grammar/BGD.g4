@@ -4,7 +4,7 @@ grammar BGD;
 
 import BGDVocab;
 
-program: init players locations objects rounds actions startState concepts?;
+program: init players locations locationconnections? objects rounds actions startState concepts?;
 
 //INIT - Game settings
 init		: gamename
@@ -73,7 +73,7 @@ playernames	:	LPAR ID (COMMA ID)* RPAR
 locations	:	LOCS LBRACE location+ RBRACE;
 
 location	:	ID LBRACE locationCharacteristics RBRACE		#locationNormal
-			|	copy locationCharacteristics copyEnd	#locationCopy
+			|	copy locationCharacteristics copyEnd			#locationCopy
 			;
 			
 locationCharacteristics 
@@ -102,6 +102,18 @@ counterType	:	COUNTERTYPE IS ID SEMI;
 //TODO!!!!!
 startingInv	:	STARTINGINV IS SEMI;
 
+//LOCATIONCONNECTIONS - what locations are connected to each other
+locationconnections
+			: 	LOCATIONCONNECTIONS LBRACE locconnection+ RBRACE
+			;
+			
+locconnection:	DIRECTED LBRACE locList conAreLoc? varList? RBRACE		#locconnectionDirected
+			|	UNDIRECTED LBRACE locList conAreLoc? varList? RBRACE	#locconnectionUndirected
+			;
+
+locList		:	LBLOCK ID COMMA ID (COMMA ID)* RBLOCK;
+conAreLoc	:	CONARELOCS	IS bool SEMI;
+			
 
 //OBJECTS - Game cards, pieces, or other "things" in the game
 objects		: 	OBJECTS;

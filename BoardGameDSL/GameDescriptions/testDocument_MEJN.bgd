@@ -5,12 +5,10 @@ Players{
 	MaxPlayers = 4;
 	//Playnumbers = 2, 4;
 	Humans{
-		Y{
-			Var1=123;
-		}
-		G{
-			Var1=123;
-		}
+		Copy{
+			[Y,G]
+			}
+
 		B{
 			Var1=123;
 		}
@@ -56,6 +54,7 @@ Locations{
 		ValueVisible = None;
 		LocationType = Supply;
 		VariableTest = 12345;
+		MultipleVariableTestings = False;
 	}	
 	RSupply{
 		Owner = R;
@@ -71,8 +70,57 @@ Locations{
 	}
 }
 
+LocationConnections{
 
-Objects
+	
+	Directed{
+	[B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,Y9,Y10,R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,G1,G2,G3,G4,G5,G6,G7,G8,G9,G10]
+		ConnectionsAreLocations = False;
+	}
+	Directed{
+		[G10, B1]
+		ConnectionsAreLocations = True;
+		ConnectionNames = [G10B1]
+	}
+	Directed{
+		[G10,BG1,BG2,BG3,BG4]
+		ConnectionsAreLocations = True;
+		ConnectionNames = [B1con, B2con, B3con, B4con]
+	}
+	Directed{
+		[B10,YG1,YG2,YG3,YG4]
+	}
+	Directed{
+		[Y10,RG1,RG2,RG3,RG4]
+	}
+	Undirected{
+		[R10,GG1,GG2,GG3,GG4]
+		GreenFinish = True;
+	}	
+	
+}
+
+
+Objects{
+	Pawn{
+		Owner = Location;
+		Type = Pawn;
+		Value = None;
+		//Sides
+		/* Let's test a block comment :)
+		*  Test Test
+		*/
+		//SidesShown
+		Randomizer = None;
+	}
+	Dice{
+		Owner = Public;	
+		Type = None;
+		Value = 6;
+		
+	}
+	
+}
 Rounds Main
 Actions
 StartState

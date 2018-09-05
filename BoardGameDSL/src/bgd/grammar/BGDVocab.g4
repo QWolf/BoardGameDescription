@@ -19,10 +19,7 @@ MEMBERS		:	'Members';
 
 //LOCATION keywords
 LOCS		: 	'Locations';
-OWNER		:	'Owner';
 EXISTVISIBLE:	'ExistVisible';
-PUBLIC		:	'Public';
-NONE		:	'None';
 VALUEVISIBLE:	'ValueVisible';
 LOCATIONTYPE:	'LocationType';
 PLACE		: 	'Place';
@@ -30,6 +27,13 @@ SUPPLY		:	'Supply';
 COUNTER		:	'Counter';
 COUNTERTYPE	: 	'CounterType';
 STARTINGINV	:	'StartingInventory';
+
+//LOCATIONCONNECTIONS keywords
+LOCATIONCONNECTIONS : 	'LocationConnections';
+DIRECTED	:	'Directed';
+UNDIRECTED	: 	'Undirected';
+CONARELOCS	:	'ConnectionsAreLocations';
+
 
 //OBJECTS KEYWORDS
 OBJECTS		:	'Objects';
@@ -55,6 +59,15 @@ FALSE		:	'False';
 
 //COPY
 COPY		:	'Copy';
+
+//Owner Keywords
+NONE		:	'None';
+OWNER		:	'Owner';
+PUBLIC		:	'Public';
+
+
+
+
 
 NUM			: 	DIGIT (DIGIT)*;
 ID			: 	UPPERCASE (LETTER | DIGIT)*;
