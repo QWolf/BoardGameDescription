@@ -112,7 +112,8 @@ locconnection:	DIRECTED LBRACE locList conAreLoc? varList? RBRACE		#locconnectio
 			;
 
 locList		:	LBLOCK ID COMMA ID (COMMA ID)* RBLOCK;
-conAreLoc	:	CONARELOCS	IS bool SEMI;
+conAreLoc	:	CONARELOCS IS bool SEMI conNames?;
+conNames	:	CONNECTIONNAMES IS nameList SEMI;
 			
 
 //OBJECTS - Game cards, pieces, or other "things" in the game

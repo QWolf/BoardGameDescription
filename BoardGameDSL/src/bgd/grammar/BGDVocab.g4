@@ -33,7 +33,7 @@ LOCATIONCONNECTIONS : 	'LocationConnections';
 DIRECTED	:	'Directed';
 UNDIRECTED	: 	'Undirected';
 CONARELOCS	:	'ConnectionsAreLocations';
-
+CONNECTIONNAMES:	'ConnectionNames';
 
 //OBJECTS KEYWORDS
 OBJECTS		:	'Objects';
