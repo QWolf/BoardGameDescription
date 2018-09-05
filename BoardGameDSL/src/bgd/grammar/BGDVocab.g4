@@ -3,39 +3,70 @@ lexer grammar BGDVocab;
 //@header{package bgd.grammar; }
 
 //INIT keywords
-GAME:	'Game';
+GAME		:	'Game';
 
 
 //PLAYERS KEYWORDS
-PLAYERS:'Players';
-MINPLAYERS:	'MinPlayers';
-MAXPLAYERS:	'MaxPlayers';
+PLAYERS		:	'Players';
+MINPLAYERS	:	'MinPlayers';
+MAXPLAYERS	:	'MaxPlayers';
+HUMANS		:	'Humans';
+NPCS		:	'NPCs';
+BANK		:	'Bank';
+TEAMS		:	'Teams';
+MEMBERS		:	'Members';
+
 
 //LOCATION keywords
-LOCS: 	'Locations';
+LOCS		: 	'Locations';
+OWNER		:	'Owner';
+EXISTVISIBLE:	'ExistVisible';
+PUBLIC		:	'Public';
+NONE		:	'None';
+VALUEVISIBLE:	'ValueVisible';
+LOCATIONTYPE:	'LocationType';
+PLACE		: 	'Place';
+SUPPLY		:	'Supply';
+COUNTER		:	'Counter';
+COUNTERTYPE	: 	'CounterType';
+STARTINGINV	:	'StartingInventory';
 
 //OBJECTS KEYWORDS
-OBJECTS:'Objects';
+OBJECTS		:	'Objects';
 
 //ROUNDS KEYWORDS
-ROUNDS:	'Rounds';
-MAIN:	'Main';
+ROUNDS		:	'Rounds';
+MAIN		:	'Main';
 
 //ACTIONS KEYWORDS
-ACTIONS:'Actions';
+ACTIONS		:	'Actions';
 
 //STARTING STATE KEYWORDS
-STARTSTATE:	'StartState';
+STARTSTATE	:	'StartState';
 
 //CONCEPTS KEYWORDS
-CONCEPTS:	'Concepts';
-VARIABLES:	'Variables';
+CONCEPTS	:	'Concepts';
+VARIABLES	:	'Variables';
 
+//HELPERFUNCTIONSKEYWORDS
+//VARIABLES
+TRUE		:	'True';
+FALSE		:	'False';
 
-NUM	: 	DIGIT (DIGIT)*;
-ID: UPPERCASE (LETTER | DIGIT)*;
-WORD: (DIGIT|LOWERCASE) (LETTER|DIGIT)*;
+//COPY
+COPY		:	'Copy';
 
+NUM			: 	DIGIT (DIGIT)*;
+ID			: 	UPPERCASE (LETTER | DIGIT)*;
+WORD		: 	(DIGIT|LOWERCASE) (LETTER|DIGIT)*;
+
+STRINGLITERAL	
+			: 	UNTERMINATEDSTRINGLITERAL '"'
+			;
+
+UNTERMINATEDSTRINGLITERAL	
+			: 	'"' (~["\\\r\n] | '\\' (. | EOF))*
+			;
 
 
 
@@ -51,6 +82,7 @@ RBLOCK:	']';
 QUOTE:	'\'';
 DQUOTE: '"';
 COMMA:	',';
+DOT:	'.';
 EXCL: 	'!';
 AT:		'@';
 PLUS:	'+';
