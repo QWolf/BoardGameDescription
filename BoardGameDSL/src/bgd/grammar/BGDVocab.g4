@@ -37,6 +37,14 @@ CONNECTIONNAMES:	'ConnectionNames';
 
 //OBJECTS KEYWORDS
 OBJECTS		:	'Objects';
+LOCATION	:	'Location';
+TYPE		:	'Type';
+VALUE		:	'Value';
+VALUETYPE	:	'ValueType';
+SIDES		:	'Sides';
+SIDESSHOWN	:	'SidesShown';
+RANDOMIZER	:	'Randomizer';
+FAIR		:	'Fair'; 
 
 //ROUNDS KEYWORDS
 ROUNDS		:	'Rounds';

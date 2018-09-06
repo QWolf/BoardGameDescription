@@ -12,12 +12,6 @@ init		: gamename
 
 gamename	:	GAME IS text SEMI
 			;
-			
-name:		nameWord nameWord*;
-nameWord	:	NUM
-			|	ID
-			|	WORD
-			;
 
 //PLAYERS - What players, forces and teams exist in the game
 players		: 	PLAYERS LBRACE playernum humans npcs? teams? RBRACE;
@@ -38,7 +32,7 @@ human		:	ID SEMI						#humanOnlyName
 			|	copy varList copyEnd		#humanCopyVarList
 			;
 			
-npcs		:	NPCS LBRACE npc+ RBRACE
+npcs		:	NPCS LBRACE npc* RBRACE
 			;
 			
 npc			:	ID SEMI						#npcOnlyName
@@ -55,7 +49,7 @@ specialNPC	:	specialNPCName SEMI						#specialNPCOnlyName
 specialNPCName:	BANK;
 
 			
-teams		:	TEAMS LBRACE team+ RBRACE
+teams		:	TEAMS LBRACE team* RBRACE
 			;
 			
 team		:	ID LBRACE members RBRACE			#teamOnlyMembers
@@ -70,16 +64,18 @@ playernames	:	LPAR ID (COMMA ID)* RPAR
 
 
 //LOCATIONS - Places in the game
-locations	:	LOCS LBRACE location+ RBRACE;
+locations	:	LOCS LBRACE location* RBRACE;
 
-location	:	ID LBRACE locationCharacteristics RBRACE		#locationNormal
-			|	copy locationCharacteristics copyEnd			#locationCopy
+location	:	ID LBRACE locationParameters RBRACE		#locationNormal
+			|	copy locationParameters copyEnd			#locationCopy
 			;
 			
-locationCharacteristics 
-			:	owner? visible1? visible2? locationType varList? startingInv?;
+locationParameters 
+			:	locOwner? visible1? visible2? locationType varList? startingInv?;
 
-owner		:	OWNER IS ID SEMI;
+locOwner	:	OWNER IS ID SEMI						#locOwnerID
+			|	OWNER IS PUBLIC SEMI					#locOwnerPublic
+			;
 
 visible1	: 	EXISTVISIBLE IS ID SEMI					#visible1SingleName
 			|	EXISTVISIBLE IS PUBLIC SEMI				#visible1Public
@@ -104,7 +100,7 @@ startingInv	:	STARTINGINV IS SEMI;
 
 //LOCATIONCONNECTIONS - what locations are connected to each other
 locationconnections
-			: 	LOCATIONCONNECTIONS LBRACE locconnection+ RBRACE
+			: 	LOCATIONCONNECTIONS LBRACE locconnection* RBRACE
 			;
 			
 locconnection:	DIRECTED LBRACE locList conAreLoc? varList? RBRACE		#locconnectionDirected
@@ -117,7 +113,51 @@ conNames	:	CONNECTIONNAMES IS nameList SEMI;
 			
 
 //OBJECTS - Game cards, pieces, or other "things" in the game
-objects		: 	OBJECTS;
+objects		: 	OBJECTS LBRACE object* RBRACE;
+
+object		:	ID LBRACE objectParameters RBRACE
+			|	copy objectParameters copyEnd
+			;
+			
+objectParameters
+			:	objectOwner? objectType? objectValue? objectSides? objectSidesShown? objectRandomizer? varList?
+			;
+			
+objectOwner	:	OWNER IS ID SEMI						#objectOwnerID
+			|	OWNER IS PUBLIC SEMI					#objectOwnerPublic
+			| 	OWNER IS LOCATION SEMI					#objectOwnerLocation
+			;
+			
+objectType	:	TYPE IS ID SEMI							#objectTypeID
+			|	TYPE IS NONE SEMI						#objectTypeNone
+			;
+			
+objectValue	:	VALUE IS value SEMI valueType			#objectValueNotNone
+			|	VALUE IS value SEMI						#objectValueNoValueType
+			|	VALUE IS NONE SEMI						#objectValueNone
+			;
+valueType	:	VALUETYPE IS ID SEMI;
+
+//TODO!!!!
+objectSides	:	SIDES SEMI 
+			;
+//TODO!!!!
+objectSidesShown:	SIDESSHOWN SEMI;
+
+//For adding randomness to objects, i.e. dice
+objectRandomizer
+			:	RANDOMIZER IS NONE SEMI												#objectRandomizerNone
+			|	RANDOMIZER LBRACE randomizerValueList randomizerChancesList RBRACE	#objectRandomizerHasRandomizer		
+			;
+			
+randomizerValueList
+			:	LBLOCK value (COMMA value)* RBLOCK
+			;
+
+randomizerChancesList
+			:	LBLOCK number (COMMA number)* RBLOCK
+			|	FAIR
+			;
 
 //ROUNDS - How the game is played, what actions are in what order?
 rounds		: 	ROUNDS MAIN;
@@ -144,9 +184,17 @@ bool		:	TRUE		#boolTrue
 			|	FALSE		#boolFalse
 			;
 
-number		:	NUM			#numberInt
-			|	NUM DOT NUM	#numberDouble
+number		:	integer		#numberInt
+			|	doublenum	#numberDouble
+			|	fraction	#numberFraction
 			;
+nofrac		:	integer		#nofracInt
+			|	doublenum	#nofracDouble	
+			;		
+			
+integer		:	NUM;
+doublenum	:	NUM DOT NUM;
+fraction	:	nofrac SLASH nofrac;
 
 text		:	STRINGLITERAL
 			;

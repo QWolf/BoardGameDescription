@@ -116,10 +116,22 @@ Objects{
 		Owner = Public;	
 		Type = None;
 		Value = 6;
-		
+		Randomizer{
+			[1,2,3,4,5,6]
+			Fair
+			
+		}
 	}
-	
+	TestItem{
+		Owner = Y;
+		Randomizer{
+			[1,2,4]
+			[0.2, 0.5, 3/10]
+		}		
+	}		
 }
+
+
 Rounds Main
 Actions
 StartState
