@@ -49,6 +49,12 @@ FAIR		:	'Fair';
 //ROUNDS KEYWORDS
 ROUNDS		:	'Rounds';
 MAIN		:	'Main';
+//variable classifier
+INT			:	'int';
+BOOL		:	'bool';
+DOUBLE		:	'double';
+STRING		:	'string';
+OBJECTTYPE	:	'objectType';
 
 //ACTIONS KEYWORDS
 ACTIONS		:	'Actions';

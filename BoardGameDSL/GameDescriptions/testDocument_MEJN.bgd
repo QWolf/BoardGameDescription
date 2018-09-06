@@ -10,7 +10,7 @@ Players{
 			}
 
 		B{
-			Var1=123;
+			StartLoc= B1;
 		}
 		R;
 	}
@@ -46,27 +46,27 @@ Locations{
 	BSupply{
 		Owner = B;
 		ExistVisible = Public;
-		LocationType = Supply;
-		VariableTest = 12345;
+		LocationType = Place;
+		PawnSupply = True;
 	}	
 	YSupply{
 		Owner = Y;
 		ValueVisible = None;
-		LocationType = Supply;
-		VariableTest = 12345;
-		MultipleVariableTestings = False;
+		LocationType = Place;
+		PawnSupply = True;
+		MultipleVariableTestings = 12345;
 	}	
 	RSupply{
 		Owner = R;
 		ExistVisible = [R, Y];
 		ValueVisible = None;
-		LocationType = Supply;
-		VariableTest = 12345;
+		LocationType = Place;
+		PawnSupply = True;
 	}	
 	GSupply{
 		Owner = G;
-		LocationType = Supply;
-		VariableTest = 12345;
+		LocationType = Place;
+		PawnSupply = True;
 	}
 }
 
@@ -132,7 +132,38 @@ Objects{
 }
 
 
-Rounds Main
-Actions
+Rounds{
+	Main(){
+		Loop(TurnOrder, Player t){
+			CurrentTurn = t;
+			Randomize(NoLoc.Dice);
+			Turn(NoLoc.Dice.Value);
+		}
+		Repeat;
+	}
+	Turn(int throw){
+		TakeAction(0,1);
+		
+	}
+}
+
+Actions{
+	StartPawn(Location l){
+		Requires{
+			NoLoc.Dice.Value == 6;
+			l.Owner == CurrentTurn;
+			l.PawnSupply == True;
+			l.contains().size() > 0;
+			or{
+				CurrentTurn.Startloc.contains().count()
+				CurrentTurn.Startloc.contains()[0].Owner != CurrentTurn;
+			}
+		}
+		effect{
+			move(l
+		}
+	
+}
+
 StartState
 

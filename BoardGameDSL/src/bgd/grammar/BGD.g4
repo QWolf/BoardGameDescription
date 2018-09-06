@@ -179,6 +179,7 @@ variable	:	ID IS value SEMI;
 value		:	bool		#valueBool
 			|	number		#valueNumber
 			|	text		#valueText
+			|	ID			#valueID
 			;
 bool		:	TRUE		#boolTrue
 			|	FALSE		#boolFalse
