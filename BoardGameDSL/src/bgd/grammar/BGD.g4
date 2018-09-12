@@ -205,3 +205,64 @@ copy		:	COPY LBRACE nameList;
 copyEnd		:	RBRACE;
 nameList	:	LBLOCK ID (COMMA ID)* RBLOCK;
 
+//EXPRESSIONS - Basic programming capabilities in Round and Action
+boolExpr	:	LPAR boolExpr RPAR				#boolExprPar
+			|	boolExpr boolOp boolExpr		#boolExprBoolOp
+			|	NOT boolExpr					#boolExprNot
+			|	addExpr compareAdd addExpr		#boolExprCompareAdd
+			|	boolExpr compareBool boolExpr	#boolExprCompareBool
+			|	stringExpr compareString stringExpr	#boolExprCompareString
+			|	idExpr							#boolExprIDExpr
+			|	bool							#boolExprBool
+			;
+
+idExpr		:	ID								#idExprID
+			;
+			
+addExpr		:	addExpr addOp addExpr			#addExprAddOp
+			|	multExpr						#addExprMultExpr
+			;
+			
+multExpr	:	multExpr multOp multExpr		#multExprMultOp
+			|	LPAR addExpr RPAR				#multExprParenteses
+			|	number							#multExprNum
+			|	ID								#multExprID
+			;
+			
+stringExpr	:	STRINGLITERAL					#stringExprString
+			|	ID								#stringExprID
+			;
+			
+addOp		:	PLUS
+			|	MINUS
+			;
+			
+multOp		:	TIMES
+			|	DIVIDE
+			|	MODULO
+			;			
+
+			
+boolOp		:	AND								#boolOpAnd
+			|	OR								#boolOpOr
+//			|	XOR								#boolOpXor
+			;
+
+compareBool	:	EQ								
+			|	NE
+			;
+			
+compareAdd	:	EQ
+			|	NE
+			|	GT
+			|	LT
+			|	GE	
+			|	LE
+			;
+			
+compareString:	EQ
+			|	NE
+			;
+			
+
+

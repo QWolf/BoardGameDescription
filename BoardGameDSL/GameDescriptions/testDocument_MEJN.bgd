@@ -11,6 +11,7 @@ Players{
 
 		B{
 			StartLoc= B1;
+			Supply = BSupply;
 		}
 		R;
 	}
@@ -42,6 +43,8 @@ Locations{
 	[BG1, BG2, BG3, BG4, YG1, YG2, YG3, YG4, RG1,RG2,RG3,RG4,GG1,GG2,GG3,GG4]
 	LocationType = Place;
 	GoalLocation = True;
+	//TODO
+	Color = Yellow;
 	}
 	BSupply{
 		Owner = B;
@@ -142,27 +145,79 @@ Rounds{
 		Repeat;
 	}
 	Turn(int throw){
-		TakeAction(0,1);
+		TakeAction(1,1);
 		
 	}
+	
+	//Helper Functions
+	GetNextField(Location l){
+		if(l.Connections.count == 1){
+			return l.Connections[0];
+		}else{
+			if(l.Connections[0].GoalLocation){
+				if(l.Connections[0].Color == CurrentTurn){
+					return l.Connections[0];
+				}else{
+					return l.Connections[1];
+				}		
+			}else{
+				if(l.Connections[1].Color == CurrentTurn){
+					return l.Connections[1];
+				}else{
+					return l.Connections[0];
+				}
+			}
+		}
+	}
+
+	
+	GetLocationAhead(Location l, int i){
+		if(i == 1){
+			return GetNextField(l);
+		}else{
+			return GetLocationAhead(GetnextField(l), i-1);		
+		}
+	}
+	
+	
+	
 }
 
 Actions{
 	StartPawn(Location l){
-		Requires{
+		requires{
 			NoLoc.Dice.Value == 6;
 			l.Owner == CurrentTurn;
 			l.PawnSupply == True;
 			l.contains().size() > 0;
-			or{
-				CurrentTurn.Startloc.contains().count()
-				CurrentTurn.Startloc.contains()[0].Owner != CurrentTurn;
-			}
+			CurrentTurn.Startloc.contains().count() == 0
+			||
+			CurrentTurn.Startloc.contains()[0].Owner != CurrentTurn;
+		}effect{
+			move(l.contains()[0], CurrentTurn.Startloc);
+			Randomize(NoLoc.Dice);
+			Turn(NoLoc.Dice.Value);
 		}
-		effect{
-			move(l
+	}
+	Pass(){
+		requires{
+		}effect{
 		}
+	}
 	
+	MovePawn(Pawn p, int throw){
+		requires{
+			p.Owner == CurrentTurn;
+			GetLocationAhead(p.Location, throw).contains().count() == 0
+			||
+			GetLocationAhead(p.Location, throw).contains[0].Owner != CurrentTurn;
+		}effect{
+			if(GetlocationAhead(p.Location, throw).contains().count() != 0){
+				move(GetLocationAhead(p.Location, throw).contains()[0], GetLocationAhead(p.Location,throw).contains[0].owner.Supply);
+			}else{}
+			move(p, GetLocationAhead(p.Location, throw);
+		}
+	}
 }
 
 StartState

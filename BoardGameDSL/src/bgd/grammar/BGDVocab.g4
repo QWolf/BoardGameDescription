@@ -53,7 +53,7 @@ MAIN		:	'Main';
 INT			:	'int';
 BOOL		:	'bool';
 DOUBLE		:	'double';
-STRING		:	'string';
+STRINGWORD	:	'string';
 OBJECTTYPE	:	'objectType';
 
 //ACTIONS KEYWORDS
@@ -112,12 +112,37 @@ COMMA:	',';
 DOT:	'.';
 EXCL: 	'!';
 AT:		'@';
-PLUS:	'+';
-MINUS:	'-';
 IS:		'=';
 BACKSL:	'\\';
 SLASH:	'/';
 STAR:	'*';
+PERCENT:'%';
+
+//Add/Substract
+ADD:	'+';
+SUB:	'-';
+
+//Numerical operators
+PLUS: 	'+';
+MINUS: 	'-';
+TIMES: 	STAR;
+DIVIDE: SLASH;
+MODULO: PERCENT;
+
+//Boolean operators
+AND: 	'&&';
+OR: 	'||';
+//XOR:	'xor';
+NOT:	EXCL; 
+
+//Compare
+GT: 	'>';
+LT:		'<';
+GE:		'>=';
+LE: 	'<=';
+EQ: 	'==';
+NE: 	'!=';
+
 
 
 //Skipped token types
