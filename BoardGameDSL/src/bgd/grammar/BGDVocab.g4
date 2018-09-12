@@ -56,6 +56,20 @@ DOUBLE		:	'double';
 STRINGWORD	:	'string';
 OBJECTTYPE	:	'objectType';
 
+//standardFunction
+LISTCOUNT	:	'count';
+//codeblock
+TAKEACTION	:	'TakeAction';
+RANDOMIZE	:	'Randomize';
+
+CONTAINS	:	'contains';
+ISCONNECTEDTO:	'isConnectedTo';
+CONNECTIONS	:	'connections';
+LOCATIONFUNC:	LOCATION;
+OWNERFUNC	:	OWNER;
+RETURN		:	'return';
+
+
 //ACTIONS KEYWORDS
 ACTIONS		:	'Actions';
 
@@ -118,16 +132,14 @@ SLASH:	'/';
 STAR:	'*';
 PERCENT:'%';
 
-//Add/Substract
-ADD:	'+';
-SUB:	'-';
+
 
 //Numerical operators
 PLUS: 	'+';
 MINUS: 	'-';
-TIMES: 	STAR;
-DIVIDE: SLASH;
-MODULO: PERCENT;
+//TIMES: 	STAR;
+//DIVIDE: SLASH;
+//MODULO: PERCENT;
 
 //Boolean operators
 AND: 	'&&';

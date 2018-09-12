@@ -159,9 +159,89 @@ randomizerChancesList
 			|	FAIR
 			;
 
-//ROUNDS - How the game is played, what actions are in what order?
-rounds		: 	ROUNDS MAIN;
+//rounds - How the game is played, what actions are in what order?
+rounds		: 	ROUNDS LPAR main additionalRound* RPAR;
 
+main		:	MAIN LPAR RPAR LBRACE codeBlock RBRACE ;
+additionalRound:ID LPAR arguments? RPAR LBRACE codeBlock RBRACE;
+
+arguments	:	argument (COMMA argument)*;
+argument	:	varType ID;
+
+//CODEBLOCK - Helper for rounds and actions
+codeBlock	:	nonReturnFunction SEMI
+//			|	LOOP LPAR 
+			|	idFromLocation DOT locationFunction SEMI
+//			|	idFromLocation DOT playerFunction SEMI
+			|	idFromLocation DOT objectFunction SEMI
+			|	RETURN codeValue SEMI
+			;
+
+nonReturnFunction
+			:	TAKEACTION LPAR integer COMMA integer RPAR 
+//			|	MOVE2
+//			|	MOVE
+//			|	ADVANCETURN
+//			|	LOOP LPAR 
+			|	RANDOMIZE LPAR idFromLocation RPAR 
+			
+			;
+			
+standardFunction
+			:	COMMA COMMA
+//			|	SEE
+//			|	NEWOBJECT
+//			|	LIST[i]
+			|	LISTCOUNT LPAR RPAR
+			;
+			
+locationFunction
+			:	CONTAINS LPAR RPAR 					#locFunctionContains
+			|	CONTAINS LPAR ID RPAR 				#locFunctionContainsType
+			|	ISCONNECTEDTO LPAR ID RPAR 			#locFunctionIsConnectedTo
+			|	CONNECTIONS LPAR RPAR				#locFunctionConnections
+			;
+			
+playerFunction
+			:	ID
+			;
+			
+objectFunction
+			:	LOCATIONFUNC 
+			|	OWNERFUNC  
+			|	VALUE
+			;
+			
+codeValue	:	value										#codeValuePlainID
+			|	idFromLocation								#codeValueIDFromLocation
+			|	codeValue DOT standardFunction				#codeValueStandardFunction
+			|	LPAR codeValue RPAR							#codeValuePar
+			|	codeValue DOT locationFunction				#codeValueLocationFunction
+//			|	codeValue DOT playerFunction				#codeValuePlayerFunction
+			|	codeValue DOT objectFunction				#codeValueObjectFunction
+			|	codeValue boolOp codeValue					#codeValueBoolOperator //AND/OR
+			|	codeValue LBLOCK integerValue RBLOCK		#codeValueListIndex
+			|	NOT codeValue								#codeValueBoolNot
+			|	codeValue compareAdd codeValue				#codeValueBoolCompare // ==, !=, >, etc.
+			|	LBLOCK codeValue (COMMA codeValue)* RBLOCK	#codeValueList
+			|	codeValue multOp codeValue					#codeValueMultOp
+			|	codeValue addOp codeValue					#codeValueAddOp
+			;
+			
+//stringExpr	:	STRINGLITERAL					#stringExprString
+//			|	ID								#stringExprID
+////			|	codeValue						#stringExprCodeValue
+//			;
+			
+
+integerValue:	integer
+			|	codeValue
+			;
+			
+idFromLocation 
+			:	ID (DOT ID)*;
+			
+			
 //ACTIONS - What actions can be taken by players or other forces?
 actions		:	ACTIONS; 
 
@@ -200,46 +280,31 @@ fraction	:	nofrac SLASH nofrac;
 text		:	STRINGLITERAL
 			;
 			
+varType		:	INT
+			|	BOOL
+			|	DOUBLE
+			|	STRINGWORD
+			|	OBJECTTYPE
+			|	ID
+			|	LOCATION
+///			|	FORCE
+//			|	TEAM
+			;
+			
 //COPY -- Duplicate a Location/Player/Object/etc with only a different name
 copy		:	COPY LBRACE nameList;
 copyEnd		:	RBRACE;
 nameList	:	LBLOCK ID (COMMA ID)* RBLOCK;
 
-//EXPRESSIONS - Basic programming capabilities in Round and Action
-boolExpr	:	LPAR boolExpr RPAR				#boolExprPar
-			|	boolExpr boolOp boolExpr		#boolExprBoolOp
-			|	NOT boolExpr					#boolExprNot
-			|	addExpr compareAdd addExpr		#boolExprCompareAdd
-			|	boolExpr compareBool boolExpr	#boolExprCompareBool
-			|	stringExpr compareString stringExpr	#boolExprCompareString
-			|	idExpr							#boolExprIDExpr
-			|	bool							#boolExprBool
-			;
 
-idExpr		:	ID								#idExprID
-			;
 			
-addExpr		:	addExpr addOp addExpr			#addExprAddOp
-			|	multExpr						#addExprMultExpr
-			;
-			
-multExpr	:	multExpr multOp multExpr		#multExprMultOp
-			|	LPAR addExpr RPAR				#multExprParenteses
-			|	number							#multExprNum
-			|	ID								#multExprID
-			;
-			
-stringExpr	:	STRINGLITERAL					#stringExprString
-			|	ID								#stringExprID
-			;
-			
-addOp		:	PLUS
+addOp		:	PLUS 
 			|	MINUS
 			;
 			
-multOp		:	TIMES
-			|	DIVIDE
-			|	MODULO
+multOp		:	STAR	//Multiply
+			|	SLASH	//Divide
+			|	PERCENT	//Modulo
 			;			
 
 			
@@ -263,6 +328,8 @@ compareAdd	:	EQ
 compareString:	EQ
 			|	NE
 			;
+			
+
 			
 
 
