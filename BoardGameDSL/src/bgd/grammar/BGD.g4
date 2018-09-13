@@ -166,25 +166,26 @@ main		:	MAIN LPAR RPAR LBRACE codeBlock RBRACE ;
 additionalRound:ID LPAR arguments? RPAR LBRACE codeBlock RBRACE;
 
 arguments	:	argument (COMMA argument)*;
-argument	:	varType ID;
+argument	:	varType LOWID;
 
 //CODEBLOCK - Helper for rounds and actions
-codeBlock	:	nonReturnFunction SEMI
+codeBlock	:	codeLine*
+			;
+
+codeLine	:	nonReturnFunction SEMI
 //			|	LOOP LPAR 
-			|	idFromLocation DOT locationFunction SEMI
-//			|	idFromLocation DOT playerFunction SEMI
-			|	idFromLocation DOT objectFunction SEMI
+			|	IF LPAR codeValue RPAR LBRACE codeBlock RBRACE ELSE LBRACE codeBlock RBRACE
 			|	RETURN codeValue SEMI
 			;
 
 nonReturnFunction
-			:	TAKEACTION LPAR integer COMMA integer RPAR 
+			:	TAKEACTION LPAR integerValue COMMA integerValue RPAR 
 //			|	MOVE2
 //			|	MOVE
 //			|	ADVANCETURN
 //			|	LOOP LPAR 
 			|	RANDOMIZE LPAR idFromLocation RPAR 
-			
+//			|	FINISHGAME			
 			;
 			
 standardFunction
@@ -207,13 +208,13 @@ playerFunction
 			;
 			
 objectFunction
-			:	LOCATIONFUNC 
-			|	OWNERFUNC  
+			:	LOCATION 
+			|	OWNER  
 			|	VALUE
 			;
 			
-codeValue	:	value										#codeValuePlainID
-			|	idFromLocation								#codeValueIDFromLocation
+codeValue	:	codeValueValue								#codeValuePlainID
+			|	codeValue DOT idFromLocation				#codeValueIDFromLocation
 			|	codeValue DOT standardFunction				#codeValueStandardFunction
 			|	LPAR codeValue RPAR							#codeValuePar
 			|	codeValue DOT locationFunction				#codeValueLocationFunction
@@ -221,13 +222,14 @@ codeValue	:	value										#codeValuePlainID
 			|	codeValue DOT objectFunction				#codeValueObjectFunction
 			|	codeValue boolOp codeValue					#codeValueBoolOperator //AND/OR
 			|	codeValue LBLOCK integerValue RBLOCK		#codeValueListIndex
-			|	NOT codeValue								#codeValueBoolNot
+			|	EXCL codeValue								#codeValueBoolNot
 			|	codeValue compareAdd codeValue				#codeValueBoolCompare // ==, !=, >, etc.
 			|	LBLOCK codeValue (COMMA codeValue)* RBLOCK	#codeValueList
 			|	codeValue multOp codeValue					#codeValueMultOp
 			|	codeValue addOp codeValue					#codeValueAddOp
 			;
 			
+		
 //stringExpr	:	STRINGLITERAL					#stringExprString
 //			|	ID								#stringExprID
 ////			|	codeValue						#stringExprCodeValue
@@ -236,6 +238,14 @@ codeValue	:	value										#codeValuePlainID
 
 integerValue:	integer
 			|	codeValue
+			;
+			
+codeValueValue
+			:	bool
+			|	number
+			|	text
+			|	ID
+			|	LOWID
 			;
 			
 idFromLocation 

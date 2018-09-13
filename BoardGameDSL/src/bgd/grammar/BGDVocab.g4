@@ -56,20 +56,25 @@ DOUBLE		:	'double';
 STRINGWORD	:	'string';
 OBJECTTYPE	:	'objectType';
 
+//CodeBlock
+IF			:	'if';
+ELSE		:	'else';
+RETURN		:	'return';
 //standardFunction
 LISTCOUNT	:	'count';
-//codeblock
+//nonReturnFunction
 TAKEACTION	:	'TakeAction';
 RANDOMIZE	:	'Randomize';
 
+//LocationFunction
 CONTAINS	:	'contains';
 ISCONNECTEDTO:	'isConnectedTo';
 CONNECTIONS	:	'connections';
-LOCATIONFUNC:	LOCATION;
-OWNERFUNC	:	OWNER;
-RETURN		:	'return';
 
 
+//ObjectFunction
+//LOCATIONFUNC:	LOCATION;
+//OWNERFUNC	:	OWNER;
 //ACTIONS KEYWORDS
 ACTIONS		:	'Actions';
 
@@ -99,7 +104,8 @@ PUBLIC		:	'Public';
 
 NUM			: 	DIGIT (DIGIT)*;
 ID			: 	UPPERCASE (LETTER | DIGIT)*;
-WORD		: 	(DIGIT|LOWERCASE) (LETTER|DIGIT)*;
+LOWID		:	LOWERCASE (LETTER | DIGIT)*;
+DIGITID		: 	DIGIT (LETTER|DIGIT)*;
 
 STRINGLITERAL	
 			: 	UNTERMINATEDSTRINGLITERAL '"'
@@ -145,7 +151,7 @@ MINUS: 	'-';
 AND: 	'&&';
 OR: 	'||';
 //XOR:	'xor';
-NOT:	EXCL; 
+//NOT:	EXCL; 
 
 //Compare
 GT: 	'>';

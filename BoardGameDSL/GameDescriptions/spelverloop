@@ -1,0 +1,2 @@
+Rand =4
+TakeAction = MovePawn(G4, 4)

@@ -144,6 +144,7 @@ Rounds{
 		}
 		Repeat;
 	}
+	
 	Turn(int throw){
 		TakeAction(1,1);
 		
@@ -151,7 +152,7 @@ Rounds{
 	
 	//Helper Functions
 	GetNextField(Location l){
-		if(l.Connections.count == 1){
+		if(l.Connections.count() == 1){
 			return l.Connections[0];
 		}else{
 			if(l.Connections[0].GoalLocation){
@@ -205,17 +206,17 @@ Actions{
 		}
 	}
 	
-	MovePawn(Pawn p, int throw){
+	MovePawn(Pawn p){
 		requires{
 			p.Owner == CurrentTurn;
-			GetLocationAhead(p.Location, throw).contains().count() == 0
+			GetLocationAhead(p.Location, NoLoc.Dice.Value).contains().count() == 0
 			||
-			GetLocationAhead(p.Location, throw).contains[0].Owner != CurrentTurn;
+			GetLocationAhead(p.Location, NoLoc.Dice.Value).contains[0].Owner != CurrentTurn;
 		}effect{
-			if(GetlocationAhead(p.Location, throw).contains().count() != 0){
-				move(GetLocationAhead(p.Location, throw).contains()[0], GetLocationAhead(p.Location,throw).contains[0].owner.Supply);
+			if(GetlocationAhead(p.Location, NoLoc.Dice.Value).contains().count() != 0){
+				move(GetLocationAhead(p.Location, NoLoc.Dice.Value).contains()[0], GetLocationAhead(p.Location,throw).contains[0].owner.Supply);
 			}else{}
-			move(p, GetLocationAhead(p.Location, throw);
+			move(p, GetLocationAhead(p.Location, NoLoc.Dice.Value);
 		}
 	}
 }
