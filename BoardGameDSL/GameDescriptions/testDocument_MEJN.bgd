@@ -4,6 +4,24 @@ Players{
 	MinPlayers = 2;
 	MaxPlayers = 4;
 	//Playnumbers = 2, 4;
+	
+	player B{
+		//AI = true;
+		StartLoc = B1;
+		Supply = BSupply;
+		
+	}
+	
+	computer Y{
+		StartLoc = Y1;
+		Supply = YSupply;
+		Team = T1;
+		}
+		
+	team T1{
+		Teamcolor = "Green";
+	}
+	
 	Humans{
 		Copy{
 			[Y,G]
@@ -30,6 +48,8 @@ Players{
 			Var5 = 3456;
 		}
 	}
+	
+	
 }
 
 	
