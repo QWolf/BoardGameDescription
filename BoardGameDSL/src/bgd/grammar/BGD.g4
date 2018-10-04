@@ -4,7 +4,7 @@ grammar BGD;
 
 import BGDVocab;
 
-program: init players locations locationconnections? objects rounds actions startState concepts?;
+program: init playersSection locations locationconnections? objects rounds actions startState concepts?;
 
 //INIT - Game settings
 init		: gamename
@@ -14,69 +14,53 @@ gamename	:	GAME IS text SEMI
 			;
 
 //PLAYERS - What players, forces and teams exist in the game
-players		: 	PLAYERS LBRACE playernum humans npcs? teams? RBRACE;
+playersSection:	PLAYERS LBRACE playernum players RBRACE;
 
-playernum	:	minplayers maxplayers		#playernumRange
-			|	PLAYERS IS NUM SEMI			#playernumFixed
+playernum	:	minplayers maxplayers				#playernumRange
+//			|	PLAYERS IS NUM SEMI					#playernumFixed
 			;
 			
 minplayers	:	MINPLAYERS IS NUM SEMI;
 maxplayers	:	MAXPLAYERS IS NUM SEMI;
+
+players		: 	player+
+			;
 		
-humans		:	HUMANS LBRACE human* RBRACE
+player		:	humOrAI ID SEMI						#playerOnlyID
+			|	humOrAI ID LBRACE varList RBRACE	#playerVarList
 			;
 			
-human		:	ID SEMI						#humanOnlyName
-			|	ID LBRACE varList RBRACE	#humanWithVarList
-			|	copy copyEnd				#humanOnlyNameCopy
-			|	copy varList copyEnd		#humanCopyVarList
-			;
-			
-npcs		:	NPCS LBRACE npc* RBRACE
-			;
-			
-npc			:	ID SEMI						#npcOnlyName
-			|	ID LBRACE varList RBRACE	#npcWithVarList
-			|	copy copyEnd				#npcCopyOnlyName
-			|	copy varList copyEnd		#npcCopyVarList
-			|	specialNPC					#npcSpecial
+humOrAI		:	HUMAN								#humOrAIHuman	
+			|	COMPUTER							#humOrAIComputer
 			;
 
-specialNPC	:	specialNPCName SEMI						#specialNPCOnlyName
-			|	specialNPCName	LBRACE varList RBRACE	#specialNPCVarList
-			;
-			
-specialNPCName:	BANK;
-
-			
-teams		:	TEAMS LBRACE team* RBRACE
-			;
-			
-team		:	ID LBRACE members RBRACE			#teamOnlyMembers
-			|	ID LBRACE members varList RBRACE	#teamWithVarList
-			;
-			
-members		:	MEMBERS IS ID (COMMA ID)* SEMI;
-
-	
-playernames	:	LPAR ID (COMMA ID)* RPAR
-			;
 
 
 //LOCATIONS - Places in the game
 locations	:	LOCS LBRACE location* RBRACE;
 
-location	:	ID LBRACE locationParameters RBRACE		#locationNormal
-			|	copy locationParameters copyEnd			#locationCopy
+location	:	locType? ID LBRACE locationVariables RBRACE		#locationNormal
+//			|	copy locationParameters copyEnd			#locationCopy
 			;
 			
-locationParameters 
-			:	locOwner? visible1? visible2? locationType varList? startingInv?;
+locType		:	PLACE
+			|	SUPPLY
+			;
+			
+locationVariables 
+			:	locVariable*;
+			
+locVariable	:	variable
+			|	locOwner
+			|	visible1
+			|	visible2
+			|	startingInv
+			;
 
 locOwner	:	OWNER IS ID SEMI						#locOwnerID
 			|	OWNER IS PUBLIC SEMI					#locOwnerPublic
 			;
-
+			
 visible1	: 	EXISTVISIBLE IS ID SEMI					#visible1SingleName
 			|	EXISTVISIBLE IS PUBLIC SEMI				#visible1Public
 			|	EXISTVISIBLE IS NONE SEMI				#visible1None
@@ -88,22 +72,19 @@ visible2	: 	VALUEVISIBLE IS ID SEMI					#visible2SingleName
 			|	VALUEVISIBLE IS nameList SEMI			#visible2NameList
 			;
 			
-locationType:	LOCATIONTYPE IS PLACE SEMI				#locationTypePlace
-			|	LOCATIONTYPE IS SUPPLY SEMI				#locationTypeSupply
-			|	LOCATIONTYPE IS COUNTER SEMI counterType#locationTypeCounter
-			;
 			
-counterType	:	COUNTERTYPE IS ID SEMI;
+startingInv	:	STARTINGINV LBRACE objectInstance+ RBRACE;
 
-//TODO!!!!!
-startingInv	:	STARTINGINV IS SEMI;
+objectInstance:	ID ID SEMI
+			|	ID ID LBRACE objectVariable+ RBRACE
+			;
 
 //LOCATIONCONNECTIONS - what locations are connected to each other
 locationconnections
-			: 	LOCATIONCONNECTIONS LBRACE locconnection* RBRACE
+			: 	LOCATIONCONNECTIONS LBRACE locConnection* RBRACE
 			;
 			
-locconnection:	DIRECTED LBRACE locList conAreLoc? varList? RBRACE		#locconnectionDirected
+locConnection:	DIRECTED LBRACE locList conAreLoc? varList? RBRACE		#locconnectionDirected
 			|	UNDIRECTED LBRACE locList conAreLoc? varList? RBRACE	#locconnectionUndirected
 			;
 
@@ -115,49 +96,38 @@ conNames	:	CONNECTIONNAMES IS nameList SEMI;
 //OBJECTS - Game cards, pieces, or other "things" in the game
 objects		: 	OBJECTS LBRACE object* RBRACE;
 
-object		:	ID LBRACE objectParameters RBRACE
-			|	copy objectParameters copyEnd
+object		:	ID LBRACE objectVariables RBRACE
+//			|	copy objectParameters copyEnd
 			;
 			
-objectParameters
-			:	objectOwner? objectType? objectValue? objectSides? objectSidesShown? objectRandomizer? varList?
+objectVariables
+			:	(publicness objectVariable)*
+			;
+			
+publicness	:	PUBLIC
+			|	HIDDEN
+			;			
+objectVariable: variable
+			|	objectOwner
+			|	objectRandomizer 
 			;
 			
 objectOwner	:	OWNER IS ID SEMI						#objectOwnerID
 			|	OWNER IS PUBLIC SEMI					#objectOwnerPublic
 			| 	OWNER IS LOCATION SEMI					#objectOwnerLocation
 			;
-			
-objectType	:	TYPE IS ID SEMI							#objectTypeID
-			|	TYPE IS NONE SEMI						#objectTypeNone
-			;
-			
-objectValue	:	VALUE IS value SEMI valueType			#objectValueNotNone
-			|	VALUE IS value SEMI						#objectValueNoValueType
-			|	VALUE IS NONE SEMI						#objectValueNone
-			;
-valueType	:	VALUETYPE IS ID SEMI;
 
-//TODO!!!!
-objectSides	:	SIDES SEMI 
-			;
-//TODO!!!!
-objectSidesShown:	SIDESSHOWN SEMI;
 
 //For adding randomness to objects, i.e. dice
 objectRandomizer
-			:	RANDOMIZER IS NONE SEMI												#objectRandomizerNone
-			|	RANDOMIZER LBRACE randomizerValueList randomizerChancesList RBRACE	#objectRandomizerHasRandomizer		
+			:	RANDOMIZER LBRACE randomizerValueList RBRACE			
 			;
 			
 randomizerValueList
 			:	LBLOCK value (COMMA value)* RBLOCK
 			;
 
-randomizerChancesList
-			:	LBLOCK number (COMMA number)* RBLOCK
-			|	FAIR
-			;
+
 
 //rounds - How the game is played, what actions are in what order?
 rounds		: 	ROUNDS LPAR main additionalRound* RPAR;
@@ -265,6 +235,10 @@ concepts	:	CONCEPTS VARIABLES;
 //VARIABLES
 varList		:	variable+;
 variable	:	ID IS value SEMI;
+itemVariable:	visibility? ID IS value SEMI;
+visibility	:	PUBLIC
+			|	PRIVATE
+			;
 
 value		:	bool		#valueBool
 			|	number		#valueNumber
@@ -302,8 +276,8 @@ varType		:	INT
 			;
 			
 //COPY -- Duplicate a Location/Player/Object/etc with only a different name
-copy		:	COPY LBRACE nameList;
-copyEnd		:	RBRACE;
+//copy		:	COPY LBRACE nameList;
+//copyEnd		:	RBRACE;
 nameList	:	LBLOCK ID (COMMA ID)* RBLOCK;
 
 

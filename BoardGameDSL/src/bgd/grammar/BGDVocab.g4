@@ -10,11 +10,13 @@ GAME		:	'Game';
 PLAYERS		:	'Players';
 MINPLAYERS	:	'MinPlayers';
 MAXPLAYERS	:	'MaxPlayers';
-HUMANS		:	'Humans';
-NPCS		:	'NPCs';
-BANK		:	'Bank';
-TEAMS		:	'Teams';
-MEMBERS		:	'Members';
+HUMAN		:	'Human';
+COMPUTER	:	'Computer';
+//HUMANS		:	'Humans';
+//NPCS		:	'NPCs';
+//BANK		:	'Bank';
+//TEAMS		:	'Teams';
+//MEMBERS		:	'Members';
 
 
 //LOCATION keywords
@@ -44,7 +46,6 @@ VALUETYPE	:	'ValueType';
 SIDES		:	'Sides';
 SIDESSHOWN	:	'SidesShown';
 RANDOMIZER	:	'Randomizer';
-FAIR		:	'Fair'; 
 
 //ROUNDS KEYWORDS
 ROUNDS		:	'Rounds';
@@ -55,6 +56,8 @@ BOOL		:	'bool';
 DOUBLE		:	'double';
 STRINGWORD	:	'string';
 OBJECTTYPE	:	'objectType';
+PUBLIC		:	'public';
+PRIVATE		:	'private';
 
 //CodeBlock
 IF			:	'if';
@@ -96,7 +99,7 @@ COPY		:	'Copy';
 //Owner Keywords
 NONE		:	'None';
 OWNER		:	'Owner';
-PUBLIC		:	'Public';
+HIDDEN		:	'Hidden';
 
 
 
@@ -169,7 +172,7 @@ COMMENTBLOCK: SLASH STAR .*? STAR SLASH -> skip;
 
 WS: [ \t\r\n]+ -> skip;
 //ENTER: '\r'?'\n';
-SPACE: ' ';
+//SPACE: ' ';
 
 
 fragment LOWERCASE: [a-z];
