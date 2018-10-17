@@ -4,7 +4,7 @@ grammar BGD;
 
 import BGDVocab;
 
-program: init playersSection locations locationconnections? objects rounds actions startState concepts?;
+program: init playersSection locations locationconnections? objects rounds actions startState?;
 
 //INIT - Game settings
 init		: gamename
@@ -106,7 +106,8 @@ objectVariables
 			
 publicness	:	PUBLIC
 			|	HIDDEN
-			;			
+			;	
+					
 objectVariable: variable
 			|	objectOwner
 			|	objectRandomizer 
@@ -130,40 +131,46 @@ randomizerValueList
 
 
 //rounds - How the game is played, what actions are in what order?
-rounds		: 	ROUNDS LPAR main additionalRound* RPAR;
+rounds		: 	ROUNDS LBRACE main additionalRound* RBRACE;
 
 main		:	MAIN LPAR RPAR LBRACE codeBlock RBRACE ;
 additionalRound:ID LPAR arguments? RPAR LBRACE codeBlock RBRACE;
 
 arguments	:	argument (COMMA argument)*;
 argument	:	varType LOWID;
-
+ 
 //CODEBLOCK - Helper for rounds and actions
 codeBlock	:	codeLine*
 			;
 
 codeLine	:	nonReturnFunction SEMI
 //			|	LOOP LPAR 
-			|	IF LPAR codeValue RPAR LBRACE codeBlock RBRACE ELSE LBRACE codeBlock RBRACE
+			|	IF LPAR codeValue RPAR LBRACE codeBlock RBRACE (ELSE LBRACE codeBlock RBRACE)?
 			|	RETURN codeValue SEMI
 			;
 
 nonReturnFunction
-			:	TAKEACTION LPAR integerValue COMMA integerValue RPAR 
+			:	CHOOSEACTION codeValue		#nonReturnFunctionTakeActionPlayer 
+			|	codeValue LPAR performActionArguments? RPAR	#nonReturnFunctionPerformAction
 //			|	MOVE2
 //			|	MOVE
-//			|	ADVANCETURN
+			|	ADVANCETURN					#nonReturnFunctionNextTurn
 //			|	LOOP LPAR 
-			|	RANDOMIZE LPAR idFromLocation RPAR 
-//			|	FINISHGAME			
+			|	RANDOMIZE idFromLocation 	#nonReturnFunctionRandomize
+//			|	FINISHGAME		
+			|	REPEAT						#nonReturnFunctionRepeat	
+			|	variable					#nonReturnVariableLocalVariable
 			;
 			
+performActionArguments: codeValue (COMMA codeValue)?;
+
 standardFunction
-			:	COMMA COMMA
+			:	
 //			|	SEE
+//			|	setVariable
 //			|	NEWOBJECT
 //			|	LIST[i]
-			|	LISTCOUNT LPAR RPAR
+			|	LISTCOUNT LPAR codeValue RPAR
 			;
 			
 locationFunction
@@ -183,7 +190,7 @@ objectFunction
 			|	VALUE
 			;
 			
-codeValue	:	codeValueValue								#codeValuePlainID
+codeValue	:	codeValueValue								#codeValuePlainValue
 			|	codeValue DOT idFromLocation				#codeValueIDFromLocation
 			|	codeValue DOT standardFunction				#codeValueStandardFunction
 			|	LPAR codeValue RPAR							#codeValuePar
@@ -223,13 +230,30 @@ idFromLocation
 			
 			
 //ACTIONS - What actions can be taken by players or other forces?
-actions		:	ACTIONS; 
+actions		:	ACTIONS action*; 
+
+action		:	ID LPAR arguments? RPAR LBRACE requires effect RBRACE
+			;
+			
+requires	:	REQUIRES LBRACE requireStatement* RBRACE
+			;
+			
+requireStatement:
+				codeValue SEMI
+			;
+			
+effect		:	EFFECT LBRACE effectStatement RBRACE
+			;
+			
+effectStatement:
+				codeLine;
+				
 
 //STARTING STATE - What non-deterministic things are done at game-start?
+//TODO
 startState	:	STARTSTATE;
 
-//CONCEPTS
-concepts	:	CONCEPTS VARIABLES;
+
 
 //HELPER FUNCTIONS
 //VARIABLES

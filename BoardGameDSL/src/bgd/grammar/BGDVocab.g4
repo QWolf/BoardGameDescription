@@ -50,6 +50,7 @@ RANDOMIZER	:	'Randomizer';
 //ROUNDS KEYWORDS
 ROUNDS		:	'Rounds';
 MAIN		:	'Main';
+ADVANCETURN	:	'NextTurn';
 //variable classifier
 INT			:	'int';
 BOOL		:	'bool';
@@ -59,6 +60,10 @@ OBJECTTYPE	:	'objectType';
 PUBLIC		:	'public';
 PRIVATE		:	'private';
 
+//ACTIONS KEYWORDS
+REQUIRES 	:	'requires';
+EFFECT		:	'effect';
+
 //CodeBlock
 IF			:	'if';
 ELSE		:	'else';
@@ -66,9 +71,10 @@ RETURN		:	'return';
 //standardFunction
 LISTCOUNT	:	'count';
 //nonReturnFunction
-TAKEACTION	:	'TakeAction';
+PERFORMACTION:	'PerformAction';
+CHOOSEACTION:	'ChooseAction';
 RANDOMIZE	:	'Randomize';
-
+REPEAT		:	'Repeat';
 //LocationFunction
 CONTAINS	:	'contains';
 ISCONNECTEDTO:	'isConnectedTo';

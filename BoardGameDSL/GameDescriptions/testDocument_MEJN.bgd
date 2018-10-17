@@ -5,209 +5,342 @@ Players{
 	MaxPlayers = 4;
 	//Playnumbers = 2, 4;
 	
-	player B{
+	Human B{
 		//AI = true;
 		StartLoc = B1;
-		Supply = BSupply;
+		SupplyLoc = BSupply;
 		
 	}
-	
-	computer Y{
+	Human Y{
+		//AI = true;
 		StartLoc = Y1;
-		Supply = YSupply;
-		Team = T1;
-		}
+		SupplyLoc = YSupply;
 		
-	team T1{
-		Teamcolor = "Green";
-	}
-	
-	Humans{
-		Copy{
-			[Y,G]
-			}
-
-		B{
-			StartLoc= B1;
-			Supply = BSupply;
-		}
-		R;
-	}
-	NPCs{
-		Bank{
-			Var2=234;
-		}			
-	}
-	Teams{
-		Blue{
-			Members = B, G;
-			Var5 = 6543;
-		}
-		Red{
-			Members = R, Y;
-			Var5 = 3456;
-		}
-	}
-	
-	
+	}	
+	Human G{
+		//AI = true;
+		StartLoc = G1;
+		SupplyLoc = GSupply;
+		
+	}	
+	Human R{
+		//AI = true;
+		StartLoc = R1;
+		SupplyLoc = RSupply;
+		
+	}	
 }
 
 	
 
 Locations{
-	Copy{
-	[B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,Y9,Y10,R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,G1,G2,G3,G4,G5,G6,G7,G8,G9,G10]
-	LocationType = Place;
+	B1{
+		Locnumber = 1;
 	}
-	Copy{
-	[BG1, BG2, BG3, BG4, YG1, YG2, YG3, YG4, RG1,RG2,RG3,RG4,GG1,GG2,GG3,GG4]
-	LocationType = Place;
-	GoalLocation = True;
-	//TODO
-	Color = Yellow;
+	B2{
+		Locnumber = 2;
 	}
+	B3{
+		Locnumber = 3;
+	}
+	B4{
+		Locnumber = 4;
+	}
+	B5{
+		Locnumber = 5;
+	}
+	B6{
+		Locnumber = 6;
+	}
+	B7{
+		Locnumber = 7;
+	}
+	B8{
+		Locnumber = 8;
+	}
+	B9{
+		Locnumber = 9;
+	}
+	B10{
+		Locnumber = 10;
+	}
+	G1{
+		Locnumber = 11;
+	}
+	G2{
+		Locnumber = 12;
+	}
+	G3{
+		Locnumber = 13;
+	}
+	G4{
+		Locnumber = 14;
+	}
+	G5{
+		Locnumber = 15;
+	}
+	G6{
+		Locnumber = 16;
+	}
+	G7{
+		Locnumber = 17;
+	}
+	G8{
+		Locnumber = 18;
+	}
+	G9{
+		Locnumber = 19;
+	}
+	G10{
+		Locnumber = 20;
+	}
+	Y1{
+		Locnumber = 21;
+	}
+	Y2{
+		Locnumber = 22;
+	}
+	Y3{
+		Locnumber = 23;
+	}
+	Y4{
+		Locnumber = 24;
+	}
+	Y5{
+		Locnumber = 25;
+	}
+	Y6{
+		Locnumber = 26;
+	}
+	Y7{
+		Locnumber = 27;
+	}
+	Y8{
+		Locnumber = 28;
+	}
+	Y9{
+		Locnumber = 29;
+	}
+	Y10{
+		Locnumber = 30;
+	}
+	R1{
+		Locnumber = 31;
+	}
+	R2{
+		Locnumber = 32;
+	}
+	R3{
+		Locnumber = 33;
+	}
+	R4{
+		Locnumber = 34;
+	}
+	R5{
+		Locnumber = 35;
+	}
+	R6{
+		Locnumber = 36;
+	}
+	R7{
+		Locnumber = 37;
+	}
+	R8{
+		Locnumber = 38;
+	}
+	R9{
+		Locnumber = 39;
+	}
+	R10{
+		Locnumber = 40;
+	}
+	
+	
+	BG1{
+		Locnumber = 1;
+		Goal = True;
+		Owner = B;
+	}
+	BG2{
+		Locnumber = 2;
+		Goal = True;
+		Owner = B;
+	}
+	BG3{
+		Locnumber = 3;
+		Goal = True;
+		Owner = B;
+	}
+	BG4{
+		Locnumber = 4;
+		Goal = True;
+		Owner = B;
+	}
+	
+	GG1{
+		Locnumber = 11;
+		Goal = True;
+		Owner = G;
+	}
+	GG2{
+		Locnumber = 12;
+		Goal = True;
+		Owner = G;
+	}
+	GG3{
+		Locnumber = 13;
+		Goal = True;
+		Owner = G;
+	}
+	GG4{
+		Locnumber = 14;
+		Goal = True;
+		Owner = G;
+	}
+	
+	
+	YG1{
+		Locnumber = 21;
+		Goal = True;
+		Owner = Y;
+	}
+	YG2{
+		Locnumber = 22;
+		Goal = True;
+		Owner = Y;
+	}
+	YG3{
+		Locnumber = 23;
+		Goal = True;
+		Owner = Y;
+	}
+	YG4{
+		Locnumber = 24;
+		Goal = True;
+		Owner = Y;
+	}
+	
+	RG1{
+		Locnumber = 1;
+		Goal = True;
+		Owner = R;
+	}
+	RG2{
+		Locnumber = 2;
+		Goal = True;
+		Owner = R;
+	}
+	RG3{
+		Locnumber = 3;
+		Goal = True;
+		Owner = R;
+	}
+	RG4{
+		Locnumber = 4;
+		Goal = True;
+		Owner = R;
+	}	
+	
 	BSupply{
 		Owner = B;
-		ExistVisible = Public;
-		LocationType = Place;
 		PawnSupply = True;
+		StartingInventory{
+			Pawn PawnB1;
+			Pawn PawnB2;
+			Pawn PawnB3;
+			Pawn PawnB4;
+		}
 	}	
 	YSupply{
 		Owner = Y;
-		ValueVisible = None;
-		LocationType = Place;
 		PawnSupply = True;
-		MultipleVariableTestings = 12345;
+		StartingInventory{
+			Pawn PawnY1;
+			Pawn PawnY2;
+			Pawn PawnY3;
+			Pawn PawnY4;
+		}
 	}	
 	RSupply{
 		Owner = R;
-		ExistVisible = [R, Y];
-		ValueVisible = None;
-		LocationType = Place;
 		PawnSupply = True;
+		StartingInventory{
+			Pawn PawnR1;
+			Pawn PawnR2;
+			Pawn PawnR3;
+			Pawn PawnR4;
+		}
 	}	
 	GSupply{
 		Owner = G;
-		LocationType = Place;
 		PawnSupply = True;
+		StartingInventory{
+			Pawn PawnG1;
+			Pawn PawnG2;
+			Pawn PawnG3;
+			Pawn PawnG4;
+		}
+	}
+	
+	NoLoc{
+		Owner = public;
+		StartNewPawnAllowed = True;
+		StartingInventory{
+			Dice D1;
+		}
 	}
 }
 
-LocationConnections{
+//LocationConnections{
+	//Empty, as single connections are not important in MEJN, only order, which is given in location numbers
 	
-	Directed{
-	[B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,Y1,Y2,Y3,Y4,Y5,Y6,Y7,Y8,Y9,Y10,R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,G1,G2,G3,G4,G5,G6,G7,G8,G9,G10]
-		ConnectionsAreLocations = False;
-	}
-	Directed{
-		[G10, B1]
-		ConnectionsAreLocations = True;
-		ConnectionNames = [G10B1];
-	}
-	Directed{
-		[G10,BG1,BG2,BG3,BG4]
-		ConnectionsAreLocations = True;
-		ConnectionNames = [B1con, B2con, B3con, B4con];
-	}
-	Directed{
-		[B10,YG1,YG2,YG3,YG4]
-	}
-	Directed{
-		[Y10,RG1,RG2,RG3,RG4]
-	}
-	Undirected{
-		[R10,GG1,GG2,GG3,GG4]
-		GreenFinish = True;
-	}	
 	
-}
+//}
 
 
 Objects{
 	Pawn{
-		Owner = Location;
-		Type = Pawn;
-		Value = None;
-		//Sides
-		/* Let's test a block comment :)
-		*  Test Test
-		*/
-		//SidesShown
-		Randomizer = None;
+		public Owner = Location;
 	}
+	
 	Dice{
-		Owner = Public;	
-		Type = None;
-		Value = 6;
-		Randomizer{
+		public Owner = public;	
+		public Randomizer{
 			[1,2,3,4,5,6]
-			Fair
-			
 		}
-	}
-	TestItem{
-		Owner = Y;
-		Randomizer{
-			[1,2,4]
-			[0.2, 0.5, 3/10]
-		}		
-	}		
+	}	
 }
 
 
 Rounds{
 	Main(){
-		Loop(TurnOrder, Player t){
-			CurrentTurn = t;
-			Randomize(NoLoc.Dice);
-			Turn(NoLoc.Dice.Value);
-		}
+		
+		NextTurn;
+		Randomize NoLoc.D1;
+		Turn();
 		Repeat;
 	}
 	
-	Turn(int throw){
-		TakeAction(1,1);
-		
+	Turn(){
+		ChooseAction CurrentTurn;	
 	}
 	
 	//Helper Functions
-	GetNextField(Location l){
-		if(l.Connections.count() == 1){
-			return l.Connections[0];
-		}else{
-			if(l.Connections[0].GoalLocation){
-				if(l.Connections[0].Color == CurrentTurn){
-					return l.Connections[0];
-				}else{
-					return l.Connections[1];
-				}		
-			}else{
-				if(l.Connections[1].Color == CurrentTurn){
-					return l.Connections[1];
-				}else{
-					return l.Connections[0];
-				}
-			}
+	
+	AdjustedGoalNumber(int i){
+		if (i < 40){
+			return i;
+		} else {
+			return i-40;
 		}
-	}
-
-	
-	GetLocationAhead(Location l, int i){
-		if(i == 1){
-			return GetNextField(l);
-		}else{
-			return GetLocationAhead(GetnextField(l), i-1);		
-		}
-	}
-	
-	
-	
+	}	
 }
 
 Actions{
 	StartPawn(Location l){
 		requires{
-			NoLoc.Dice.Value == 6;
+			NoLoc.StartNewPawnAllowed == True;
+			NoLoc.D1.Value == 6;
 			l.Owner == CurrentTurn;
 			l.PawnSupply == True;
 			l.contains().size() > 0;
@@ -215,9 +348,11 @@ Actions{
 			||
 			CurrentTurn.Startloc.contains()[0].Owner != CurrentTurn;
 		}effect{
-			move(l.contains()[0], CurrentTurn.Startloc);
-			Randomize(NoLoc.Dice);
-			Turn(NoLoc.Dice.Value);
+			move l.contains()[0]  CurrentTurn.Startloc;
+			Randomize NoLoc.D1;
+			NoLoc.StartNewPawnAllowed = False;
+			Turn();
+			NoLoc.StartNewPawnAllowed = True;
 		}
 	}
 	Pass(){
@@ -226,16 +361,19 @@ Actions{
 		}
 	}
 	
-	MovePawn(Pawn p){
+	MovePawn(Pawn p, Location goal){
 		requires{
 			p.Owner == CurrentTurn;
-			GetLocationAhead(p.Location, NoLoc.Dice.Value).contains().count() == 0
+			goal.Locnumber = AdjustedGoalNumber(p.Location.Locnumber + NoLoc.D1.Value);
+			count(goal.contains()) == 0
 			||
-			GetLocationAhead(p.Location, NoLoc.Dice.Value).contains[0].Owner != CurrentTurn;
+			count(goal.contains()[0].Owner != CurrentTurn;
 		}effect{
-			if(GetlocationAhead(p.Location, NoLoc.Dice.Value).contains().count() != 0){
-				move(GetLocationAhead(p.Location, NoLoc.Dice.Value).contains()[0], GetLocationAhead(p.Location,throw).contains[0].owner.Supply);
-			}else{}
+			//Return taken pawn
+			if(count(goal.contains()) != 0){
+				move(goal.contains()[0], goal.contains[0].owner.Supply);
+			}
+			//Move own pawn
 			move(p, GetLocationAhead(p.Location, NoLoc.Dice.Value);
 		}
 	}
