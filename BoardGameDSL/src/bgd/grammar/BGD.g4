@@ -153,29 +153,32 @@ nonReturnFunction
 			:	CHOOSEACTION codeValue		#nonReturnFunctionTakeActionPlayer 
 			|	codeValue LPAR performActionArguments? RPAR	#nonReturnFunctionPerformAction
 //			|	MOVE2
-//			|	MOVE
+			|	MOVE codeValue codeValue	#nonReturnFunctionMoveObjectTo
 			|	ADVANCETURN					#nonReturnFunctionNextTurn
 //			|	LOOP LPAR 
 			|	RANDOMIZE idFromLocation 	#nonReturnFunctionRandomize
 //			|	FINISHGAME		
 			|	REPEAT						#nonReturnFunctionRepeat	
-			|	variable					#nonReturnVariableLocalVariable
+			|	variable					#nonReturnFunctionLocalVariable
+			|	WINNER codeValue			#nonReturnFunctionWin
+			|	LOSER codeValue				#nonReturnFunctionLoser
+			|	FINISH						#nonReturnFunctionFinishGame
+			|	codeValue IS codeValue		#nonReturnFunctionSetVariable
 			;
 			
 performActionArguments: codeValue (COMMA codeValue)?;
 
 standardFunction
-			:	
+			:	LISTCOUNT LPAR codeValue RPAR
 //			|	SEE
 //			|	setVariable
 //			|	NEWOBJECT
-//			|	LIST[i]
-			|	LISTCOUNT LPAR codeValue RPAR
+//			|	LIST[i] 
 			;
 			
 locationFunction
 			:	CONTAINS LPAR RPAR 					#locFunctionContains
-			|	CONTAINS LPAR ID RPAR 				#locFunctionContainsType
+//			|	CONTAINS LPAR ID RPAR 				#locFunctionContainsType
 			|	ISCONNECTEDTO LPAR ID RPAR 			#locFunctionIsConnectedTo
 			|	CONNECTIONS LPAR RPAR				#locFunctionConnections
 			;
@@ -192,8 +195,9 @@ objectFunction
 			
 codeValue	:	codeValueValue								#codeValuePlainValue
 			|	codeValue DOT idFromLocation				#codeValueIDFromLocation
-			|	codeValue DOT standardFunction				#codeValueStandardFunction
+			|	standardFunction							#codeValueStandardFunction
 			|	LPAR codeValue RPAR							#codeValuePar
+			|	ID LPAR performActionArguments? RPAR		#codeValueActionOrRound
 			|	codeValue DOT locationFunction				#codeValueLocationFunction
 //			|	codeValue DOT playerFunction				#codeValuePlayerFunction
 			|	codeValue DOT objectFunction				#codeValueObjectFunction
@@ -230,7 +234,7 @@ idFromLocation
 			
 			
 //ACTIONS - What actions can be taken by players or other forces?
-actions		:	ACTIONS action*; 
+actions		:	ACTIONS LBRACE action* RBRACE; 
 
 action		:	ID LPAR arguments? RPAR LBRACE requires effect RBRACE
 			;
@@ -242,7 +246,7 @@ requireStatement:
 				codeValue SEMI
 			;
 			
-effect		:	EFFECT LBRACE effectStatement RBRACE
+effect		:	EFFECT LBRACE effectStatement* RBRACE
 			;
 			
 effectStatement:
@@ -268,7 +272,19 @@ value		:	bool		#valueBool
 			|	number		#valueNumber
 			|	text		#valueText
 			|	ID			#valueID
+			|	list		#valueList
 			;
+			
+list		:	LBLOCK nonListValue (COMMA nonListValue)* RBLOCK	#listFilled
+			|	LBLOCK RBLOCK										#listEmpty
+			;
+			
+nonListValue:	bool		#nonListValueBool
+			|	number		#nonListValueNumber
+			|	text		#nonListValueText
+			|	ID			#nonListValueID
+			;			
+			
 bool		:	TRUE		#boolTrue
 			|	FALSE		#boolFalse
 			;

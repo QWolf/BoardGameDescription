@@ -9,24 +9,28 @@ Players{
 		//AI = true;
 		StartLoc = B1;
 		SupplyLoc = BSupply;
+		GoalLocs = [BG1,BG2,BG3,BG4];
 		
 	}
 	Human Y{
 		//AI = true;
 		StartLoc = Y1;
 		SupplyLoc = YSupply;
+		GoalLocs = [YG1,YG2,YG3,YG4];
 		
 	}	
 	Human G{
 		//AI = true;
 		StartLoc = G1;
 		SupplyLoc = GSupply;
+		GoalLocs = [GG1,GG2,GG3,GG4];
 		
 	}	
 	Human R{
 		//AI = true;
 		StartLoc = R1;
 		SupplyLoc = RSupply;
+		GoalLocs = [RG1,RG2,RG3,RG4];
 		
 	}	
 }
@@ -334,6 +338,16 @@ Rounds{
 			return i-40;
 		}
 	}	
+	
+	CheckIsFinished(Player p){
+		if( count(p.GoalLocs[0].contains()) != 0 &&
+			count(p.GoalLocs[1].contains()) != 0 &&
+			count(p.GoalLocs[2].contains()) != 0 &&
+			count(p.GoalLocs[3].contains()) != 0 ){
+				Winner p;
+				FinishGame;
+		}
+	}
 }
 
 Actions{
@@ -343,8 +357,8 @@ Actions{
 			NoLoc.D1.Value == 6;
 			l.Owner == CurrentTurn;
 			l.PawnSupply == True;
-			l.contains().size() > 0;
-			CurrentTurn.Startloc.contains().count() == 0
+			count(l.contains()) > 0;
+			count(CurrentTurn.Startloc.contains()) == 0
 			||
 			CurrentTurn.Startloc.contains()[0].Owner != CurrentTurn;
 		}effect{
@@ -355,6 +369,7 @@ Actions{
 			NoLoc.StartNewPawnAllowed = True;
 		}
 	}
+	
 	Pass(){
 		requires{
 		}effect{
@@ -364,17 +379,18 @@ Actions{
 	MovePawn(Pawn p, Location goal){
 		requires{
 			p.Owner == CurrentTurn;
-			goal.Locnumber = AdjustedGoalNumber(p.Location.Locnumber + NoLoc.D1.Value);
-			count(goal.contains()) == 0
+			goal.Locnumber == (AdjustedGoalNumber(p.Location.Locnumber + NoLoc.D1.Value));
+			(count(goal.contains()) == 0)
 			||
-			count(goal.contains()[0].Owner != CurrentTurn;
+			(count(goal.contains()[0].Owner != CurrentTurn));
 		}effect{
 			//Return taken pawn
 			if(count(goal.contains()) != 0){
-				move(goal.contains()[0], goal.contains[0].owner.Supply);
+				move goal.contains()[0] goal.contains()[0].Owner.SupplyLoc;
 			}
 			//Move own pawn
-			move(p, GetLocationAhead(p.Location, NoLoc.Dice.Value);
+			move p (GetLocationAhead(p.Location, NoLoc.D1.Value));
+			CheckIsFinished(CurrentTurn);
 		}
 	}
 }

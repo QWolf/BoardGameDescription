@@ -75,10 +75,14 @@ PERFORMACTION:	'PerformAction';
 CHOOSEACTION:	'ChooseAction';
 RANDOMIZE	:	'Randomize';
 REPEAT		:	'Repeat';
+WINNER		:	'Winner';
+LOSER		:	'Loser';
+FINISH		:	'FinishGame';
 //LocationFunction
 CONTAINS	:	'contains';
 ISCONNECTEDTO:	'isConnectedTo';
 CONNECTIONS	:	'connections';
+MOVE		:	'move';
 
 
 //ObjectFunction
