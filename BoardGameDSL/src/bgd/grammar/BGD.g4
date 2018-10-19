@@ -92,9 +92,10 @@ locConnection:	DIRECTED LBRACE locList  RBRACE		#locconnectionDirected
 			|	UNDIRECTED LBRACE locList  RBRACE	#locconnectionUndirected
 			;
 
+// From to (perhaps multiple) locations
 locList		:	LBLOCK ID COMMA ID (COMMA ID)* RBLOCK;
-conAreLoc	:	CONARELOCS IS bool SEMI conNames?;
-conNames	:	CONNECTIONNAMES IS nameList SEMI;
+//conAreLoc	:	CONARELOCS IS bool SEMI conNames?;
+//conNames	:	CONNECTIONNAMES IS nameList SEMI;
 			
 
 //OBJECTS - Game cards, pieces, or other "things" in the game
