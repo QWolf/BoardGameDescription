@@ -84,8 +84,12 @@ locationconnections
 			: 	LOCATIONCONNECTIONS LBRACE locConnection* RBRACE
 			;
 			
-locConnection:	DIRECTED LBRACE locList conAreLoc? varList? RBRACE		#locconnectionDirected
-			|	UNDIRECTED LBRACE locList conAreLoc? varList? RBRACE	#locconnectionUndirected
+//locConnection:	DIRECTED LBRACE locList conAreLoc? varList? RBRACE		#locconnectionDirected
+//			|	UNDIRECTED LBRACE locList conAreLoc? varList? RBRACE	#locconnectionUndirected
+//			;
+
+locConnection:	DIRECTED LBRACE locList  RBRACE		#locconnectionDirected
+			|	UNDIRECTED LBRACE locList  RBRACE	#locconnectionUndirected
 			;
 
 locList		:	LBLOCK ID COMMA ID (COMMA ID)* RBLOCK;
