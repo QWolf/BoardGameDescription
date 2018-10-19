@@ -18,15 +18,16 @@ public class VariableManager {
 		doubleVariables = new HashMap<String, Double>();
 	}
 
-	public void setVariableType(String id, String type) {
-		varTypes.put(id, type);
-	}
+	// public void setVariableType(String id, String type) {
+	// varTypes.put(id, type);
+	// }
 
 	public String getVariableType(String id) {
 		return varTypes.get(id);
 	}
 
 	public void setIDVariable(String id, String val) {
+		varTypes.put(id, "ID");
 		idVariables.put(id, val);
 	}
 
@@ -35,6 +36,7 @@ public class VariableManager {
 	}
 
 	public void setIntVariable(String id, int val) {
+		varTypes.put(id, "Int");
 		intVariables.put(id, val);
 	}
 
@@ -43,6 +45,7 @@ public class VariableManager {
 	}
 
 	public void setBoolVariable(String id, boolean val) {
+		varTypes.put(id, "Bool");
 		boolVariables.put(id, val);
 	}
 
@@ -51,11 +54,30 @@ public class VariableManager {
 	}
 
 	public void setDoubleVariable(String id, double val) {
+		varTypes.put(id, "Double");
 		doubleVariables.put(id, val);
 	}
 
 	public double getDoubleVarialbe(String id) {
 		return doubleVariables.get(id);
+	}
+
+	public VariableManager getCopy() {
+		VariableManager vm = new VariableManager();
+		for (String key : idVariables.keySet()) {
+			vm.setIDVariable(key, idVariables.get(key));
+		}
+		for (String key : intVariables.keySet()) {
+			vm.setIntVariable(key, intVariables.get(key));
+		}
+		for (String key : boolVariables.keySet()) {
+			vm.setBoolVariable(key, boolVariables.get(key));
+		}
+		for (String key : doubleVariables.keySet()) {
+			vm.setDoubleVariable(key, doubleVariables.get(key));
+		}
+
+		return vm;
 	}
 
 }

@@ -2,7 +2,7 @@ package bgexe.model;
 
 import bgexe.util.VariableManager;
 
-public class Object {
+public class GameObjectInstance {
 	
 	private String name;
 	private String objectType;
@@ -10,9 +10,11 @@ public class Object {
 	private VariableManager varManager;
 	
 	
-	public Object(String name, String objectType){
+	public GameObjectInstance(String name, String objectType, VariableManager varman){
 		this.name = name;
 		this.objectType = objectType;
+		this.varManager = varman;
+		varManager.setIDVariable("Owner", "Public");
 	}
 	
 	
