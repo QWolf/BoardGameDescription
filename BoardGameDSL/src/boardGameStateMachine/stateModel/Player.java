@@ -1,11 +1,12 @@
-package bgss.model;
+package boardGameStateMachine.stateModel;
 
-import bgss.util.VariableManager;
+import boardGameStateMachine.util.VariableManager;
 
 public class Player {
 	private String name;
 	private boolean isHuman = true;
-	private boolean isPlaying = false;
+	//Neutral force if false
+	private boolean isPlayer = false;
 	
 	private VariableManager varManager;
 	
@@ -28,11 +29,11 @@ public class Player {
 		return isHuman;
 	}
 	
-	public boolean isPlaying(){
-		return isPlaying;
+	public boolean isPlayer(){
+		return isPlayer;
 	}
 	
-	public void setIsPlaying(boolean isPlaying){
-		this.isPlaying = isPlaying;
+	public void setIsPlaying(boolean isPlayer){
+		this.isPlayer = isPlayer;
 	}
 }

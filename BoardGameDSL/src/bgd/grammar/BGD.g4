@@ -160,7 +160,6 @@ nonReturnFunction
 //			|	MOVE2
 			|	MOVE codeValue codeValue	#nonReturnFunctionMoveObjectTo
 			|	ADVANCETURN					#nonReturnFunctionNextTurn
-//			|	LOOP LPAR 
 			|	RANDOMIZE idFromLocation 	#nonReturnFunctionRandomize
 //			|	FINISHGAME		
 			|	REPEAT						#nonReturnFunctionRepeat	

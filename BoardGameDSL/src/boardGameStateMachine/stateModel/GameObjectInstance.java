@@ -1,6 +1,6 @@
-package bgss.model;
+package boardGameStateMachine.stateModel;
 
-import bgss.util.VariableManager;
+import boardGameStateMachine.util.VariableManager;
 
 public class GameObjectInstance {
 	

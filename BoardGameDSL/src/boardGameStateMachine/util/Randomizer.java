@@ -1,4 +1,4 @@
-package bgss.util;
+package boardGameStateMachine.util;
 
 import java.util.Random;
 

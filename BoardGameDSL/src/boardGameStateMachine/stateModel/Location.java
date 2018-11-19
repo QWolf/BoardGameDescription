@@ -1,9 +1,9 @@
-package bgss.model;
+package boardGameStateMachine.stateModel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import bgss.util.VariableManager;
+import boardGameStateMachine.util.VariableManager;
 
 public class Location {
 	private String name;
