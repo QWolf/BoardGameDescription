@@ -1,4 +1,4 @@
-package bgexe.util;
+package bgss.util;
 
 import java.util.Random;
 

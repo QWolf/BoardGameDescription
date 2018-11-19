@@ -1,9 +1,9 @@
-package bgexe.model;
+package bgss.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import bgexe.util.VariableManager;
+import bgss.util.VariableManager;
 
 public class Location {
 	private String name;

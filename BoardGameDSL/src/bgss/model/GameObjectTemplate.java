@@ -1,6 +1,6 @@
-package bgexe.model;
+package bgss.model;
 
-import bgexe.util.VariableManager;
+import bgss.util.VariableManager;
 
 public class GameObjectTemplate {
 
