@@ -1,7 +1,8 @@
-package boardGameStateMachine.util;
+package deprecated;
 
 import java.util.HashMap;
 
+//Variable Manager for a single 
 public class VariableManager {
 	private HashMap<String, String> varTypes;
 

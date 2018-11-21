@@ -1,11 +1,20 @@
 package boardGameStateMachine.stateModel;
 
+import java.util.HashMap;
+
+import boardGameStateMachine.util.IDManager;
+
 public class Game {
 
 	private String gameName;
-	private Player[] players = new Player[0];
+	private HashMap<String, Player> players = new HashMap<String, Player>();
+	private Player publicPlayer = new Player("Public", false, false);
 	private int minPlayers;
 	private int maxPlayers;
+	public IDManager idManager = new IDManager();
+	private HashMap<String, Location> locations = new HashMap<String, Location>();
+	private HashMap<String, GameObjectTemplate> objectTypeList = new HashMap<String, GameObjectTemplate>();
+	private HashMap<String, GameObjectInstance> objectInstanceList = new HashMap<String, GameObjectInstance>();
 
 	public Game(String name, int minPlayers, int maxPlayers) {
 		gameName = name;
@@ -18,19 +27,39 @@ public class Game {
 	}
 
 	public Player[] getPlayers() {
-		return players;
+		return (Player[]) players.values().toArray();
+	}
+	
+	public Player getPlayer(String name){
+		return players.get(name);
 	}
 
-	public void setPlayers(Player[] players) {
-		this.players = players;
+	public boolean addPlayer(Player p) {
+		if (players.size() >= maxPlayers){
+			return false;
+		}
+		if (!players.containsKey(p.getName())) {
+			players.put(p.getName(), p);
+			return true;
+		} else {
+			return false;
+		}
 	}
-
-	public void addPlayer(Player p) {
-		Player[] newList = new Player[players.length + 1];
-		System.arraycopy(players, 0, newList, 0, players.length);
-		players = newList;
-		players[players.length - 1] = p;
-
+	
+	public int getPlayerNumber(){
+		return players.size();
+	}
+	
+	public int getLocationNumber(){
+		return locations.size();
+	}
+	
+	public int getObjectInstanceNumber(){
+		return objectInstanceList.size();
+	}
+	
+	public IDManager getIDManager(){
+		return idManager;
 	}
 
 }

@@ -13,8 +13,19 @@ public abstract class CodeLine {
 	public CodeLineType getCodeLineType() {
 		return type;
 	}
+	
+	public static Object executeCodeBlockUntilReturn(CodeLine[] lines){
+		for(CodeLine line : lines){
+			if(line.getCodeLineType() == CodeLineType.Return){
+				return line.execute();
+			}else{
+				line.execute();
+			}
+		}
+		return null;
+	}
 
 	
-	public abstract void execute();
+	public abstract Object execute();
 
 }

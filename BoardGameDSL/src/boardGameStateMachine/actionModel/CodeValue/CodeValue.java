@@ -1,22 +1,24 @@
 package boardGameStateMachine.actionModel.CodeValue;
 
-import boardGameStateMachine.util.VariableType;
+import boardGameStateMachine.util.IDType;
 
 public abstract class CodeValue {
 	
-	private VariableType varType;
+	private IDType idType;
 	
 	
 	
-	public CodeValue(VariableType vt){
-		varType = vt;
+	public CodeValue(IDType vt){
+		idType = vt;
 		
 	}
 	
-	public  VariableType getCodeValueVariable(){
-		return varType;
+	public  IDType getIDType(){
+		return idType;
 	}
 	
+	
+
 	
 
 }

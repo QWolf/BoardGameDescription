@@ -1,11 +1,11 @@
 package boardGameStateMachine.actionModel.CodeValue;
 
-import boardGameStateMachine.util.VariableType;
+import boardGameStateMachine.util.IDType;
 
 public abstract class CodeValueBool extends CodeValue{
 
 	public CodeValueBool() {
-		super(VariableType.BOOL);
+		super(IDType.Boolean);
 	}
 	
 	public abstract boolean getValue();

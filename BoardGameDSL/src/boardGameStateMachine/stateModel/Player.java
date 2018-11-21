@@ -1,24 +1,25 @@
 package boardGameStateMachine.stateModel;
 
-import boardGameStateMachine.util.VariableManager;
+import boardGameStateMachine.util.IDManager;
 
 public class Player {
 	private String name;
 	private boolean isHuman = true;
-	//Neutral force if false
+	//Neutral force if false. If true, the player wins/loses in the end
 	private boolean isPlayer = false;
 	
-	private VariableManager varManager;
+	private IDManager idManager = new IDManager();
 	
 	
-	public Player(String name, boolean isHuman){
+	public Player(String name, boolean isHuman, boolean isPlayer){
 		this.name = name;
 		this.isHuman = isHuman;
+		this.isPlayer = isPlayer;
 	}
 	
 	
-	public VariableManager getVarManager(){
-		return varManager;
+	public IDManager getVarManager(){
+		return idManager;
 	}	
 	
 	public String getName(){
