@@ -228,7 +228,7 @@ integerValue:	integer
 codeValueValue
 			:	bool
 			|	number
-			|	text
+//			|	text
 			|	ID
 			|	LOWID
 			;
@@ -274,7 +274,7 @@ visibility	:	PUBLIC
 
 value		:	bool		#valueBool
 			|	number		#valueNumber
-			|	text		#valueText
+//			|	text		#valueText
 			|	ID			#valueID
 			|	list		#valueList
 			;
@@ -285,7 +285,7 @@ list		:	LBLOCK nonListValue (COMMA nonListValue)* RBLOCK	#listFilled
 			
 nonListValue:	bool		#nonListValueBool
 			|	number		#nonListValueNumber
-			|	text		#nonListValueText
+//			|	text		#nonListValueText
 			|	ID			#nonListValueID
 			;			
 			

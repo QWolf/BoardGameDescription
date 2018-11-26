@@ -40,7 +40,7 @@ public class Action extends CodeValue{
 	}
 	
 	//Executes action and returns the value (if appropriate)
-	public Object execute(Object[] arguments) throws Exception{
+	public CodeValue getValue(CodeValue[] arguments) throws Exception{
 		if(requiredArgumentNames != null){
 			for (int i = 0; i < requiredArgumentNames.length-1; i++){
 				//TODO check if arguments are of proper type
@@ -69,5 +69,10 @@ public class Action extends CodeValue{
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public CodeValue getValue() {
+		return getValue(null);
 	}
 }
