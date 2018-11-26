@@ -2,6 +2,7 @@ package boardGameStateMachine.util;
 
 import java.util.HashMap;
 
+import boardGameStateMachine.actionModel.CodeValue.CodeValue;
 import boardGameStateMachine.stateModel.Action;
 import boardGameStateMachine.stateModel.GameObjectInstance;
 import boardGameStateMachine.stateModel.GameObjectTemplate;
@@ -14,9 +15,9 @@ public class IDManager {
 
 	// List of types of the ID's
 	private HashMap<String, IDType> typeList = new HashMap<String, IDType>();
-	private HashMap<String, Object> referenceList = new HashMap<String, Object>();
+	private HashMap<String, CodeValue> referenceList = new HashMap<String, CodeValue>();
 
-	public boolean addID(String name, IDType type, Object o) {
+	public boolean addID(String name, IDType type, CodeValue o) {
 		if (!typeList.containsKey(name)) {
 			typeList.put(name, type);
 			referenceList.put(name, o);
@@ -30,8 +31,8 @@ public class IDManager {
 		return typeList.get(name);
 	}
 
-	public Object getObject(String name) {
-		return (int) referenceList.get(name);
+	public CodeValue getObject(String name) {
+		return  referenceList.get(name);
 	}
 
 	public Player getPlayer(String name) {

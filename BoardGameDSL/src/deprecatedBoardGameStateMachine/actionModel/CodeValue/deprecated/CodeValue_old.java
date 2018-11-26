@@ -1,14 +1,14 @@
-package boardGameStateMachine.actionModel.CodeValue;
+package boardGameStateMachine.actionModel.CodeValue.deprecated;
 
 import boardGameStateMachine.util.IDType;
 
-public abstract class CodeValue {
+public abstract class CodeValue_old {
 	
 	private IDType idType;
 	
 	
 	
-	public CodeValue(IDType vt){
+	public CodeValue_old(IDType vt){
 		idType = vt;
 		
 	}
@@ -16,6 +16,8 @@ public abstract class CodeValue {
 	public  IDType getIDType(){
 		return idType;
 	}
+	
+	public abstract Object getValue();
 	
 	
 
