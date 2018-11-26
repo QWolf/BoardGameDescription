@@ -1,6 +1,6 @@
 package boardGameStateMachine.stateModel;
 
-import boardGameStateMachine.util.IDManager;
+import boardGameStateMachine.Variable.SingleScopeVariableManager;
 
 public class Player {
 	private String name;
@@ -8,7 +8,7 @@ public class Player {
 	//Neutral force if false. If true, the player wins/loses in the end
 	private boolean isPlayer = false;
 	
-	private IDManager idManager = new IDManager();
+	private SingleScopeVariableManager varManager = new SingleScopeVariableManager();
 	
 	
 	public Player(String name, boolean isHuman, boolean isPlayer){
@@ -18,8 +18,8 @@ public class Player {
 	}
 	
 	
-	public IDManager getVarManager(){
-		return idManager;
+	public SingleScopeVariableManager getVarManager(){
+		return varManager;
 	}	
 	
 	public String getName(){

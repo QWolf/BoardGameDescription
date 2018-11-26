@@ -12,6 +12,7 @@ public abstract class Variable {
 		return varType;
 	}
 	
+	public abstract SingleScopeVariableManager getGameObjectVariableManager();
 
 
 }

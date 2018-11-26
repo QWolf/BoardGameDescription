@@ -3,14 +3,17 @@ package boardGameStateMachine.stateModel;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import boardGameStateMachine.util.IDManager;
-import boardGameStateMachine.util.IDType;
+import boardGameStateMachine.Variable.SingleScopeVariableManager;
+import boardGameStateMachine.Variable.VarOwner;
+import boardGameStateMachine.Variable.VarType;
+
 
 public class Location {
 	private String name;
 	private boolean isSupply = false;
 	public GameObjectTemplate supplying = null;
-	private IDManager idManager;
+	private SingleScopeVariableManager varMan;
+	private Game g;
 	
 	private boolean existVisibleEverybody = true;
 	private HashSet<String> existVisiblePlayers = new HashSet<String>();
@@ -27,8 +30,8 @@ public class Location {
 	
 	public Location(String name, String objectType) {
 		this.name = name;
-		this.idManager = new IDManager();
-		idManager.addID("Owner", IDType.Player, "Public");
+		this.varMan = new SingleScopeVariableManager();
+		varMan.addVariable("Owner", new VarOwner(true));
 	}
 
 	/*
@@ -122,8 +125,8 @@ public class Location {
 	/*
 	 * Generic getters and setters
 	 */
-	public IDManager getIDManager() {
-		return idManager;
+	public SingleScopeVariableManager getVarManager() {
+		return varMan;
 	}
 
 	public String getName() {

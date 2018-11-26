@@ -20,4 +20,9 @@ public class VarLocation extends Variable{
 	public void setValue(Location loc){
 		value = loc;
 	}
+	
+	@Override
+	public SingleScopeVariableManager getGameObjectVariableManager() {
+		return value.getVarManager();
+	}
 }

@@ -18,4 +18,10 @@ public class VarBool extends Variable{
 	public void setValue(boolean b){
 		value = b;
 	}
+	
+	@Override
+	public SingleScopeVariableManager getGameObjectVariableManager() {
+		System.out.println("VarBool has no VariableScope!");
+		return null;
+	}
 }

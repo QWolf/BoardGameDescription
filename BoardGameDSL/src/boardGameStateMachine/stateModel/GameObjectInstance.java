@@ -1,7 +1,9 @@
 package boardGameStateMachine.stateModel;
 
-import boardGameStateMachine.util.IDManager;
-import boardGameStateMachine.util.IDType;
+import boardGameStateMachine.Variable.SingleScopeVariableManager;
+import boardGameStateMachine.Variable.VarOwner;
+import boardGameStateMachine.Variable.VarType;
+
 
 public class GameObjectInstance {
 	
@@ -10,21 +12,24 @@ public class GameObjectInstance {
 	private Location currentLocation;
 	private Game g;
 	
-	private IDManager idManager;
+	private SingleScopeVariableManager varManager;
 	
 	
-	public GameObjectInstance(String name, String objectType, IDManager idman, Game g, Location l){
+	public GameObjectInstance(String name, String objectType, SingleScopeVariableManager varman, Game g, Location l){
 		this.name = name;
 		this.objectType = objectType;
-		this.idManager = idman;
+		this.varManager = varman;
 		this.g = g;
 		currentLocation = l;
-		idManager.addID("Owner", IDType.Player, l.getIDManager().getObject("Owner"));
+		Owner locationOwner = ( (VarOwner) l.getVarManager().getVariable("Owner")).getValue();
+		
+		varman.addVariable("Owner", new VarOwner(locationOwner));
+//		varManager.addID("Owner", VarType.Player, l.getVarManager().getObject("Owner"));
 	}
 	
 	
-	public IDManager getVarManager(){
-		return idManager;
+	public SingleScopeVariableManager getVarManager(){
+		return varManager;
 	}	
 	
 	public String getName(){

@@ -18,4 +18,9 @@ public class VarDouble extends Variable{
 	public void setValue(double d){
 		value = d;
 	}
+	@Override
+	public SingleScopeVariableManager getGameObjectVariableManager() {
+		System.out.println("VarDouble has no VariableScope!");
+		return null;
+	}
 }

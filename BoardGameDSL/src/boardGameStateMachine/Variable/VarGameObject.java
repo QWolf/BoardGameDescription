@@ -20,4 +20,9 @@ public class VarGameObject extends Variable{
 	public void setValue(GameObjectInstance obj){
 		value = obj;
 	}
+	
+	@Override
+	public SingleScopeVariableManager getGameObjectVariableManager() {
+		return value.getVarManager();
+	}
 }

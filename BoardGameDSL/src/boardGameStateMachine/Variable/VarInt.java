@@ -18,4 +18,10 @@ public class VarInt extends Variable{
 	public void setValue(int i){
 		value = i;
 	}
+	
+	@Override
+	public SingleScopeVariableManager getGameObjectVariableManager() {
+		System.out.println("VarInt has no VariableScope!");
+		return null;
+	}
 }
