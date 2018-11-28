@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import boardGameStateMachine.Variable.SingleScopeVariableManager;
+import boardGameStateMachine.Variable.VarGameObject;
+import boardGameStateMachine.Variable.VarList;
+import boardGameStateMachine.Variable.VarLocation;
 import boardGameStateMachine.Variable.VarOwner;
-import boardGameStateMachine.Variable.VarType;
+import boardGameStateMachine.Variable.Variable;
 
 
 public class Location {
@@ -31,14 +34,22 @@ public class Location {
 	public Location(String name, String objectType) {
 		this.name = name;
 		this.varMan = new SingleScopeVariableManager();
-		varMan.addVariable("Owner", new VarOwner(true));
+		varMan.addVariable("Owner", new VarOwner(VarOwner.OwnerType.Public));
 	}
 
 	/*
 	 * Inventory of location, what objects are here
+	 * converts to an array of Variables
 	 */
-	public ArrayList<GameObjectInstance> getInventory() {
-		return inventory;
+	public Variable getInventory() {
+		Variable[] inv = new Variable[inventory.size()];
+		int i = 0;
+		for(GameObjectInstance goi : inventory){
+			inv[i] = new VarGameObject(goi);
+			i++;
+		}
+		
+		return new VarList(inv);
 	}
 	
 	public void removeObject(GameObjectInstance id){
@@ -113,12 +124,23 @@ public class Location {
 	}
 	
 	
-	public ArrayList<Location> getConnections(){
-		return connections;
+	public Variable getConnections(){
+		Variable[] connectedLocs = new Variable[connections.size()];
+		int i = 0;
+		for(Location loc : connections){
+			connectedLocs[i] = new VarLocation(loc);
+			i++;
+		}
+		
+		return new VarList(connectedLocs);
 	}
 	
 	public void addConnections(Location l){
 		connections.add(l);
+	}
+	
+	public boolean isConnectedTo(Location l){
+		return connections.contains(l);
 	}
 
 	

@@ -21,7 +21,6 @@ public class SingleScopeVariableManager {
 		boolean error = !varList.containsKey(name);
 		varList.put(name, v);
 		return error;
-		
 	}
 	
 	public Variable getVariable(String name){
@@ -30,6 +29,20 @@ public class SingleScopeVariableManager {
 	
 	public boolean containsKey(String name){
 		return varList.containsKey(name);
+	}
+	
+	/**
+	 * Creates a deepcopy of the variablemanager, useful for ObjectTemplates
+	 * @return A deepcopy of this variableManager
+	 */
+	public SingleScopeVariableManager getCopy(){
+		SingleScopeVariableManager copy = new SingleScopeVariableManager();
+			for(String key : varList.keySet()){
+				copy.addVariable(key, varList.get(key));
+			}
+		
+		return copy;
+		
 	}
 		
 

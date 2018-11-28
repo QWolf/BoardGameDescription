@@ -12,7 +12,7 @@ import boardGameStateMachine.Variable.Variable;
  */
 public abstract class CodeValue {
 	
-	private VarType varType;
+	protected VarType varType;
 	
 	
 	public CodeValue(VarType vt){

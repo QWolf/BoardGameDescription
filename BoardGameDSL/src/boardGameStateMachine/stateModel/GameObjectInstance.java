@@ -39,4 +39,7 @@ public class GameObjectInstance {
 	public String getObjectType(){
 		return objectType;
 	}
+	public Location getLocation(){
+		return currentLocation;
+	}
 }

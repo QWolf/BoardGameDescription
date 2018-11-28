@@ -2,7 +2,7 @@ package boardGameStateMachine.stateModel;
 
 import java.util.HashMap;
 
-import boardGameStateMachine.util.IDManager;
+import boardGameStateMachine.Variable.SingleScopeVariableManager;
 
 public class Game {
 
@@ -11,7 +11,7 @@ public class Game {
 	private Player publicPlayer = new Player("Public", false, false);
 	private int minPlayers;
 	private int maxPlayers;
-	public IDManager idManager = new IDManager();
+	private SingleScopeVariableManager varMan = new SingleScopeVariableManager();
 	private HashMap<String, Location> locations = new HashMap<String, Location>();
 	private HashMap<String, GameObjectTemplate> objectTypeList = new HashMap<String, GameObjectTemplate>();
 	private HashMap<String, GameObjectInstance> objectInstanceList = new HashMap<String, GameObjectInstance>();
@@ -58,8 +58,8 @@ public class Game {
 		return objectInstanceList.size();
 	}
 	
-	public IDManager getIDManager(){
-		return idManager;
+	public SingleScopeVariableManager getVarMan(){
+		return varMan;
 	}
 
 }

@@ -1,14 +1,14 @@
 package boardGameStateMachine.CodeValue;
 
 import boardGameStateMachine.Variable.MultiScopeVariableManager;
-import boardGameStateMachine.Variable.VarType;
 import boardGameStateMachine.Variable.Variable;
 
 public class CodeValueParameters extends CodeValue{
 	
 	CodeValue value;
-
-	public CodeValueParameters(VarType vt, CodeValue cv) {
+	
+	
+	public CodeValueParameters(CodeValue cv) {
 		super(cv.getType());
 		this.value = cv;
 	}
