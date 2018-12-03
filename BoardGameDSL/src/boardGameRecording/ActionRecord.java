@@ -1,25 +1,26 @@
 package boardGameRecording;
 
-import boardGameStateMachine.actionModel.CodeValue.CodeValue;
-import boardGameStateMachine.stateModel.Action;
+import boardGameStateMachine.Variable.Variable;
+import boardGameStateMachine.stateModel.ActionRound;
 
 public class ActionRecord {
 
-	private Action a;
-	private CodeValue[] arguments;
+	private ActionRound a;
+	private Variable[] arguments;
 
-	public CodeValue executeAction() {
+	public ActionRecord(ActionRound ar, Variable[] arguments) {
+		this.a = ar;
+		this.arguments = arguments;
+
+	}
+
+	public Variable executeAction() {
 		if (arguments == null) {
-			return a.getValue(null);
+			return a.getValue(new Variable[0]);
 		} else {
-			Object[] calculatedArguments = (Object[]) arguments;
-			for (int i = 0; i < arguments.length -1; i++){
-				calculatedArguments[i] = arguments[i].g
-			}
-			
+			return a.getValue(arguments);
 		}
 
-		return a.getValue(arguments);
 	}
 
 }

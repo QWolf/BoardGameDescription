@@ -1,6 +1,8 @@
 package boardGameStateMachine.stateModel;
 
 import boardGameStateMachine.CodeLine.CodeLine;
+import boardGameStateMachine.CodeLine.CodeLineReturn.CodeLineReturn;
+import boardGameStateMachine.CodeLine.CodeLineReturn.CodeLineReturnType;
 import boardGameStateMachine.CodeValue.CodeValue;
 import boardGameStateMachine.Variable.MultiScopeVariableManager;
 import boardGameStateMachine.Variable.SingleScopeVariableManager;
@@ -8,7 +10,7 @@ import boardGameStateMachine.Variable.VarBool;
 import boardGameStateMachine.Variable.VarType;
 import boardGameStateMachine.Variable.Variable;
 
-public class ActionRound extends CodeValue {
+public class ActionRound {
 
 	// Name of the action
 	private String name;
@@ -23,17 +25,15 @@ public class ActionRound extends CodeValue {
 
 	private SingleScopeVariableManager actionVarMan = new SingleScopeVariableManager();
 	private MultiScopeVariableManager multiScopeVarMan = new MultiScopeVariableManager(game.getVarMan());
-	
-	public ActionRound(String name, Game g, CodeValue[] requirements, CodeLine[] body, String[] argumentNames,
-			VarType returnType) {
-		super(returnType);
+
+	public ActionRound(String name, Game g, CodeValue[] requirements, CodeLine[] body, String[] argumentNames) {
 		this.name = name;
 		this.game = g;
 		this.lines = body;
 		this.requirements = requirements;
 		this.requiredArgumentNames = argumentNames;
 
-		//Check if requirements are actually boolean variables
+		// Check if requirements are actually boolean variables
 		for (CodeValue req : requirements) {
 			if (req.getType() != VarType.Boolean) {
 				// TODO proper error handling
@@ -45,22 +45,24 @@ public class ActionRound extends CodeValue {
 				}
 			}
 		}
-		//Construct the Multi-scope variable manager
+		// Construct the Multi-scope variable manager
 		multiScopeVarMan.setRoundActionScope(actionVarMan);
-		
+
 	}
 
 	// Executes action and returns the value (if appropriate)
-	public Variable getValue(Variable[] arguments) {
-		if(requiredArgumentNames != null){
-			for (int i = 0; i < requiredArgumentNames.length-1; i++){
-				if (!actionVarMan.addVariable(requiredArgumentNames[i], arguments[i])){
-					System.out.println("Failed to add to VariableManager: "+requiredArgumentNames[i] + " Name already exists");
+	public CodeLineReturn executeActionRound(Variable[] arguments) {
+		if (requiredArgumentNames != null) {
+			for (int i = 0; i < requiredArgumentNames.length - 1; i++) {
+				if (!actionVarMan.addVariable(requiredArgumentNames[i], arguments[i])) {
+					System.out.println(
+							"Failed to add to VariableManager: " + requiredArgumentNames[i] + " Name already exists");
 
-				};
+				}
+				;
 			}
 		}
-		if(!satisfiesRequirements()){
+		if (!satisfiesRequirements()) {
 			try {
 				throw new Exception("Requirement did not resolve to true");
 			} catch (Exception e) {
@@ -69,18 +71,23 @@ public class ActionRound extends CodeValue {
 			}
 			return null;
 		} else {
-			
-			return CodeLine.executeCodeBlockUntilReturn(lines, multiScopeVarMan);
+			CodeLineReturn clr = new CodeLineReturn(CodeLineReturnType.Repeat, false);
+			while (clr.isRepeat()) {
+				clr = CodeLine.executeCodeBlockUntilReturn(lines, multiScopeVarMan);
+			}
+			return clr;
 		}
-		
-
+	}
+	
+	public CodeLineReturn executeActionRound(){
+		return executeActionRound(null);
 	}
 
 	public boolean satisfiesRequirements() {
 		for (CodeValue req : requirements) {
 			// check if each statement resolves to true
 			VarBool reqVariable = (VarBool) req.getValue(multiScopeVarMan);
-			
+
 			if (!reqVariable.getValue()) {
 				return false;
 			}
@@ -88,15 +95,7 @@ public class ActionRound extends CodeValue {
 		return true;
 	}
 
-
-	@Override
-	public Variable getValue(MultiScopeVariableManager scope) {
-
-
-		return getValue(new Variable[0]);
-	}
-	
-	public String getName(){
+	public String getName() {
 		return name;
 	}
 }

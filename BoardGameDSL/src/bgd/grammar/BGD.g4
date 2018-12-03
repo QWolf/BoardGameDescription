@@ -177,7 +177,7 @@ standardFunction
 //			|	SEE
 //			|	setVariable
 //			|	NEWOBJECT
-//			|	LIST[i] 
+//			|	LIST[i]  -> CodeValue
 			;
 			
 locationFunction

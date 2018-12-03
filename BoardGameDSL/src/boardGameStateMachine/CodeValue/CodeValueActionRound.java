@@ -1,5 +1,6 @@
 package boardGameStateMachine.CodeValue;
 
+import boardGameStateMachine.CodeLine.CodeLineReturn.CodeLineReturn;
 import boardGameStateMachine.Variable.MultiScopeVariableManager;
 import boardGameStateMachine.Variable.VarType;
 import boardGameStateMachine.Variable.Variable;
@@ -16,6 +17,7 @@ import boardGameStateMachine.stateModel.ActionRound;
 public class CodeValueActionRound extends CodeValue {
 	ActionRound actionRound;
 	CodeValue[] parameters;
+	CodeLineReturn executedSolution = null;
 
 	/**
 	 * Executes an Action or Round with Codevalues as arguments
@@ -36,7 +38,13 @@ public class CodeValueActionRound extends CodeValue {
 		for(int i = 0; i<parameters.length-1; i++){
 			calculatedParameters[i] = parameters[i].getValue(scope);
 		}
-		return actionRound.getValue(calculatedParameters);
+		executedSolution = actionRound.executeActionRound(calculatedParameters);
+		if(executedSolution.isVariable()){
+			return executedSolution.getVariable();
+		}else{
+			return null;
+		}
+		
 	}
 
 }
