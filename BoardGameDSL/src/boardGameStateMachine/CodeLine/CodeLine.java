@@ -1,7 +1,7 @@
 package boardGameStateMachine.CodeLine;
 
-import boardGameStateMachine.CodeLine.CodeLineReturn.CodeLineReturn;
-import boardGameStateMachine.CodeLine.CodeLineReturn.CodeLineReturnType;
+import boardGameStateMachine.CodeLine.Return.CodeLineReturn;
+import boardGameStateMachine.CodeLine.Return.CodeLineReturnType;
 import boardGameStateMachine.Variable.MultiScopeVariableManager;
 
 public abstract class CodeLine {

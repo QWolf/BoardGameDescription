@@ -11,6 +11,8 @@ public class Player {
 	private SingleScopeVariableManager varManager = new SingleScopeVariableManager();
 	private Game game;
 	
+	private PlayerRanking ranking= new PlayerRanking();
+	
 	
 	public Player(String name, boolean isHuman, boolean isPlayer, Game g){
 		this.name = name;
@@ -41,5 +43,10 @@ public class Player {
 	
 	public void setIsPlaying(boolean isPlayer){
 		this.isPlayer = isPlayer;
+	}
+
+
+	public PlayerRanking getRanking() {
+		return ranking;
 	}
 }

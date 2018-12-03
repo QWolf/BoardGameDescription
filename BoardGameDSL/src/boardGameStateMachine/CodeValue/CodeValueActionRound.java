@@ -1,6 +1,6 @@
 package boardGameStateMachine.CodeValue;
 
-import boardGameStateMachine.CodeLine.CodeLineReturn.CodeLineReturn;
+import boardGameStateMachine.CodeLine.Return.CodeLineReturn;
 import boardGameStateMachine.Variable.MultiScopeVariableManager;
 import boardGameStateMachine.Variable.VarType;
 import boardGameStateMachine.Variable.Variable;

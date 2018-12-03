@@ -1,4 +1,4 @@
-package boardGameStateMachine.CodeLine.CodeLineReturn;
+package boardGameStateMachine.CodeLine.Return;
 
 import boardGameStateMachine.Variable.Variable;
 
@@ -18,9 +18,10 @@ public class CodeLineReturn {
 		this.isDone = isDone;
 	}
 
-	public CodeLineReturn(Variable v) {
+	public CodeLineReturn(Variable v, boolean isDone) {
 		this.returnType = CodeLineReturnType.Variable;
 		this.variable = v;
+		this.isDone = isDone;
 	}
 
 	public boolean isEmpty() {

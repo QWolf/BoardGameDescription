@@ -25,7 +25,7 @@ public class Location {
 	private HashSet<String> valueVisiblePlayers = new HashSet<String>();
 	
 	
-	public ArrayList<GameObjectInstance> inventory = new ArrayList<GameObjectInstance>();
+	private ArrayList<GameObjectInstance> inventory = new ArrayList<GameObjectInstance>();
 
 
 	private ArrayList<Location> connections = new ArrayList<Location>();
@@ -53,11 +53,11 @@ public class Location {
 		return new VarList(inv);
 	}
 	
-	public void removeObject(GameObjectInstance id){
+	public void removeObjectFromInventory(GameObjectInstance id){
 		inventory.remove(id);
 	}
 	
-	public void addObject(GameObjectInstance id){
+	public void addObjectToInventory(GameObjectInstance id){
 		inventory.add(id);
 	}
 	

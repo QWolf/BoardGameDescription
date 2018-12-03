@@ -42,4 +42,11 @@ public class GameObjectInstance {
 	public Location getLocation(){
 		return currentLocation;
 	}
+
+
+	public void moveTo(Location newLoc) {
+		currentLocation.removeObjectFromInventory(this);
+		newLoc.addObjectToInventory(this);
+		this.currentLocation = newLoc;
+	}
 }

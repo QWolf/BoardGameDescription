@@ -9,7 +9,10 @@ public class Game {
 	private String gameName;
 	private HashMap<String, Player> players = new HashMap<String, Player>();
 	private HashMap<String, Player> entities = new HashMap<String, Player>();
-
+	private Player[] turnOrder;
+	private int currentTurnIndex = 0;
+	
+	
 	private Player publicPlayer = new Player("Public", false, false, this);
 	private int minPlayers;
 	private int maxPlayers;
@@ -26,6 +29,24 @@ public class Game {
 
 	public String getName() {
 		return gameName;
+	}
+	
+	public void setTurnOrder(Player[] to){
+		turnOrder = to;
+		currentTurnIndex = 0;
+	}
+	
+	public Player[] getTurnOrder(){
+		return turnOrder;
+	}
+	
+	public Player getCurrentTurn(){
+		return turnOrder[currentTurnIndex];
+	}
+	
+	public void advanceTurn(int i){
+		currentTurnIndex = (currentTurnIndex+i) % turnOrder.length;
+		
 	}
 
 	public Player[] getPlayers() {

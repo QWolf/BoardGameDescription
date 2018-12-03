@@ -156,14 +156,14 @@ codeLine	:	nonReturnFunction SEMI
 
 nonReturnFunction
 			:	CHOOSEACTION codeValue		#nonReturnFunctionTakeActionPlayer 
-			|	codeValue LPAR performActionArguments? RPAR	#nonReturnFunctionPerformAction
+			|	ID LPAR performActionArguments? RPAR	#nonReturnFunctionActionRoundNoReturn
 //			|	MOVE2
 			|	MOVE codeValue codeValue	#nonReturnFunctionMoveObjectTo
 			|	ADVANCETURN					#nonReturnFunctionNextTurn
 			|	RANDOMIZE idFromLocation 	#nonReturnFunctionRandomize
 //			|	FINISHGAME		
 			|	REPEAT						#nonReturnFunctionRepeat	
-			|	variable					#nonReturnFunctionLocalVariable
+//			|	variable					#nonReturnFunctionLocalVariable
 			|	WINNER codeValue			#nonReturnFunctionWin
 			|	LOSER codeValue				#nonReturnFunctionLoser
 			|	FINISH						#nonReturnFunctionFinishGame
