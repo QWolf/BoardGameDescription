@@ -30,7 +30,8 @@ public class GameObjectTemplate {
 		this.game = g;
 		
 		//Public owner
-		varMan.addVariable("Owner", new VarOwner(VarOwner.OwnerType.Public));
+		varMan.addVariable("Owner", new VarOwner());
+		g.addGameObjectTemplate(this);
 	}
 
 	public Variable getVariable(String name) {
@@ -60,5 +61,9 @@ public class GameObjectTemplate {
 		generatorcounter++;
 		return getNewInstance(name, loc);
 		
+	}
+
+	public String getName() {
+		return objectTypeName;
 	}
 }

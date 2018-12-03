@@ -24,7 +24,7 @@ public class GameObjectInstance {
 		Owner locationOwner = ( (VarOwner) l.getVarManager().getVariable("Owner")).getValue();
 		
 		varman.addVariable("Owner", new VarOwner(locationOwner));
-//		varManager.addID("Owner", VarType.Player, l.getVarManager().getObject("Owner"));
+		g.addObjectInstance(this);
 	}
 	
 	

@@ -34,7 +34,8 @@ public class Location {
 	public Location(String name, String objectType) {
 		this.name = name;
 		this.varMan = new SingleScopeVariableManager();
-		varMan.addVariable("Owner", new VarOwner(VarOwner.OwnerType.Public));
+		varMan.addVariable("Owner", new VarOwner());
+		g.addLocation(this);
 	}
 
 	/*

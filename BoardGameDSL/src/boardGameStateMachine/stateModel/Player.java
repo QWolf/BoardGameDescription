@@ -9,12 +9,17 @@ public class Player {
 	private boolean isPlayer = false;
 	
 	private SingleScopeVariableManager varManager = new SingleScopeVariableManager();
+	private Game game;
 	
 	
-	public Player(String name, boolean isHuman, boolean isPlayer){
+	public Player(String name, boolean isHuman, boolean isPlayer, Game g){
 		this.name = name;
 		this.isHuman = isHuman;
 		this.isPlayer = isPlayer;
+		this.game = g;
+		
+		game.addPlayer(this);
+		
 	}
 	
 	

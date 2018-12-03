@@ -10,19 +10,15 @@ public class VarOwner extends Variable {
 	Owner value = null;
 	OwnerType type = null;
 
-	public VarOwner() {
-		super(VarType.Owner);
-	}
-
 	public VarOwner(Owner own) {
 		super(VarType.Owner);
 		value = own;
 	}
 
 	// boolean true will result in "Public"
-	public VarOwner(OwnerType ot) {
+	public VarOwner() {
 		super(VarType.Owner);
-		value = new Owner(ot);
+		value = new Owner();
 
 	}
 

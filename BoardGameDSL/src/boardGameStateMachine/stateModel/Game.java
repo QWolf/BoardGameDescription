@@ -8,7 +8,9 @@ public class Game {
 
 	private String gameName;
 	private HashMap<String, Player> players = new HashMap<String, Player>();
-	private Player publicPlayer = new Player("Public", false, false);
+	private HashMap<String, Player> entities = new HashMap<String, Player>();
+
+	private Player publicPlayer = new Player("Public", false, false, this);
 	private int minPlayers;
 	private int maxPlayers;
 	private SingleScopeVariableManager varMan = new SingleScopeVariableManager();
@@ -38,8 +40,9 @@ public class Game {
 		if (players.size() >= maxPlayers){
 			return false;
 		}
-		if (!players.containsKey(p.getName())) {
+		if (!entities.containsKey(p.getName())) {
 			players.put(p.getName(), p);
+			entities.put(p.getName(), p);
 			return true;
 		} else {
 			return false;
@@ -48,6 +51,22 @@ public class Game {
 	
 	public int getPlayerNumber(){
 		return players.size();
+	}
+	
+	public Player[] getEntity() {
+		return (Player[]) entities.values().toArray();
+	}
+	
+	public Player getEntity(String name){
+		return entities.get(name);
+	}
+	
+	public boolean addEntity(Player p){
+		return entities.put(p.getName(), p) == null;
+	}
+	
+	public int getEntityNumber(){
+		return entities.size();
 	}
 	
 	public int getLocationNumber(){
@@ -60,6 +79,19 @@ public class Game {
 	
 	public SingleScopeVariableManager getVarMan(){
 		return varMan;
+	}
+
+	public void addObjectInstance(GameObjectInstance gameObjectInstance) {
+		objectInstanceList.put(gameObjectInstance.getName(), gameObjectInstance);
+	}
+
+	public void addGameObjectTemplate(GameObjectTemplate template) {
+		objectTypeList.put(template.getName(), template);
+		
+	}
+
+	public void addLocation(Location location) {
+		locations.put(location.getName(), location);		
 	}
 
 }
