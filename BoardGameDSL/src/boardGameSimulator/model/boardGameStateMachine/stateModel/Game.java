@@ -2,6 +2,7 @@ package boardGameSimulator.model.boardGameStateMachine.stateModel;
 
 import java.util.HashMap;
 
+import boardGameSimulator.controller.StateMachineController;
 import boardGameSimulator.model.boardGameStateMachine.Variable.SingleScopeVariableManager;
 
 public class Game {
@@ -20,11 +21,13 @@ public class Game {
 	private HashMap<String, Location> locations = new HashMap<String, Location>();
 	private HashMap<String, GameObjectTemplate> objectTypeList = new HashMap<String, GameObjectTemplate>();
 	private HashMap<String, GameObjectInstance> objectInstanceList = new HashMap<String, GameObjectInstance>();
-
-	public Game(String name, int minPlayers, int maxPlayers) {
-		gameName = name;
+	private StateMachineController controller;
+	
+	public Game(String name, int minPlayers, int maxPlayers, StateMachineController smc) {
+		this.gameName = name;
 		this.minPlayers = minPlayers;
 		this.maxPlayers = maxPlayers;
+		this.controller = smc;
 	}
 
 	public String getName() {
@@ -113,6 +116,10 @@ public class Game {
 
 	public void addLocation(Location location) {
 		locations.put(location.getName(), location);		
+	}
+	
+	public StateMachineController getStateMachineController(){
+		return controller;
 	}
 
 }

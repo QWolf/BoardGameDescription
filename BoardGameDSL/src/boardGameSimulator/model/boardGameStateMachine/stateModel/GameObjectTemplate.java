@@ -1,6 +1,7 @@
 package boardGameSimulator.model.boardGameStateMachine.stateModel;
 
 import boardGameSimulator.model.boardGameStateMachine.Variable.SingleScopeVariableManager;
+import boardGameSimulator.model.boardGameStateMachine.Variable.VarList;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarOwner;
 import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 
@@ -13,6 +14,7 @@ public class GameObjectTemplate {
 	private Game game;
 	private String generatorName;
 	private int generatorcounter = 1;
+	private Randomizer randomizer;
 
 	/**
 	 * Object Template
@@ -49,10 +51,24 @@ public class GameObjectTemplate {
 	public String getObjectType() {
 		return objectTypeName;
 	}
+	
+	public Randomizer getRandomizer(){
+		return randomizer;
+	}
+	
+	public void setRandomizer(Randomizer r){
+		this.randomizer = r;
+	}
 
 	public GameObjectInstance getNewInstance(String name, Location loc) {
+		//Copy the object
 		GameObjectInstance instance = new GameObjectInstance(name, objectTypeName, varMan.getCopy(),game,loc);
 
+		//copy the randomizer, if any
+		if(randomizer != null){
+			instance.setRandomizer(new Randomizer(((VarList)randomizer.getVariableList()).getValue()));
+			instance.getRandomizer().setValue(randomizer.getValue());
+		}
 		return instance;
 	}
 	

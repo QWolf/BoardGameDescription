@@ -4,12 +4,12 @@ public class VarList extends Variable{
 
 	Variable[] value = null;
 
-	public VarList() {
+//	public VarList() {
+//		super(VarType.List);
+//	}
+	public VarList(Variable[] vars){
 		super(VarType.List);
-	}
-	public VarList(Variable[] i){
-		super(VarType.List);
-		value = i;
+		value = vars;
 	}
 	
 	public Variable[] getValue(){

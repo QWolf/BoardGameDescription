@@ -105,6 +105,4 @@ public class Owner {
 	public Location getLocationOwner() {
 		return locationOwner;
 	}
-
-	// TODO VarOwner -> go Fix
 }

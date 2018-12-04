@@ -8,7 +8,7 @@ public class VarOwner extends Variable {
 	}
 
 	Owner value = null;
-	OwnerType type = null;
+	// OwnerType type = null;
 
 	public VarOwner(Owner own) {
 		super(VarType.Owner);
@@ -27,7 +27,8 @@ public class VarOwner extends Variable {
 	}
 
 	public void setValue(OwnerType ot) {
-		type = ot;
+		// type = ot;
+		value = null;
 	}
 
 	public void setValue(Owner own) {
@@ -36,8 +37,12 @@ public class VarOwner extends Variable {
 
 	@Override
 	public SingleScopeVariableManager getGameObjectVariableManager() {
-		// TODO Owner != Player
-		System.out.println("VarOwner has no VariableScope!");
+
+		if (value.getOwnerType() == VarOwner.OwnerType.Player) {
+
+			return value.getPlayerOwner().getVarManager();
+		}
+		System.out.println("VarOwner has no VariableScope if it is not a Player!");
 		return null;
 	}
 }

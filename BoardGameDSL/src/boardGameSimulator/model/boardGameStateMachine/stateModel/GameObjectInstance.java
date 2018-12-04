@@ -11,6 +11,7 @@ public class GameObjectInstance {
 	private String objectType;
 	private Location currentLocation;
 	private Game g;
+	private Randomizer randomizer;
 	
 	private SingleScopeVariableManager varManager;
 	
@@ -27,6 +28,14 @@ public class GameObjectInstance {
 		g.addObjectInstance(this);
 	}
 	
+	
+	public Randomizer getRandomizer(){
+		return randomizer;
+	}
+	
+	public void setRandomizer(Randomizer r){
+		this.randomizer = r;
+	}
 	
 	public SingleScopeVariableManager getVarManager(){
 		return varManager;
