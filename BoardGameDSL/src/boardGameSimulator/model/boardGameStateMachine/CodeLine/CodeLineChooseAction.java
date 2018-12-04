@@ -4,6 +4,7 @@ import boardGameSimulator.controller.StateMachineController;
 import boardGameSimulator.model.boardGameStateMachine.CodeLine.Return.CodeLineReturn;
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValue;
 import boardGameSimulator.model.boardGameStateMachine.Variable.MultiScopeVariableManager;
+import boardGameSimulator.model.boardGameStateMachine.Variable.RawVariable;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarPlayer;
 import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.ActionRound;
@@ -40,9 +41,13 @@ public class CodeLineChooseAction extends CodeLine{
 		
 		//Ask the SMC for a action to perform - either live or from a file
 		ActionRound ar = smc.getNextAction(calculatedPlayer);
-		Variable[] parameters = smc.getNextActionParameters(scope);
+		RawVariable[] parameters = smc.getNextActionParameters(scope);
 		
-		CodeLineReturn answer = ar.executeActionRound(parameters);
+		Variable[] parsAsVars = new Variable[parameters.length];
+		for(int i = 0; i<parsAsVars.length; i++){
+			parsAsVars[i] = parameters[i].getVariable(scope);
+		}
+		CodeLineReturn answer = ar.executeActionRound(parsAsVars);
 		
 		//Write action to the game log
 		smc.writeAction(ar.getName(), calculatedPlayer.getName(), parameters);

@@ -53,7 +53,7 @@ public class ActionRound {
 	// Executes action and returns the value (if appropriate)
 	public CodeLineReturn executeActionRound(Variable[] arguments) {
 		if (requiredArgumentNames != null) {
-			for (int i = 0; i < requiredArgumentNames.length - 1; i++) {
+			for (int i = 0; i < requiredArgumentNames.length; i++) {
 				if (!actionVarMan.addVariable(requiredArgumentNames[i], arguments[i])) {
 					System.out.println(
 							"Failed to add to VariableManager: " + requiredArgumentNames[i] + " Name already exists");

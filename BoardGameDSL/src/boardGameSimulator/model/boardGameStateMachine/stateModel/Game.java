@@ -21,6 +21,7 @@ public class Game {
 	private HashMap<String, Location> locations = new HashMap<String, Location>();
 	private HashMap<String, GameObjectTemplate> objectTypeList = new HashMap<String, GameObjectTemplate>();
 	private HashMap<String, GameObjectInstance> objectInstanceList = new HashMap<String, GameObjectInstance>();
+	private HashMap<String, ActionRound> actionRoundList = new HashMap<String, ActionRound>();
 	private StateMachineController controller;
 	
 	public Game(String name, int minPlayers, int maxPlayers, StateMachineController smc) {
@@ -120,6 +121,13 @@ public class Game {
 	
 	public StateMachineController getStateMachineController(){
 		return controller;
+	}
+	
+	public void addActionRound(ActionRound ar){
+		actionRoundList.put(ar.getName(), ar);
+	}
+	public ActionRound getActionRound(String name){
+		return actionRoundList.get(name);
 	}
 
 }

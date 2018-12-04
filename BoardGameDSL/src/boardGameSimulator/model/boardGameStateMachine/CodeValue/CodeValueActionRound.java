@@ -35,7 +35,7 @@ public class CodeValueActionRound extends CodeValue {
 	public Variable getValue(MultiScopeVariableManager scope) {
 		
 		Variable[] calculatedParameters = new Variable[parameters.length];
-		for(int i = 0; i<parameters.length-1; i++){
+		for(int i = 0; i<parameters.length; i++){
 			calculatedParameters[i] = parameters[i].getValue(scope);
 		}
 		executedSolution = actionRound.executeActionRound(calculatedParameters);

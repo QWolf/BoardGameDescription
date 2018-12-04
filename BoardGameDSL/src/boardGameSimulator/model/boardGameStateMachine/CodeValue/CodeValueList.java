@@ -23,7 +23,7 @@ public class CodeValueList extends CodeValue{
 		//Convert CodeValues to Variables
 		Variable[] codeValuesAsVariables = new Variable[list.length];
 		
-		for(int i = 0; i<list.length -1; i++){
+		for(int i = 0; i<list.length; i++){
 			codeValuesAsVariables[i] = list[i].getValue(scope);
 		}
 		

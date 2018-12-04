@@ -10,7 +10,7 @@ public abstract class CodeLine {
 		CodeLineReturn clr = new CodeLineReturn(CodeLineReturnType.Empty, false);
 		int i = 0;
 		
-		while(i < lines.length -1 && !clr.isDone()){
+		while(i < lines.length && !clr.isDone()){
 			clr = lines[i].execute(scope);
 		}
 		return clr;

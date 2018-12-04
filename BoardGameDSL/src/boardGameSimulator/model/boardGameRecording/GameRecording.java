@@ -4,7 +4,7 @@ public class GameRecording {
 
 	
 	private ActionRecord[] ar;
-	private int actionRecordCounter = 0;
+	private int nextAction = 0;
 	
 	
 	
@@ -14,9 +14,8 @@ public class GameRecording {
 	
 	
 	
-	public void executeNextAction(){
-		ar[actionRecordCounter].executeAction();
-		
+	public String getNextActionName(){
+		return ar[nextAction].getActionName();
 	}
 	
 	
