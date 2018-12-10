@@ -1,11 +1,13 @@
 package boardGameSimulator.view;
 
-import boardGameSimulator.model.boardGameStateMachine.Variable.RawVariable;
+import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 
 public interface ViewInterface {
 	
 	public String getActionName();
 	
-	public RawVariable[] getParameters();
+	public Variable[] getParameters();
+
+	public Variable[] getActionParameters();
 
 }

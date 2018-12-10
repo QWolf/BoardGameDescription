@@ -2,7 +2,6 @@ package boardGameSimulator.controller;
 
 import boardGameSimulator.model.boardGameRecording.GameRecording;
 import boardGameSimulator.model.boardGameStateMachine.Variable.MultiScopeVariableManager;
-import boardGameSimulator.model.boardGameStateMachine.Variable.RawVariable;
 import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.ActionRound;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.Game;
@@ -41,12 +40,15 @@ public class StateMachineController {
 	}
 
 	public Variable getNextRandomResult() {
-		// TODO!!!!
-		return null;
+		return preRecorded.getNextRandomVariable();
+
 	}
 
 	public void writeRandom(Variable value) {
-		// TODO Auto-generated method stub
+		currentRecording.writeRandom(value);
+		if(usePredeterminedRandomResults){
+			preRecorded.advanceRandom();
+		}
 
 	}
 
@@ -63,14 +65,23 @@ public class StateMachineController {
 		return action;
 	}
 
-	public RawVariable[] getNextActionParameters(MultiScopeVariableManager scope) {
-		// TODO Auto-generated method stub
-		return new RawVariable[0];
-	}
+	public Variable[] getNextActionParameters(MultiScopeVariableManager scope) {
+		Variable [] parameters;
+		if (usePredeterminedActionsAndParameters) {
+			parameters = preRecorded.getNextActionParameters();
 
-	public void writeAction(String ActionRound, String Player, RawVariable[] parameters) {
-		// TODO Auto-generated method stub
-		// Advance prerecorded, if required
+		} else {
+			parameters = view.getActionParameters();
+		}
+
+		return parameters;	}
+
+	public void writeAction(String actionround, String player, Variable[] parameters) {
+		currentRecording.writeAction(actionround, player, parameters);
+		if(usePredeterminedActionsAndParameters()){
+			preRecorded.advanceActions();
+		}
+		
 
 	}
 

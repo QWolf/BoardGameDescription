@@ -2,9 +2,11 @@ grammar BGD;
 
 //@header{package bgd.grammar; }
 
+
 import BGDVocab;
 
 program: init playersSection locations locationconnections? objects rounds actions startState?;
+
 
 //INIT - Game settings
 init		: gamename
@@ -44,7 +46,7 @@ location	:	locType? ID LBRACE locationVariables RBRACE		#locationNormal
 			;
 			
 locType		:	PLACE
-			|	SUPPLY
+			|	SUPPLY // TODO more?
 			;
 			
 locationVariables 
@@ -55,6 +57,7 @@ locVariable	:	variable
 			|	visible1
 			|	visible2
 			|	startingInv
+			| 	supplies
 			;
 
 locOwner	:	OWNER IS ID SEMI						#locOwnerID
@@ -72,12 +75,17 @@ visible2	: 	VALUEVISIBLE IS ID SEMI					#visible2SingleName
 			|	VALUEVISIBLE IS nameList SEMI			#visible2NameList
 			;
 			
+supplies	:	SUPPLIES LBRACE objectInstance RBRACE;
+
+			
 			
 startingInv	:	STARTINGINV LBRACE objectInstance+ RBRACE;
 
+	//creates new varobjects
 objectInstance:	ID ID SEMI
 			|	ID ID LBRACE objectVariable+ RBRACE
 			;
+			
 
 //LOCATIONCONNECTIONS - what locations are connected to each other
 locationconnections
@@ -300,6 +308,7 @@ number		:	integer		#numberInt
 nofrac		:	integer		#nofracInt
 			|	doublenum	#nofracDouble	
 			;		
+			
 			
 integer		:	NUM;
 doublenum	:	NUM DOT NUM;

@@ -24,11 +24,18 @@ public class Game {
 	private HashMap<String, ActionRound> actionRoundList = new HashMap<String, ActionRound>();
 	private StateMachineController controller;
 	
-	public Game(String name, int minPlayers, int maxPlayers, StateMachineController smc) {
+	/**
+	 * A game object
+	 * @param name	name of the game
+	 * @param minPlayers minimal number of players
+	 * @param maxPlayers maximum number of players
+	 * @param smc A state Machine Controller
+	 */
+	public Game(String name, int minPlayers, int maxPlayers) {
 		this.gameName = name;
 		this.minPlayers = minPlayers;
 		this.maxPlayers = maxPlayers;
-		this.controller = smc;
+//		this.controller = smc;
 	}
 
 	public String getName() {
@@ -128,6 +135,10 @@ public class Game {
 	}
 	public ActionRound getActionRound(String name){
 		return actionRoundList.get(name);
+	}
+	
+	public void setStateMachineController(StateMachineController smc){
+		this.controller = smc;
 	}
 
 }

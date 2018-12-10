@@ -14,10 +14,10 @@ public class Player {
 	private PlayerRanking ranking= new PlayerRanking();
 	
 	
-	public Player(String name, boolean isHuman, boolean isPlayer, Game g){
+	public Player(String name, boolean isHuman, boolean isContender, Game g){
 		this.name = name;
 		this.isHuman = isHuman;
-		this.isPlayer = isPlayer;
+		this.isPlayer = isContender;
 		this.game = g;
 		
 		game.addPlayer(this);

@@ -36,6 +36,9 @@ public class Location {
 		this.varMan = new SingleScopeVariableManager();
 		varMan.addVariable("Owner", new VarOwner());
 		g.addLocation(this);
+		
+		//TODO!
+		this.supplying = null;
 	}
 
 	/*

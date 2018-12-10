@@ -1,2 +1,10 @@
-Rand =4
-TakeAction = MovePawn(G4, 4)
+Players: B, G
+AI:
+
+
+Rand:6
+StartPawn:PawnB1(B1)
+Rand:5
+MovePawn: P1, B6
+Rand:4
+Pass:

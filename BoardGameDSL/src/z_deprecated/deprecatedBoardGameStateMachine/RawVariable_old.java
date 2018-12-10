@@ -1,6 +1,11 @@
-package boardGameSimulator.model.boardGameStateMachine.Variable;
+package z_deprecated.deprecatedBoardGameStateMachine;
 
 import boardGameSimulator.model.util.StringUtil;
+import boardGameSimulator.model.boardGameStateMachine.Variable.MultiScopeVariableManager;
+import boardGameSimulator.model.boardGameStateMachine.Variable.VarBool;
+import boardGameSimulator.model.boardGameStateMachine.Variable.VarDouble;
+import boardGameSimulator.model.boardGameStateMachine.Variable.VarInt;
+import boardGameSimulator.model.boardGameStateMachine.Variable.VarList;
 import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 
 /**
@@ -9,7 +14,7 @@ import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
  * @author Peter
  *
  */
-public class RawVariable {
+public class RawVariable_old {
 
 	private Variable staticValue = null;
 	private String id = null;
@@ -23,12 +28,12 @@ public class RawVariable {
 		Boolean, Int, Double, List, ID;
 	}
 
-	public RawVariable(String input) {
+	public RawVariable_old(String input) {
 		parseString(input);
 	}
 
 	// input as a list
-	public RawVariable(String[] inputs) {
+	public RawVariable_old(String[] inputs) {
 		parseList(inputs);
 	}
 

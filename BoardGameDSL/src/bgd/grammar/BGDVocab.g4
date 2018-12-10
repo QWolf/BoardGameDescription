@@ -29,6 +29,7 @@ SUPPLY		:	'Supply';
 COUNTER		:	'Counter';
 COUNTERTYPE	: 	'CounterType';
 STARTINGINV	:	'StartingInventory';
+SUPPLIES	:	'Supplies';
 
 //LOCATIONCONNECTIONS keywords
 LOCATIONCONNECTIONS : 	'LocationConnections';
