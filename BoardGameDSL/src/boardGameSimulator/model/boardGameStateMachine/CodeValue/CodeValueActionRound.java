@@ -39,6 +39,7 @@ public class CodeValueActionRound extends CodeValue {
 			calculatedParameters[i] = parameters[i].getValue(scope);
 		}
 		executedSolution = actionRound.executeActionRound(calculatedParameters);
+		this.varType = executedSolution.getVariable().getVarType();
 		if(executedSolution.isVariable()){
 			return executedSolution.getVariable();
 		}else{

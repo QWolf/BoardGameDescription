@@ -14,7 +14,7 @@ public class Game {
 	private int currentTurnIndex = 0;
 	
 	
-	private Player publicPlayer = new Player("Public", false, false, this);
+//	private Player publicPlayer = new Player("Public", false, false, this);
 	private int minPlayers;
 	private int maxPlayers;
 	private SingleScopeVariableManager varMan = new SingleScopeVariableManager();
@@ -105,6 +105,10 @@ public class Game {
 		return locations.size();
 	}
 	
+	public Location getLocation(String locName){
+		return locations.get(locName);
+	}
+	
 	public int getObjectInstanceNumber(){
 		return objectInstanceList.size();
 	}
@@ -115,6 +119,10 @@ public class Game {
 
 	public void addObjectInstance(GameObjectInstance gameObjectInstance) {
 		objectInstanceList.put(gameObjectInstance.getName(), gameObjectInstance);
+	}
+	
+	public GameObjectInstance getGameObjectInstance(String name){
+		return objectInstanceList.get(name);
 	}
 
 	public void addGameObjectTemplate(GameObjectTemplate template) {

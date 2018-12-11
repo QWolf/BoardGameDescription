@@ -12,8 +12,7 @@ public class Owner {
 	/**
 	 * Owner Object for Public or Location
 	 * 
-	 * @param ot
-	 *            Ownertype Location or Player
+
 	 */
 	public Owner() {
 		this.owner = null;

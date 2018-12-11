@@ -15,7 +15,7 @@ public class VarOwner extends Variable {
 		value = own;
 	}
 
-	// boolean true will result in "Public"
+// Empty constructor will be public owner
 	public VarOwner() {
 		super(VarType.Owner);
 		value = new Owner();

@@ -7,7 +7,7 @@ import boardGameSimulator.model.boardGameStateMachine.Variable.MultiScopeVariabl
 import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.ActionRound;
 
-public class CodeValueNonReturnFunctionActionRoundExecute extends CodeLine{
+public class CodeLineNonReturnFunctionActionRoundExecute extends CodeLine{
 	
 	
 	private ActionRound actionround;
@@ -19,7 +19,7 @@ public class CodeValueNonReturnFunctionActionRoundExecute extends CodeLine{
 	 * @param ar		The action which needs to be executed
 	 * @param arguments The arguments, expressed in CodeValues
 	 */
-	public CodeValueNonReturnFunctionActionRoundExecute(ActionRound ar, CodeValue[] arguments){
+	public CodeLineNonReturnFunctionActionRoundExecute(ActionRound ar, CodeValue[] arguments){
 		this.actionround = ar;
 		this.arguments = arguments;
 	}

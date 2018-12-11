@@ -109,21 +109,21 @@ locList		:	LBLOCK ID COMMA ID (COMMA ID)* RBLOCK;
 //OBJECTS - Game cards, pieces, or other "things" in the game
 objects		: 	OBJECTS LBRACE object* RBRACE;
 
-object		:	ID LBRACE objectVariables RBRACE
+object		:	ID LBRACE objectVariableHelp* RBRACE
 //			|	copy objectParameters copyEnd
 			;
 			
-objectVariables
-			:	(publicness objectVariable)*
+objectVariableHelp
+			:	publicness objectVariable
 			;
 			
 publicness	:	PUBLIC
 			|	HIDDEN
 			;	
 					
-objectVariable: variable
-			|	objectOwner
-			|	objectRandomizer 
+objectVariable: variable								#objectVariableVariable
+			|	objectOwner								#objectVariableOwner
+			|	objectRandomizer 						#objectVariableRandomizer
 			;
 			
 objectOwner	:	OWNER IS ID SEMI						#objectOwnerID
@@ -154,12 +154,13 @@ argument	:	varType LOWID;
  
 //CODEBLOCK - Helper for rounds and actions
 codeBlock	:	codeLine*
-			;
+			;			
 
-codeLine	:	nonReturnFunction SEMI
+codeLine	:	nonReturnFunction SEMI #codeLineNonReturn
 //			|	LOOP LPAR 
-			|	IF LPAR codeValue RPAR LBRACE codeBlock RBRACE (ELSE LBRACE codeBlock RBRACE)?
-			|	RETURN codeValue SEMI
+			|	IF LPAR codeValue RPAR LBRACE codeBlock RBRACE #codeLineIf
+			|	IF LPAR codeValue RPAR LBRACE codeBlock RBRACE ELSE LBRACE codeBlock RBRACE?#codeLineifElse
+			|	RETURN codeValue SEMI #codeLineReturn
 			;
 
 nonReturnFunction
@@ -168,7 +169,7 @@ nonReturnFunction
 //			|	MOVE2
 			|	MOVE codeValue codeValue	#nonReturnFunctionMoveObjectTo
 			|	ADVANCETURN					#nonReturnFunctionNextTurn
-			|	RANDOMIZE idFromLocation 	#nonReturnFunctionRandomize
+			|	RANDOMIZE codeValue 	#nonReturnFunctionRandomize
 //			|	FINISHGAME		
 			|	REPEAT						#nonReturnFunctionRepeat	
 //			|	variable					#nonReturnFunctionLocalVariable
@@ -181,7 +182,7 @@ nonReturnFunction
 performActionArguments: codeValue (COMMA codeValue)?;
 
 standardFunction
-			:	LISTCOUNT LPAR codeValue RPAR
+			:	LISTCOUNT LPAR codeValue RPAR #standardFunctionListCount
 //			|	SEE
 //			|	setVariable
 //			|	NEWOBJECT
@@ -191,22 +192,22 @@ standardFunction
 locationFunction
 			:	CONTAINS LPAR RPAR 					#locFunctionContains
 //			|	CONTAINS LPAR ID RPAR 				#locFunctionContainsType
-			|	ISCONNECTEDTO LPAR ID RPAR 			#locFunctionIsConnectedTo
+			|	ISCONNECTEDTO LPAR codeValue RPAR	#locFunctionIsConnectedTo
 			|	CONNECTIONS LPAR RPAR				#locFunctionConnections
 			;
 			
-playerFunction
-			:	ID
-			;
+//playerFunction
+//			:	ID
+//			;
 			
 objectFunction
-			:	LOCATION 
-			|	OWNER  
-			|	VALUE
+			:	LOCATION	#objectFunctionLocation
+			|	OWNER  		#objectFunctionOwner
+			|	VALUE		#objectFunctionValue
 			;
 			
 codeValue	:	codeValueValue								#codeValuePlainValue
-			|	codeValue DOT idFromLocation				#codeValueIDFromLocation
+			|	codeValue DOT getVariable					#codeValueIDFromLocation
 			|	standardFunction							#codeValueStandardFunction
 			|	LPAR codeValue RPAR							#codeValuePar
 			|	ID LPAR performActionArguments? RPAR		#codeValueActionOrRound
@@ -214,7 +215,7 @@ codeValue	:	codeValueValue								#codeValuePlainValue
 //			|	codeValue DOT playerFunction				#codeValuePlayerFunction
 			|	codeValue DOT objectFunction				#codeValueObjectFunction
 			|	codeValue boolOp codeValue					#codeValueBoolOperator //AND/OR
-			|	codeValue LBLOCK integerValue RBLOCK		#codeValueListIndex
+			|	codeValue LBLOCK codeValue RBLOCK		#codeValueListIndex
 			|	EXCL codeValue								#codeValueBoolNot
 			|	codeValue compareAdd codeValue				#codeValueBoolCompare // ==, !=, >, etc.
 			|	LBLOCK codeValue (COMMA codeValue)* RBLOCK	#codeValueList
@@ -229,9 +230,9 @@ codeValue	:	codeValueValue								#codeValuePlainValue
 //			;
 			
 
-integerValue:	integer
-			|	codeValue
-			;
+//integerValue:	integer
+//			|	codeValue
+//			;
 			
 codeValueValue
 			:	bool
@@ -241,8 +242,8 @@ codeValueValue
 			|	LOWID
 			;
 			
-idFromLocation 
-			:	ID (DOT ID)*;
+getVariable 
+			:	ID ;
 			
 			
 //ACTIONS - What actions can be taken by players or other forces?
@@ -297,22 +298,22 @@ nonListValue:	bool		#nonListValueBool
 			|	ID			#nonListValueID
 			;			
 			
-bool		:	TRUE		#boolTrue
-			|	FALSE		#boolFalse
+bool		:	TRUE		
+			|	FALSE		
 			;
 
 number		:	integer		#numberInt
 			|	doublenum	#numberDouble
-			|	fraction	#numberFraction
+//			|	fraction	numberFraction
 			;
-nofrac		:	integer		#nofracInt
-			|	doublenum	#nofracDouble	
-			;		
+//nofrac		:	integer		#nofracInt
+//			|	doublenum	#nofracDouble	
+//			;		
 			
 			
 integer		:	NUM;
 doublenum	:	NUM DOT NUM;
-fraction	:	nofrac SLASH nofrac;
+//fraction	:	nofrac SLASH nofrac;
 
 text		:	STRINGLITERAL
 			;
@@ -331,6 +332,7 @@ varType		:	INT
 //COPY -- Duplicate a Location/Player/Object/etc with only a different name
 //copy		:	COPY LBRACE nameList;
 //copyEnd		:	RBRACE;
+
 nameList	:	LBLOCK ID (COMMA ID)* RBLOCK;
 
 
@@ -341,7 +343,7 @@ addOp		:	PLUS
 			
 multOp		:	STAR	//Multiply
 			|	SLASH	//Divide
-			|	PERCENT	//Modulo
+//			|	PERCENT	//Modulo
 			;			
 
 			
@@ -350,9 +352,9 @@ boolOp		:	AND								#boolOpAnd
 //			|	XOR								#boolOpXor
 			;
 
-compareBool	:	EQ								
-			|	NE
-			;
+//compareBool	:	EQ								
+//			|	NE
+//			;
 			
 compareAdd	:	EQ
 			|	NE
@@ -362,9 +364,9 @@ compareAdd	:	EQ
 			|	LE
 			;
 			
-compareString:	EQ
-			|	NE
-			;
+//compareString:	EQ
+//			|	NE
+//			;
 			
 
 			

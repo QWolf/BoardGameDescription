@@ -2,6 +2,7 @@ package boardGameSimulator.model.boardGameStateMachine.stateModel;
 
 import boardGameSimulator.model.boardGameStateMachine.Variable.SingleScopeVariableManager;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarList;
+import boardGameSimulator.model.boardGameStateMachine.Variable.VarLocation;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarOwner;
 import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 
@@ -15,6 +16,7 @@ public class GameObjectTemplate {
 	private String generatorName;
 	private int generatorcounter = 1;
 	private Randomizer randomizer;
+	private boolean ownerIsLocation = false;
 
 	/**
 	 * Object Template
@@ -34,6 +36,10 @@ public class GameObjectTemplate {
 		//Public owner
 		varMan.addVariable("Owner", new VarOwner());
 		g.addGameObjectTemplate(this);
+	}
+	
+	public void setOwnerIsLocation(boolean ownerequalsLocation){
+		this.ownerIsLocation = ownerequalsLocation;
 	}
 
 	public Variable getVariable(String name) {
@@ -68,6 +74,10 @@ public class GameObjectTemplate {
 		if(randomizer != null){
 			instance.setRandomizer(new Randomizer(((VarList)randomizer.getVariableList()).getValue()));
 			instance.getRandomizer().setValue(randomizer.getValue());
+		}
+		
+		if(ownerIsLocation){
+			instance.getVarManager().addVariable("Owner", new VarLocation(loc));
 		}
 		return instance;
 	}
