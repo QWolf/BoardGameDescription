@@ -26,7 +26,7 @@ public class ActionRound {
 	private boolean isAction = true;
 
 	private SingleScopeVariableManager actionVarMan = new SingleScopeVariableManager();
-	private MultiScopeVariableManager multiScopeVarMan = new MultiScopeVariableManager(game.getVarMan());
+	private MultiScopeVariableManager multiScopeVarMan = null;
 
 	
 	/**
@@ -56,6 +56,7 @@ public class ActionRound {
 		this.lines = body;
 		this.requirements = requirements;
 		this.requiredArgumentNames = argumentNames;
+		this.multiScopeVarMan = new MultiScopeVariableManager(game.getVarMan());
 
 		// Check if requirements are actually boolean variables
 		for (CodeValue req : requirements) {

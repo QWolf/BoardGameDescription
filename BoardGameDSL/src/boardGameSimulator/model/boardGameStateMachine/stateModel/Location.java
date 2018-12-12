@@ -31,9 +31,10 @@ public class Location {
 	private ArrayList<Location> connections = new ArrayList<Location>();
 	
 	
-	public Location(String name, GameObjectTemplate objectTemplate) {
+	public Location(String name, GameObjectTemplate objectTemplate, Game g) {
 		this.name = name;
 		this.varMan = new SingleScopeVariableManager();
+		this.g = g;
 		varMan.addVariable("Owner", new VarOwner());
 		g.addLocation(this);
 		
