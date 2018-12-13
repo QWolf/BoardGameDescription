@@ -1,6 +1,4 @@
 /BGD.tokens
-/BGDBaseListener.java
-/BGDBaseVisitor.java
 /BGDLexer.java
 /BGDLexer.tokens
 /BGDListener.java
