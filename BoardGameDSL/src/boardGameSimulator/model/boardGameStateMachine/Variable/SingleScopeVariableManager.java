@@ -18,6 +18,10 @@ public class SingleScopeVariableManager {
 	}
 	
 	public boolean addVariable(String name, Variable v){
+		if(v == null){
+			System.out.println("Adding null as variable! " + name);
+		}
+		
 		boolean error = !varList.containsKey(name);
 		varList.put(name, v);
 		return error;

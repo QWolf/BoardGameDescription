@@ -104,4 +104,19 @@ public class Owner {
 	public Location getLocationOwner() {
 		return locationOwner;
 	}
+	
+	public String toString(){
+		switch(type){
+		case Location:
+			return "Location";
+		case Player:
+			return owner.getName();
+		case Public:
+			return "Public";
+		default:
+			break;
+		
+		}
+		return null;
+	}
 }

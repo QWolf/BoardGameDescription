@@ -19,10 +19,10 @@ public class Location {
 	private Game g;
 	
 	private boolean existVisibleEverybody = true;
-	private HashSet<String> existVisiblePlayers = new HashSet<String>();
+	private HashSet<Player> existVisiblePlayers = new HashSet<Player>();
 
 	private boolean valueVisibleEverybody = false;
-	private HashSet<String> valueVisiblePlayers = new HashSet<String>();
+	private HashSet<Player> valueVisiblePlayers = new HashSet<Player>();
 	
 	
 	private ArrayList<GameObjectInstance> inventory = new ArrayList<GameObjectInstance>();
@@ -72,7 +72,7 @@ public class Location {
 		existVisibleEverybody = publiclyVisible;
 	}
 	
-	public boolean getExistanceVisibility(String player){
+	public boolean getExistanceVisibility(Player player){
 		if (existVisibleEverybody){
 			return true;
 		} else {
@@ -80,7 +80,7 @@ public class Location {
 		}
 	}
 	
-	public void addExistanceVisiblePlayer(String player){
+	public void addExistanceVisiblePlayer(Player player){
 		existVisiblePlayers.add(player);
 	}
 	
@@ -97,7 +97,7 @@ public class Location {
 		valueVisibleEverybody = publiclyVisible;
 	}
 	
-	public boolean getValueVisibility(String player){
+	public boolean getValueVisibility(Player player){
 		if (valueVisibleEverybody){
 			return true;
 		} else {
@@ -105,7 +105,7 @@ public class Location {
 		}
 	}
 	
-	public void addValueVisiblePlayer(String player){
+	public void addValueVisiblePlayer(Player player){
 		valueVisiblePlayers.add(player);
 	}
 	

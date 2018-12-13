@@ -40,7 +40,7 @@ public class CodeValuePlainVariable extends CodeValue {
 
 	@Override
 	public Variable getValue(MultiScopeVariableManager scope) {
-		if (!(idName == null)) {
+		if ((idName == null)) {
 			return storedVariable;
 		} else {
 			return scope.getVariableGameObject(idName);

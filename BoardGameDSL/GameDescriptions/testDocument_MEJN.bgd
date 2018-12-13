@@ -309,6 +309,7 @@ Objects{
 	
 	Dice{
 		public Owner = public;	
+		public FavPawn = B1;
 		public Randomizer{
 			[1,2,3,4,5,6]
 		}

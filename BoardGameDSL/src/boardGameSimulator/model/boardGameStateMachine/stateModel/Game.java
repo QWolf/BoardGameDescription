@@ -149,4 +149,8 @@ public class Game {
 		this.controller = smc;
 	}
 
+	public GameObjectTemplate getGameObjectTemplate(String name) {
+		return objectTypeList.get(name);
+	}
+
 }

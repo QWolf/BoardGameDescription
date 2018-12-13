@@ -41,7 +41,7 @@ humOrAI		:	HUMAN								#humOrAIHuman
 //LOCATIONS - Places in the game
 locations	:	LOCS LBRACE location* RBRACE;
 
-location	:	locType? ID LBRACE locationVariables RBRACE		#locationNormal
+location	:	locType? ID LBRACE locationVariables startingInv? supplies? RBRACE		#locationNormal
 //			|	copy locationParameters copyEnd			#locationCopy
 			;
 			
@@ -56,8 +56,8 @@ locVariable	:	variable
 			|	locOwner
 			|	visible1
 			|	visible2
-			|	startingInv
-			| 	supplies
+//			|	startingInv
+//			| 	supplies
 			;
 
 locOwner	:	OWNER IS ID SEMI						#locOwnerID
@@ -82,8 +82,9 @@ supplies	:	SUPPLIES LBRACE objectInstance RBRACE;
 startingInv	:	STARTINGINV LBRACE objectInstance+ RBRACE;
 
 	//creates new varobjects
+	// ObjectType IDName, Variables
 objectInstance:	ID ID SEMI
-			|	ID ID LBRACE objectVariable+ RBRACE
+			|	ID ID LBRACE objectVariableHelp+ RBRACE
 			;
 			
 
@@ -276,10 +277,8 @@ startState	:	STARTSTATE;
 //VARIABLES
 varList		:	variable+;
 variable	:	ID IS value SEMI;
-itemVariable:	visibility? ID IS value SEMI;
-visibility	:	PUBLIC
-			|	PRIVATE
-			;
+
+
 
 value		:	bool		#valueBool
 			|	number		#valueNumber
