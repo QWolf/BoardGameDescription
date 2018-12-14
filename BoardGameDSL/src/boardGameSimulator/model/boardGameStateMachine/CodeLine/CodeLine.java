@@ -12,6 +12,7 @@ public abstract class CodeLine {
 		
 		while(i < lines.length && !clr.isDone()){
 			clr = lines[i].execute(scope);
+			i++;
 		}
 		return clr;
 	}

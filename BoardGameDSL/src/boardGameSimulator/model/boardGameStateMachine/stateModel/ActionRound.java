@@ -28,27 +28,37 @@ public class ActionRound {
 	private SingleScopeVariableManager actionVarMan = new SingleScopeVariableManager();
 	private MultiScopeVariableManager multiScopeVarMan = null;
 
-	
 	/**
 	 * A Round, no requirements given
-	 * @param name	Round name
-	 * @param g		Game object
-	 * @param body	Lines to execute
-	 * @param argumentNames	names of arguments
+	 * 
+	 * @param name
+	 *            Round name
+	 * @param g
+	 *            Game object
+	 * @param body
+	 *            Lines to execute
+	 * @param argumentNames
+	 *            names of arguments
 	 */
 	public ActionRound(String name, Game g, CodeLine[] body, String[] argumentNames) {
 		this(name, g, new CodeValue[0], body, argumentNames);
 		this.isAction = false;
 
 	}
-	
+
 	/**
 	 * An Action, requirements ARE given
-	 * @param name	Round name
-	 * @param g		Game object
-	 * @param requirements All requirements to be met to execute this action
-	 * @param body	Lines to execute
-	 * @param argumentNames	names of arguments
+	 * 
+	 * @param name
+	 *            Round name
+	 * @param g
+	 *            Game object
+	 * @param requirements
+	 *            All requirements to be met to execute this action
+	 * @param body
+	 *            Lines to execute
+	 * @param argumentNames
+	 *            names of arguments
 	 */
 	public ActionRound(String name, Game g, CodeValue[] requirements, CodeLine[] body, String[] argumentNames) {
 		this.name = name;
@@ -78,7 +88,7 @@ public class ActionRound {
 	// Executes action and returns the value (if appropriate)
 	public CodeLineReturn executeActionRound(Variable[] arguments) {
 		if (requiredArgumentNames != null) {
-			//TODO: Typechecking arguments (also in parser)
+			// TODO: Typechecking arguments (also in parser)
 			for (int i = 0; i < requiredArgumentNames.length; i++) {
 				if (!actionVarMan.addVariable(requiredArgumentNames[i], arguments[i])) {
 					System.out.println(
@@ -88,7 +98,7 @@ public class ActionRound {
 				;
 			}
 		}
-		if (!satisfiesRequirements()) {
+		if (isAction && !satisfiesRequirements()) {
 			try {
 				throw new Exception("Requirement did not resolve to true");
 			} catch (Exception e) {
@@ -123,5 +133,19 @@ public class ActionRound {
 
 	public String getName() {
 		return name;
+	}
+
+	public boolean isAction() {
+		return isAction;
+	}
+
+	public String printNamePars() {
+		String returnString = name + "(";
+		for (String reqArgname : requiredArgumentNames) {
+			returnString += reqArgname + ", ";
+		}
+		returnString += ")";
+
+		return returnString;
 	}
 }

@@ -10,4 +10,6 @@ public interface ViewInterface {
 
 	public Variable[] getActionParameters();
 
+	public void clearNextActionName();
+	public void clearNextParameters();
 }

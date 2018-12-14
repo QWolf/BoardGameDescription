@@ -318,17 +318,13 @@ Objects{
 
 
 Rounds{
-	Main(){
-		
-		NextTurn;
-		Randomize NoLoc.D1;
-		Turn();
-		Repeat;
-	}
+
 	
 	Turn(){
 		ChooseAction CurrentTurn;	
 	}
+	
+	
 	
 	//Helper Functions
 	
@@ -348,6 +344,14 @@ Rounds{
 				Winner p;
 				FinishGame;
 		}
+	}
+	
+		Main(){
+		
+		NextTurn;
+		Randomize NoLoc.D1;
+		Turn();
+		Repeat;
 	}
 }
 

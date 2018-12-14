@@ -59,6 +59,7 @@ public class Parser {
 			}
 
 		} catch (FileNotFoundException e) {
+			System.out.println("File not found, please try again");
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -109,7 +110,8 @@ public class Parser {
 		System.out.println(blue.getVarManager().getVariable("StartLoc"));
 		System.out.println(blue.getVarManager().getVariable("SupplyLoc"));
 		System.out.println(blue.getVarManager().getVariable("GoalLocs"));
-
+		System.out.println(p.getGame().getVarMan().getVariable("NoLoc"));
+		System.out.println(p.getGame().getVarMan().getVariable("D1"));
 		
 		
 	}

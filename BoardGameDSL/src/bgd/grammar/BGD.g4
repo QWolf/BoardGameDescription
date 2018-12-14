@@ -145,7 +145,7 @@ randomizerValueList
 
 
 //rounds - How the game is played, what actions are in what order?
-rounds		: 	ROUNDS LBRACE main additionalRound* RBRACE;
+rounds		: 	ROUNDS LBRACE additionalRound* main RBRACE;
 
 main		:	MAIN LPAR RPAR LBRACE codeBlock RBRACE ;
 additionalRound:ID LPAR arguments? RPAR LBRACE codeBlock RBRACE;

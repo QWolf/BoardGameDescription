@@ -1,6 +1,7 @@
-package boardGameSimulator.view;
+package z_deprecated;
 
 import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
+import boardGameSimulator.view.ViewInterface;
 
 public class GatherInput implements ViewInterface {
 	
@@ -51,6 +52,18 @@ public class GatherInput implements ViewInterface {
 	public Variable[] getActionParameters() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void clearNextActionName() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void clearNextParameters() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

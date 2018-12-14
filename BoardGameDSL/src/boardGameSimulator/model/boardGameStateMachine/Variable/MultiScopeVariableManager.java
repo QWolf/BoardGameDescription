@@ -63,7 +63,11 @@ public class MultiScopeVariableManager {
 	}
 
 	public Variable getVariableGameObject(String name) {
-		return gameObject.getVariable(name);
+		if (gameObject == null) {
+			return null;
+		} else {
+			return gameObject.getVariable(name);
+		}
 	}
 
 }

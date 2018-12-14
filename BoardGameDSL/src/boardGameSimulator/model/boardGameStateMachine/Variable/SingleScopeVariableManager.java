@@ -1,6 +1,7 @@
 package boardGameSimulator.model.boardGameStateMachine.Variable;
 
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * A class that manages the variables (ID's) of a single GameLocation, that is of an Object, Location, Player, Round or Action, or the global variables.
@@ -46,6 +47,18 @@ public class SingleScopeVariableManager {
 			}
 		
 		return copy;
+		
+	}
+	
+	public int variableCount(){
+		return varList.size();
+	}
+	public Set<String> keySet(){
+		return varList.keySet();
+	}
+
+	public void remove(String name) {
+		varList.remove(name);
 		
 	}
 		

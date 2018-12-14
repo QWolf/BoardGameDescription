@@ -49,7 +49,13 @@ public class CodeValueObjectFunction extends CodeValue {
 
 	@Override
 	public Variable getValue(MultiScopeVariableManager scope) {
+		System.out.println("CodeValueObjectFucntion");
+		System.out.println(  object);
+		System.out.println( ((VarGameObject) object.getValue(scope)));
+		
 		GameObjectInstance calculatedObject = ((VarGameObject) object.getValue(scope)).getValue();
+		
+		
 		switch (function) {
 		case Location:
 			return new VarLocation(calculatedObject.getLocation());
@@ -57,7 +63,7 @@ public class CodeValueObjectFunction extends CodeValue {
 			return calculatedObject.getVarManager().getVariable("Owner");
 		case Value:
 			Variable value = calculatedObject.getVarManager().getVariable("Value");
-			varType = value.getVarType();
+//			varType = value.getVarType();
 			return value;
 			
 		default:

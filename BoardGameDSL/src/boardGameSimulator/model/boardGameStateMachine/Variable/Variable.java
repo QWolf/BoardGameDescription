@@ -52,7 +52,7 @@ public abstract class Variable {
 			buildString = "Owner: "+ ((VarOwner) this).getValue().toString();
 			break;
 		case Player:
-			buildString = "Player: "+ ((VarPlayer) this).getValue().getName();
+			buildString = ((VarPlayer) this).getValue().toString();
 			break;
 		case Unspecified:
 			buildString = "UnspecifiedType";

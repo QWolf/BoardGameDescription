@@ -58,4 +58,20 @@ public class GameObjectInstance {
 		newLoc.addObjectToInventory(this);
 		this.currentLocation = newLoc;
 	}
+	
+	public String toString(){
+		String returnString = objectType + " " + name;
+		
+		if(varManager.variableCount() != 0){
+			for(String key : varManager.keySet()){
+				returnString += "\r\n\t\t" + key + ": " +varManager.getVariable(key).toString();
+			}
+		}
+		
+		if(randomizer != null){
+			returnString += "\r\n\t\t Randomizer Value: "+ randomizer.getValue();
+		}
+		
+		return returnString;
+	}
 }

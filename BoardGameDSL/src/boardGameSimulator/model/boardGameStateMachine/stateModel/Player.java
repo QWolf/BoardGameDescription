@@ -12,6 +12,7 @@ public class Player {
 	private Game game;
 	
 	private PlayerRanking ranking= new PlayerRanking();
+	private String playerName;
 	
 	
 	public Player(String name, boolean isHuman, boolean isContender, Game g){
@@ -48,5 +49,21 @@ public class Player {
 
 	public PlayerRanking getRanking() {
 		return ranking;
+	}
+	public void setPlayerName(String string) {
+		this.playerName = string;
+	}
+
+	public String getPlayerName() {
+		return this.playerName;
+	}
+	
+	public String toString(){
+		if(playerName != null){
+			return "Player: " + name + " c.b. " + playerName;
+		}else{
+			return "Player: " + name + " c.b. " + "Nobody";
+
+		}
 	}
 }

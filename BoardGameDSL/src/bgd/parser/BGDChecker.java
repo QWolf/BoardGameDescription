@@ -5,6 +5,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 import bgd.grammar.BGDBaseVisitor;
 import bgd.grammar.BGDParser;
 import bgd.grammar.BGDParser.ActionContext;
+import bgd.grammar.BGDParser.AdditionalRoundContext;
 import bgd.grammar.BGDParser.ObjectVariableHelpContext;
 import bgd.parser.ParseReturn.ParseReturnValue;
 import boardGameSimulator.model.boardGameStateMachine.CodeLine.CodeLine;
@@ -139,8 +140,8 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 		ParseReturn humOrAI = visit(ctx.humOrAI());
 		boolean humOrAIBool = humOrAI.getParseReturn() == ParseReturnValue.Human;
 		// Create a new player object
-		// All players initialized as contenders
-		game.addPlayer(new Player(ctx.ID().getText(), humOrAIBool, true, game));
+		// All players initialized as non-contenders
+		game.addPlayer(new Player(ctx.ID().getText(), humOrAIBool, false, game));
 
 		return null;
 	}
@@ -151,8 +152,8 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 		ParseReturn humOrAI = visit(ctx.humOrAI());
 		boolean humOrAIBool = humOrAI.getParseReturn() == ParseReturnValue.Human;
 		// Create a new player object
-		// All players initialized as contenders
-		game.addPlayer(new Player(ctx.ID().getText(), humOrAIBool, true, game));
+		// All players initialized as non-contenders
+		game.addPlayer(new Player(ctx.ID().getText(), humOrAIBool, false, game));
 
 		return null;
 	}
@@ -326,6 +327,16 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 	// private CodeLine[] currentCodeBlock = new CodeLine[0];
 	private String[] currentArguments = new String[0];
 
+	
+	@Override
+	public ParseReturn visitRounds(@NotNull BGDParser.RoundsContext ctx){
+		for(AdditionalRoundContext actx : ctx.additionalRound()){
+			visit(actx);
+		}
+		visit(ctx.main());
+		
+		return null;
+	}
 	@Override
 	public ParseReturn visitMain(@NotNull BGDParser.MainContext ctx) {
 
@@ -445,6 +456,8 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 		} else {
 			arguments = new CodeValue[0];
 		}
+
+		
 		CodeLine codeLine = new CodeLineNonReturnFunctionActionRoundExecute(game.getActionRound(ctx.ID().getText()),
 				arguments);
 
@@ -452,6 +465,7 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 		pr.setCodeLine(codeLine);
 		return pr;
 	}
+
 
 	@Override
 	public ParseReturn visitNonReturnFunctionMoveObjectTo(@NotNull BGDParser.NonReturnFunctionMoveObjectToContext ctx) {
@@ -771,9 +785,9 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 		ParseReturn pr = new ParseReturn(ParseReturnValue.CodeValue);
 
 		if (ctx.ID() != null) {
-			pr.setCodeValue(new CodeValuePlainVariable(VarType.Unspecified, ctx.ID().getText()));
+			pr.setCodeValue(new CodeValuePlainVariable(VarType.Unspecified, ctx.ID().getText(), game));
 		} else if (ctx.LOWID() != null) {
-			pr.setCodeValue(new CodeValuePlainVariable(VarType.Unspecified, ctx.LOWID().getText()));
+			pr.setCodeValue(new CodeValuePlainVariable(VarType.Unspecified, ctx.LOWID().getText(), game));
 		} else if (ctx.bool() != null) {
 			return visit(ctx.bool());
 		} else {

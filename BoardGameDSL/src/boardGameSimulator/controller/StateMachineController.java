@@ -16,6 +16,7 @@ public class StateMachineController {
 	private GameRecording currentRecording = new GameRecording();
 	private Game game;
 	private ViewInterface view;
+	private boolean hasStarted = false;
 
 	public StateMachineController(GameRecording record, Game g, ViewInterface vi) {
 		this.preRecorded = record;
@@ -59,7 +60,9 @@ public class StateMachineController {
 			name = preRecorded.getNextActionName();
 
 		} else {
+			System.out.println("Choose Action Player: " + game.getCurrentTurn().getName());
 			name = view.getActionName();
+			view.clearNextActionName();
 		}
 		ActionRound action = game.getActionRound(name);
 		return action;
@@ -87,6 +90,15 @@ public class StateMachineController {
 
 	public GameRecording getCurrentRecording() {
 		return currentRecording;
+	}
+
+	public boolean HasStarted() {
+		return hasStarted;
+	}
+
+	public void startGame() {
+		this.hasStarted = true;
+		game.getActionRound("Main").executeActionRound();
 	}
 
 }

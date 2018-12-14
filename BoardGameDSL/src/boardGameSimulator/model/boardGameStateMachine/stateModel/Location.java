@@ -58,10 +58,12 @@ public class Location {
 	
 	public void removeObjectFromInventory(GameObjectInstance id){
 		inventory.remove(id);
+		varMan.remove(id.getName());
 	}
 	
 	public void addObjectToInventory(GameObjectInstance id){
 		inventory.add(id);
+		varMan.addVariable(id.getName(), new VarGameObject(id));
 	}
 	
 	
@@ -161,6 +163,30 @@ public class Location {
 
 	public boolean isSupply() {
 		return isSupply;
+	}
+	
+	public String toString(){
+		String returnString = name;
+		if(varMan.variableCount() != 0){
+			for(String key : varMan.keySet()){
+				returnString += "\r\n\t" + key + ": " +varMan.getVariable(key).toString();
+			}
+		}
+		
+		
+		if(inventory.size() == 0){
+			returnString+= "\r\n\tInventory Empty ";
+		}else{
+			returnString+="\r\n\tInventory:";
+			for(GameObjectInstance obj : inventory){
+				returnString+=  "\r\n" + "\t"+ obj.toString() ;
+			}
+		}
+		
+		
+		
+		
+		return returnString;
 	}
 
 }
