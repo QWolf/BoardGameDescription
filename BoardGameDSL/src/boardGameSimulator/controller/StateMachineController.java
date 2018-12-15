@@ -75,6 +75,7 @@ public class StateMachineController {
 
 		} else {
 			parameters = view.getActionParameters();
+			
 		}
 
 		return parameters;	}

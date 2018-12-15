@@ -27,7 +27,9 @@ public class CodeLineNonReturnFunctionActionRoundExecute extends CodeLine{
 	@Override
 	public CodeLineReturn execute(MultiScopeVariableManager scope) {
 		Variable[] variables = new Variable[arguments.length];
-		actionround.executeActionRound(variables);
+		if(actionround.executeActionRound(variables).isInvalidAction()){
+			System.out.println("NonReturnAction was invalid!");			
+		}
 		return new CodeLineReturn(CodeLineReturnType.Empty,false);
 	}
 

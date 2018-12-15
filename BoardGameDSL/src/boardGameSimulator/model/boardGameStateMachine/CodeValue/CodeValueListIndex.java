@@ -1,6 +1,10 @@
-package boardGameSimulator.model.boardGameStateMachine.Variable;
+package boardGameSimulator.model.boardGameStateMachine.CodeValue;
 
-import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValue;
+import boardGameSimulator.model.boardGameStateMachine.Variable.MultiScopeVariableManager;
+import boardGameSimulator.model.boardGameStateMachine.Variable.VarInt;
+import boardGameSimulator.model.boardGameStateMachine.Variable.VarList;
+import boardGameSimulator.model.boardGameStateMachine.Variable.VarType;
+import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 
 public class CodeValueListIndex extends CodeValue{
 

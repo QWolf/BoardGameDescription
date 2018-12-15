@@ -26,10 +26,12 @@ public class CodeValueIDFromLocation extends CodeValue{
 	
 	@Override
 	public Variable getValue(MultiScopeVariableManager scope) {
-		System.out.println(variableName);
+		System.out.println("FromLoc" + variableName);
 		
 		Variable fromVariable = fromSpace.getValue(scope);
 		Variable toReturn = fromVariable.getGameObjectVariableManager().getVariable(variableName);
+		System.out.println(fromVariable);
+		System.out.println(toReturn);
 		this.varType = toReturn.getVarType();
 		return toReturn;
 	}

@@ -12,6 +12,7 @@ public class CodeLineReturn {
 	 * more lines should be checked, as a Return or FinishGame has been hit
 	 */
 	private boolean isDone = false;
+	
 
 	public CodeLineReturn(CodeLineReturnType type, boolean isDone) {
 		this.returnType = type;
@@ -39,7 +40,9 @@ public class CodeLineReturn {
 	public boolean isFinished() {
 		return returnType == CodeLineReturnType.Finished;
 	}
-
+	public boolean isInvalidAction() {
+		return returnType == CodeLineReturnType.ActionInvalid;
+	}
 	public Variable getVariable() {
 		return variable;
 	}

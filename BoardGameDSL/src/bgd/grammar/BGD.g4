@@ -216,7 +216,7 @@ codeValue	:	codeValueValue								#codeValuePlainValue
 //			|	codeValue DOT playerFunction				#codeValuePlayerFunction
 			|	codeValue DOT objectFunction				#codeValueObjectFunction
 			|	codeValue boolOp codeValue					#codeValueBoolOperator //AND/OR
-			|	codeValue LBLOCK codeValue RBLOCK		#codeValueListIndex
+			|	codeValue LBLOCK codeValue RBLOCK			#codeValueListIndex
 			|	EXCL codeValue								#codeValueBoolNot
 			|	codeValue compareAdd codeValue				#codeValueBoolCompare // ==, !=, >, etc.
 			|	LBLOCK codeValue (COMMA codeValue)* RBLOCK	#codeValueList

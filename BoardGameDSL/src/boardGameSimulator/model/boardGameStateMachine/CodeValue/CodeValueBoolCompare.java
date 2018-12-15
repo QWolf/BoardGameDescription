@@ -10,6 +10,7 @@ import boardGameSimulator.model.boardGameStateMachine.Variable.VarOwner;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarPlayer;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarType;
 import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
+import boardGameSimulator.model.boardGameStateMachine.Variable.VarOwner.OwnerType;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.GameObjectInstance;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.Location;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.Owner;
@@ -38,6 +39,10 @@ public class CodeValueBoolCompare extends CodeValue {
 		Variable calculatedPar1 = par1.getValue(scope);
 		Variable calculatedPar2 = par2.getValue(scope);
 		boolean returnValue = false;
+		
+		System.out.println("---------CVBool-----");
+		System.out.println(calculatedPar1);
+		System.out.println(calculatedPar2);
 
 		switch (calculatedPar1.getVarType()) {
 		case Boolean:
@@ -103,13 +108,20 @@ public class CodeValueBoolCompare extends CodeValue {
 			break;
 		case Owner:
 			Owner ownPar1 = ((VarOwner) calculatedPar1).getValue();
-			Owner ownPar2 = ((VarOwner) calculatedPar2).getValue();
+			Owner ownPar2 = null;
+			
+			if(calculatedPar2.getVarType() == VarType.Owner){
+				ownPar2 = ((VarOwner) calculatedPar2).getValue();
+			} else if(calculatedPar2.getVarType() == VarType.Player){
+				ownPar2 = new Owner(((VarPlayer) calculatedPar2).getValue());
+			}
+
 			switch (co) {
 			case EQ:
-				returnValue = ownPar1.equals(ownPar2);
+				returnValue = ownPar1.isSameOwner(ownPar2);
 				break;
 			case NE:
-				returnValue = !ownPar2.equals(ownPar2);
+				returnValue = !ownPar1.isSameOwner(ownPar2);
 				break;
 			default:
 				System.out.println("Invalid compare operator for Objects!");
@@ -118,7 +130,18 @@ public class CodeValueBoolCompare extends CodeValue {
 			break;
 		case Player:
 			Player playerPar1 = ((VarPlayer) calculatedPar1).getValue();
-			Player playerPar2 = ((VarPlayer) calculatedPar2).getValue();
+			Player playerPar2 = null;
+			
+			if(calculatedPar2.getVarType() == VarType.Player){
+				playerPar2 = ((VarPlayer) calculatedPar2).getValue();
+			}else if(calculatedPar2.getVarType() == VarType.Owner){
+				//If par 2 is owner, get player object out of it, else set null (-> to make it different from par1)
+				Owner playerParOwner2 = ((VarOwner)calculatedPar2).getValue();
+				if(playerParOwner2.getOwnerType() == OwnerType.Player){
+					playerPar2 = playerParOwner2.getPlayerOwner();
+				}
+			}
+			
 			switch (co) {
 			case EQ:
 				returnValue = playerPar1.getName() == playerPar2.getName();

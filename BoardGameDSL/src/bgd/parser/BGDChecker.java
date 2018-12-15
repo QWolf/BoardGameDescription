@@ -31,6 +31,7 @@ import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueBoolOpe
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueBoolOperator.BoolOperator;
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueIDFromLocation;
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueList;
+import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueListIndex;
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueLocationFunction;
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueLocationFunction.LocationFunction;
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueMultOp;
@@ -40,7 +41,6 @@ import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueObjectF
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValuePlainVariable;
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueStandardFunction;
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueStandardFunction.StandardFunction;
-import boardGameSimulator.model.boardGameStateMachine.Variable.CodeValueListIndex;
 import boardGameSimulator.model.boardGameStateMachine.Variable.MultiScopeVariableManager;
 import boardGameSimulator.model.boardGameStateMachine.Variable.SingleScopeVariableManager;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarGameObject;

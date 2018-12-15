@@ -90,22 +90,13 @@ public class ActionRound {
 		if (requiredArgumentNames != null) {
 			// TODO: Typechecking arguments (also in parser)
 			for (int i = 0; i < requiredArgumentNames.length; i++) {
-				if (!actionVarMan.addVariable(requiredArgumentNames[i], arguments[i])) {
-					System.out.println(
-							"Failed to add to VariableManager: " + requiredArgumentNames[i] + " Name already exists");
-
-				}
+				actionVarMan.setVariable(requiredArgumentNames[i], arguments[i]);
 				;
 			}
 		}
 		if (isAction && !satisfiesRequirements()) {
-			try {
-				throw new Exception("Requirement did not resolve to true");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
+			System.out.println("Unable to perform action " + name + " . Requirements were not met!");
+			return new CodeLineReturn(CodeLineReturnType.ActionInvalid, false);
 		} else {
 			CodeLineReturn clr = new CodeLineReturn(CodeLineReturnType.Repeat, false);
 			while (clr.isRepeat()) {
@@ -125,6 +116,7 @@ public class ActionRound {
 			VarBool reqVariable = (VarBool) req.getValue(multiScopeVarMan);
 
 			if (!reqVariable.getValue()) {
+				System.out.println(req.toString() +  " was not met!");
 				return false;
 			}
 		}
@@ -147,5 +139,9 @@ public class ActionRound {
 		returnString += ")";
 
 		return returnString;
+	}
+
+	public int argumentNumber() {
+		return requiredArgumentNames.length;
 	}
 }

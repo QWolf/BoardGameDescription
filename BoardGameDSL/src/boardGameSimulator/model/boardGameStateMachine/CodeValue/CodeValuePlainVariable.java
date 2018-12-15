@@ -47,9 +47,8 @@ public class CodeValuePlainVariable extends CodeValue {
 	public Variable getValue(MultiScopeVariableManager scope) {
 		if ((idName == null)) {
 			return storedVariable;
-		} else if(scope.getVariableGameObject(idName) != null){
-			
-			return scope.getVariableGameObject(idName);
+		} else if(scope.getVariable(idName) != null){			
+			return scope.getVariable(idName);
 		} else if(game.getPlayer(idName)!= null){
 			return new VarPlayer(game.getPlayer(idName));
 		} else if(game.getLocation(idName)!= null){
@@ -57,8 +56,12 @@ public class CodeValuePlainVariable extends CodeValue {
 		} else if(idName.equals("CurrentTurn")){
 			return new VarPlayer( game.getCurrentTurn());
 		}
-		System.out.println("CodeValuePlainVariable could not be resolved!");
-		System.out.println(idName);
+//		System.out.println(scope.getRoundActionScope().getVariable(idName));
+//		System.out.println("CodeValuePlainVariable could not be resolved!");
+//		System.out.println(idName);
+//		System.out.println(scope.getRoundActionScope());
+//		System.out.println(scope.getRoundActionScope().getVariable("l"));
+//		System.out.println("~~~~");
 		return null;
 
 	}

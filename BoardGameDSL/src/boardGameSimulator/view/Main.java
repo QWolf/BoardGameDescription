@@ -32,13 +32,13 @@ public class Main implements ViewInterface {
 		}
 		sc.close();
 	}
-	
-	public void parseInput(){
+
+	public void parseInput() {
 		String[] args = sc.nextLine().split(" ");
 		switch (args[0]) {
 		case ("ParseGame"):
 			loadGame(args);
-		
+
 			break;
 		case ("Action"):
 			parseAction(args);
@@ -54,9 +54,9 @@ public class Main implements ViewInterface {
 		case ("StartGame"):
 			smc.startGame();
 			break;
-		 case ("Print"):
-			 print(args);
-		 break;
+		case ("Print"):
+			print(args);
+			break;
 		// case ("Action"):
 		//
 		// break;
@@ -83,11 +83,12 @@ public class Main implements ViewInterface {
 		}
 
 	}
-	
-	public void print(String[] args){
-		if(args[1].equals("Turn")){
-			System.out.println("It is currently " + game.getCurrentTurn().getPlayerName() + "'s Turn (" + game.getCurrentTurn().getName() + ")");
-		} else if (args[1].equals("Game")){
+
+	public void print(String[] args) {
+		if (args[1].equals("Turn")) {
+			System.out.println("It is currently " + game.getCurrentTurn().getPlayerName() + "'s Turn ("
+					+ game.getCurrentTurn().getName() + ")");
+		} else if (args[1].equals("Game")) {
 			game.printExtended();
 		}
 	}
@@ -98,10 +99,22 @@ public class Main implements ViewInterface {
 	}
 
 	private boolean parseAction(String[] args) {
+
 		if (args[0].equals("Action") && args.length >= 2) {
-			this.actionName = args[1];
-			this.actionArguments = Arrays.copyOfRange(args, 2, args.length);
-			return true;
+			if (game.getActionRound(args[1]) == null) {
+				System.out.println("Actionname not recognized: " + args[1]);
+				return false;
+			} else if ((args.length - 2) < game.getActionRound(args[1]).argumentNumber()) {
+				System.out.println("Not enough arguments supplied!");
+				return false;
+			} else if (getParameters(Arrays.copyOfRange(args, 2, args.length)) == null) {
+				System.out.println("Could not recognize arguments to variables");
+				return false;
+			} else {
+				this.actionName = args[1];
+				this.actionArguments = Arrays.copyOfRange(args, 2, args.length);
+				return true;
+			}
 
 		} else {
 			return false;
@@ -127,8 +140,8 @@ public class Main implements ViewInterface {
 
 	@Override
 	public String getActionName() {
-		System.out.println("D1 Value: "+ game.getGameObjectInstance("D1").getRandomizer().getValue());
-		if (this.actionName != null) {
+		System.out.println("D1 Value: " + game.getGameObjectInstance("D1").getRandomizer().getValue());
+		if (this.actionName != null && getParameters() != null) {
 			return actionName;
 		} else {
 			waitForActionInput();
@@ -142,6 +155,22 @@ public class Main implements ViewInterface {
 
 		for (int i = 0; i < vars.length; i++) {
 			vars[i] = parseVariable(actionArguments[i]);
+			if (vars[i] == null) {
+				return null;
+			}
+		}
+
+		return vars;
+	}
+
+	public Variable[] getParameters(String[] pars) {
+		Variable[] vars = new Variable[pars.length];
+
+		for (int i = 0; i < vars.length; i++) {
+			vars[i] = parseVariable(pars[i]);
+			if (vars[i] == null) {
+				return null;
+			}
 		}
 
 		return vars;
@@ -182,10 +211,10 @@ public class Main implements ViewInterface {
 	@Override
 	public Variable[] getActionParameters() {
 		Variable[] arguments = new Variable[actionArguments.length];
-		for(int i = 0; i<arguments.length; i++){
+		for (int i = 0; i < arguments.length; i++) {
 			arguments[i] = parseVariable(actionArguments[i]);
 		}
-		
+
 		return arguments;
 	}
 
@@ -193,13 +222,12 @@ public class Main implements ViewInterface {
 	public void clearNextActionName() {
 		actionName = null;
 
-		
 	}
 
 	@Override
 	public void clearNextParameters() {
 		actionArguments = null;
-		
+
 	}
 
 }

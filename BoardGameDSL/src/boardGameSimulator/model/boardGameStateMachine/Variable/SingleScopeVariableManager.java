@@ -28,6 +28,10 @@ public class SingleScopeVariableManager {
 		return error;
 	}
 	
+	public void setVariable(String name, Variable v){
+		varList.put(name, v);
+	}
+	
 	public Variable getVariable(String name){
 		return varList.get(name);
 	}

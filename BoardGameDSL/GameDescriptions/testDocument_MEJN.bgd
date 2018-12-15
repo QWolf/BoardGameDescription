@@ -363,11 +363,11 @@ Actions{
 			l.Owner == CurrentTurn;
 			l.PawnSupply == True;
 			count(l.contains()) > 0;
-			count(CurrentTurn.Startloc.contains()) == 0
+			(count(CurrentTurn.StartLoc.contains()) == 0)
 			||
-			CurrentTurn.Startloc.contains()[0].Owner != CurrentTurn;
+			(CurrentTurn.StartLoc.contains()[0].Owner != CurrentTurn);
 		}effect{
-			move l.contains()[0]  CurrentTurn.Startloc;
+			move l.contains()[0]  CurrentTurn.StartLoc;
 			Randomize NoLoc.D1;
 			NoLoc.StartNewPawnAllowed = False;
 			Turn();

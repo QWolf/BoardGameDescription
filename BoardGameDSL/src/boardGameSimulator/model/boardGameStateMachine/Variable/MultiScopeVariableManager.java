@@ -39,12 +39,20 @@ public class MultiScopeVariableManager {
 
 	public Variable getVariable(String name) {
 		// Find variable in scope of round/action
+
 		if (roundAction != null) {
+
 			if (roundAction.containsKey(name)) {
 				return roundAction.getVariable(name);
 			}
+		} 
+		if(gameObject != null){
+			if(gameObject.containsKey(name)){
+				return gameObject.getVariable(name);
+			}
 		}
 
+		
 		// If not found, find in global scope
 		return global.getVariable(name);
 	}
@@ -60,14 +68,6 @@ public class MultiScopeVariableManager {
 
 	public void removeGameObjectScope() {
 		gameObject = null;
-	}
-
-	public Variable getVariableGameObject(String name) {
-		if (gameObject == null) {
-			return null;
-		} else {
-			return gameObject.getVariable(name);
-		}
 	}
 
 }
