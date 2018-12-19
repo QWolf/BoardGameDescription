@@ -44,7 +44,7 @@ public class Main implements ViewInterface {
 			parseAction(args);
 			break;
 		case ("Setup"):
-			if (smc.HasStarted()) {
+			if (smc == null || smc.HasStarted()) {
 				System.out.println("Game has already started!");
 			} else {
 				runSetup(args);

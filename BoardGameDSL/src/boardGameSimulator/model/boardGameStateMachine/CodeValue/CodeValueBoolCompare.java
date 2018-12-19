@@ -40,9 +40,10 @@ public class CodeValueBoolCompare extends CodeValue {
 		Variable calculatedPar2 = par2.getValue(scope);
 		boolean returnValue = false;
 		
-		System.out.println("---------CVBool-----");
-		System.out.println(calculatedPar1);
-		System.out.println(calculatedPar2);
+//		System.out.println("---------CVBool-----");
+//		System.out.println(calculatedPar1);
+//		System.out.println(calculatedPar2);
+//		System.out.println(co);
 
 		switch (calculatedPar1.getVarType()) {
 		case Boolean:
@@ -64,14 +65,30 @@ public class CodeValueBoolCompare extends CodeValue {
 
 		case Double:
 			double doublePar1 = ((VarDouble) calculatedPar1).getValue();
-			double doublePar2 = ((VarDouble) calculatedPar2).getValue();
+			double doublePar2 = 0;
+			
+			if(calculatedPar2.getVarType() == VarType.Double){
+				doublePar2 = ((VarDouble) calculatedPar2).getValue();
+			} else if(calculatedPar2.getVarType()==VarType.Int){
+				doublePar2 = ((VarInt) calculatedPar2).getValue();
+			} else {
+				System.out.println("No input for Double (CodeValueBool)");
+			}
 
 			returnValue = compareDouble(doublePar1, doublePar2, co);
 			break;
 		case Int:
 			int intPar1 = ((VarInt) calculatedPar1).getValue();
-			int intPar2 = ((VarInt) calculatedPar2).getValue();
+			int intPar2 = 0;
 
+			if(calculatedPar2.getVarType() == VarType.Int){
+				intPar2 = ((VarInt) calculatedPar2).getValue();
+			} else if(calculatedPar2.getVarType()==VarType.Double){
+				intPar2 = (int) Math.round(((VarDouble) calculatedPar2).getValue());
+			} else {
+				System.out.println("No input for Double (CodeValueBool)");
+			}
+			
 			returnValue = compareDouble((double) intPar1, (double) intPar2, co);
 			break;
 		// case List:
@@ -164,6 +181,8 @@ public class CodeValueBoolCompare extends CodeValue {
 			return null;
 		}
 
+		
+//		System.out.println("CVBoolCompare Result: "+ returnValue);
 		return new VarBool(returnValue);
 
 	}

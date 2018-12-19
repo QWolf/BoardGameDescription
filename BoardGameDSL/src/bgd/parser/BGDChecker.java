@@ -451,10 +451,23 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 	public ParseReturn visitNonReturnFunctionActionRoundNoReturn(
 			@NotNull BGDParser.NonReturnFunctionActionRoundNoReturnContext ctx) {
 		CodeValue[] arguments = null;
+		System.out.println("-!VisitNOnReturnFunctionActionRoundNoRetunrn");
+		System.out.println(ctx.getText());
 		if (ctx.performActionArguments() != null) {
-			arguments = visit(ctx.performActionArguments()).getCodeValueList();
+			arguments = new CodeValue[ctx.performActionArguments().codeValue().size()];
+			
+			for(int i = 0; i<arguments.length; i++){
+				arguments[i] = visit(ctx.performActionArguments().codeValue(i)).getCodeValue();
+			}
+			
 		} else {
 			arguments = new CodeValue[0];
+		}
+		
+		System.out.println(arguments);
+		for(CodeValue arg : arguments){
+			System.out.println(arg);
+			System.out.println(arg.toRawString());
 		}
 
 		
@@ -656,7 +669,7 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 
 		CodeValue cv = visit(ctx.codeValue()).getCodeValue();
 		String varName = ctx.getVariable().ID().getText();
-		CodeValue codeValue = new CodeValueIDFromLocation(VarType.Unspecified, cv, varName);
+		CodeValue codeValue = new CodeValueIDFromLocation(VarType.Unspecified, cv, varName, ctx.getText());
 
 		ParseReturn pr = new ParseReturn(ParseReturnValue.CodeValue);
 		pr.setCodeValue(codeValue);
@@ -682,7 +695,7 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 		}
 
 		CodeValue codeValue = new CodeValueActionRound(VarType.Unspecified, game.getActionRound(ctx.ID().getText()),
-				arguments);
+				arguments, ctx.getText());
 
 		ParseReturn pr = new ParseReturn(ParseReturnValue.CodeValue);
 		pr.setCodeValue(codeValue);
@@ -785,17 +798,37 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 		ParseReturn pr = new ParseReturn(ParseReturnValue.CodeValue);
 
 		if (ctx.ID() != null) {
-			pr.setCodeValue(new CodeValuePlainVariable(VarType.Unspecified, ctx.ID().getText(), game));
+			CodeValuePlainVariable cvpv = new CodeValuePlainVariable(VarType.Unspecified, ctx.ID().getText(), game, ctx.getText());
+			pr.setCodeValue(cvpv);
+//			System.out.println("IDNAME " + cvpv.idName);
 		} else if (ctx.LOWID() != null) {
-			pr.setCodeValue(new CodeValuePlainVariable(VarType.Unspecified, ctx.LOWID().getText(), game));
+			pr.setCodeValue(new CodeValuePlainVariable(VarType.Unspecified, ctx.LOWID().getText(), game, ctx.getText()));
+			CodeValuePlainVariable cvpv = new CodeValuePlainVariable(VarType.Unspecified, ctx.LOWID().getText(), game, ctx.getText());
+			pr.setCodeValue(cvpv);
+//			System.out.println("IDNAME " + cvpv.idName);
+		
 		} else if (ctx.bool() != null) {
 			return visit(ctx.bool());
 		} else {
 			return visit(ctx.number());
 		}
-
+		
+//		System.out.println("----Checker - CodeValueValue");
+//		System.out.println(ctx.getText());
+//		System.out.println(pr);
+//		System.out.println(parseReturnToVariable(pr));
+//		System.out.println(ctx.ID() == null);
+//		System.out.println(ctx.LOWID() == null);
+//		System.out.println(pr.getIDVar());
+//		
 		return pr;
 	}
+	
+	/*
+	 * ########################################
+	 * Actions
+	 * #########################################
+	 */
 
 	@Override
 	public ParseReturn visitActions(@NotNull BGDParser.ActionsContext ctx) {
@@ -1068,6 +1101,8 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 			v = new VarLocation(game.getLocation(ret.getIDVar()));
 		} else if (game.getGameObjectInstance(ret.getIDVar()) != null) {
 			v = new VarGameObject(game.getGameObjectInstance(ret.getIDVar()));
+		} else{
+			System.out.println("Error, parsereturn could not be converted to Variable");
 		}
 		return v;
 	}

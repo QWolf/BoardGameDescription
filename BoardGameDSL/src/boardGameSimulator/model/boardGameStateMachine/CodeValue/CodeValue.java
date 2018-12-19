@@ -13,10 +13,16 @@ import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 public abstract class CodeValue {
 	
 	protected VarType varType;
+	private String rawString;
 	
+
 	
 	public CodeValue(VarType vt){
+		this(vt, "NoStringGiven");
+	}
+	public CodeValue(VarType vt, String rawString){
 		this.varType = vt;
+		this.rawString = rawString;
 	}
 	
 	
@@ -26,6 +32,10 @@ public abstract class CodeValue {
 	
 	public VarType getType(){
 		return varType;
+	}
+	
+	public String toRawString(){
+		return "Raw CodeValue: " + rawString;
 	}
 
 }

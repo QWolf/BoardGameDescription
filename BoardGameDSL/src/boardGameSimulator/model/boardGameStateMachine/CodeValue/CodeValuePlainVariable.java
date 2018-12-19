@@ -18,8 +18,8 @@ import boardGameSimulator.model.boardGameStateMachine.stateModel.Game;
 
 public class CodeValuePlainVariable extends CodeValue {
 
-	Variable storedVariable = null;
-	String idName = null;
+	private Variable storedVariable = null;
+	public String idName = null;
 	private Game game;
 
 	public CodeValuePlainVariable(int i) {
@@ -37,8 +37,8 @@ public class CodeValuePlainVariable extends CodeValue {
 		storedVariable = new VarBool(b);
 	}
 
-	public CodeValuePlainVariable(VarType vt, String name, Game g) {
-		super(vt);
+	public CodeValuePlainVariable(VarType vt, String name, Game g, String rawSTring) {
+		super(vt, rawSTring);
 		this.idName = name;
 		this.game = g;
 	}
@@ -56,12 +56,12 @@ public class CodeValuePlainVariable extends CodeValue {
 		} else if(idName.equals("CurrentTurn")){
 			return new VarPlayer( game.getCurrentTurn());
 		}
-//		System.out.println(scope.getRoundActionScope().getVariable(idName));
-//		System.out.println("CodeValuePlainVariable could not be resolved!");
-//		System.out.println(idName);
-//		System.out.println(scope.getRoundActionScope());
-//		System.out.println(scope.getRoundActionScope().getVariable("l"));
-//		System.out.println("~~~~");
+		System.out.println("-!-!CodeValuePlainVariable could not be resolved!");
+		System.out.println(scope.getRoundActionScope().getVariable(idName));
+		System.out.println(idName);
+		System.out.println(scope.getRoundActionScope());
+		System.out.println(scope.getRoundActionScope().getVariable("p"));
+		System.out.println("-!-!~~~~");
 		return null;
 
 	}

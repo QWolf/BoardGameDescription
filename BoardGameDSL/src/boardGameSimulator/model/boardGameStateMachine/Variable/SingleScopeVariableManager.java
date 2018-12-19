@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class SingleScopeVariableManager {
 	
-	private HashMap<String,Variable> varList = new HashMap<String,Variable>();
+	public HashMap<String,Variable> varList = new HashMap<String,Variable>();
 	
 	public SingleScopeVariableManager(){
 		
@@ -29,7 +29,11 @@ public class SingleScopeVariableManager {
 	}
 	
 	public void setVariable(String name, Variable v){
+//		System.out.println("--" + "SingleScopeVarManager");
+//		System.out.println("--" + varList.containsKey(name));
 		varList.put(name, v);
+//		System.out.println("--" + varList.containsKey(name));
+
 	}
 	
 	public Variable getVariable(String name){

@@ -309,9 +309,9 @@ Objects{
 	
 	Dice{
 		public Owner = public;	
-		public FavPawn = B1;
 		public Randomizer{
-			[1,2,3,4,5,6]
+			//[1,2,3,4,5,6]
+			[6]
 		}
 	}	
 }
@@ -337,10 +337,10 @@ Rounds{
 	}	
 	
 	CheckIsFinished(Player p){
-		if( count(p.GoalLocs[0].contains()) != 0 &&
-			count(p.GoalLocs[1].contains()) != 0 &&
-			count(p.GoalLocs[2].contains()) != 0 &&
-			count(p.GoalLocs[3].contains()) != 0 ){
+		if( (count(p.GoalLocs[0].contains()) != 0) &&
+			(count(p.GoalLocs[1].contains()) != 0) &&
+			(count(p.GoalLocs[2].contains()) != 0) &&
+			(count(p.GoalLocs[3].contains()) != 0) ){
 				Winner p;
 				FinishGame;
 		}
@@ -383,6 +383,7 @@ Actions{
 	
 	MovePawn(Pawn p, Location goal){
 		requires{
+			CurrentTurn.SupplyLoc != p.Location;
 			p.Owner == CurrentTurn;
 			goal.Locnumber == (AdjustedGoalNumber(p.Location.Locnumber + NoLoc.D1.Value));
 			(count(goal.contains()) == 0)
@@ -390,11 +391,11 @@ Actions{
 			(count(goal.contains()[0].Owner != CurrentTurn));
 		}effect{
 			//Return taken pawn
-			if(count(goal.contains()) != 0){
-				move goal.contains()[0] goal.contains()[0].Owner.SupplyLoc;
-			}
+			//if(count(goal.contains()) != 0){
+				//move goal.contains()[0] goal.contains()[0].Owner.SupplyLoc;
+			//}
 			//Move own pawn
-			move p (GetLocationAhead(p.Location, NoLoc.D1.Value));
+			move p goal;
 			CheckIsFinished(CurrentTurn);
 		}
 	}

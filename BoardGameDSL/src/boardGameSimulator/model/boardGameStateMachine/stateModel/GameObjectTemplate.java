@@ -77,7 +77,7 @@ public class GameObjectTemplate {
 		}
 		
 		if(ownerIsLocation){
-			instance.getVarManager().addVariable("Owner", new VarLocation(loc));
+			instance.getVarManager().addVariable("Owner", loc.getVarManager().getVariable("Owner"));
 		}
 		return instance;
 	}

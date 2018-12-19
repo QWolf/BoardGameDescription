@@ -15,6 +15,7 @@ import bgd.grammar.BGDLexer;
 import bgd.grammar.BGDParser;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarInt;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarList;
+import boardGameSimulator.model.boardGameStateMachine.Variable.VarLocation;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.Game;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.GameObjectInstance;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.Player;
@@ -103,7 +104,7 @@ public class Parser {
 		VarInt i = (VarInt) ((VarList) dice.getRandomizer().getVariableList()).getSize();
 		System.out.println("Randomizer Size: " + i.getValue());
 		System.out.println("Randomizer Value: " + ((VarInt)dice.getRandomizer().getValue()).getValue());
-		System.out.println("Randomizer side 3: " + ((VarInt)((VarList)dice.getRandomizer().getVariableList()).getValue()[2]).getValue());
+//		System.out.println("Randomizer side 3: " + ((VarInt)((VarList)dice.getRandomizer().getVariableList()).getValue()[2]).getValue());
 //		System.out.println()
 		
 		Player blue = p.getGame().getPlayer("B");
@@ -114,5 +115,14 @@ public class Parser {
 		System.out.println(p.getGame().getVarMan().getVariable("D1"));
 		
 		
+		Player ct = p.getGame().getPlayer("B");
+		System.out.println(ct.getVarManager().getVariable("StartLoc"));
+		System.out.println(((VarLocation) ct.getVarManager().getVariable("StartLoc")).getValue().getInventory());
+		
+		
+		System.out.println(p.getGame().getActionRound("MovePawn"));
+		System.out.println(p.getGame().getActionRound("CheckIsFinished").argumentNumber());
+		System.out.println(p.getGame().getActionRound("CheckIsFinished").getArguments()[0]);
+		System.out.println(ct.getVarManager().getVariable("GoalLocs"));
 	}
 }

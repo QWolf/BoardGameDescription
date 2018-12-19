@@ -10,6 +10,9 @@ public class VarList extends Variable{
 	public VarList(Variable[] vars){
 		super(VarType.List);
 		value = vars;
+		if(value == null){
+			System.out.println("VarList is null!!!!");
+		}
 	}
 	
 	public Variable[] getValue(){
@@ -21,6 +24,13 @@ public class VarList extends Variable{
 	}
 	
 	public Variable getIndex(int i){
+		System.out.println("VarList");
+		System.out.println(value);
+		System.out.println(value.length);
+		for(Variable v : value){
+			System.out.println(v);
+		}
+		
 		return value[i];
 	}
 

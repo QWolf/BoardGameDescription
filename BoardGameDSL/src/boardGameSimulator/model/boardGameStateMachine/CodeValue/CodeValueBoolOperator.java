@@ -25,16 +25,29 @@ public class CodeValueBoolOperator extends CodeValue {
 	@Override
 	public Variable getValue(MultiScopeVariableManager scope) {
 		VarBool calculatedPar1 = (VarBool) par1.getValue(scope);
-		VarBool calculatedPar2 = (VarBool) par2.getValue(scope);
+		
+		boolean outcome = false;
 		switch (operator) {
 		case And:
-			return new VarBool(calculatedPar1.getValue() && calculatedPar2.getValue());
+			if(calculatedPar1.getValue() == false){
+				outcome = false;
+				break;
+			}else{
+				outcome = ((VarBool) par2.getValue(scope)).getValue();
+			}
+			break;
 		case Or:
-			return new VarBool(calculatedPar1.getValue() || calculatedPar2.getValue());
+			if(calculatedPar1.getValue() == true){
+				outcome = true;
+			}else{
+				outcome = ((VarBool) par2.getValue(scope)).getValue();
+			}
+			break;
 		default:
 			return null;
 
 		}
+		return new VarBool(outcome);
 	}
 
 }

@@ -7,6 +7,7 @@ import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValue;
 import boardGameSimulator.model.boardGameStateMachine.Variable.MultiScopeVariableManager;
 import boardGameSimulator.model.boardGameStateMachine.Variable.SingleScopeVariableManager;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarBool;
+import boardGameSimulator.model.boardGameStateMachine.Variable.VarPlayer;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarType;
 import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 
@@ -87,13 +88,31 @@ public class ActionRound {
 
 	// Executes action and returns the value (if appropriate)
 	public CodeLineReturn executeActionRound(Variable[] arguments) {
+//		System.out.println("----ActionRounc----" + this.name);
+//		System.out.println(multiScopeVarMan);
+//		System.out.println(multiScopeVarMan.getRoundActionScope());
+//		System.out.println(requiredArgumentNames);
+		
+		
+		
 		if (requiredArgumentNames != null) {
 			// TODO: Typechecking arguments (also in parser)
 			for (int i = 0; i < requiredArgumentNames.length; i++) {
 				actionVarMan.setVariable(requiredArgumentNames[i], arguments[i]);
-				;
+//				System.out.println("Added variable "+ requiredArgumentNames[i]);;
 			}
 		}
+//		System.out.println(multiScopeVarMan.getVariable("p"));
+//		System.out.println(multiScopeVarMan.getRoundActionScope().containsKey("p"));
+//		System.out.println(actionVarMan.containsKey("p"));
+//		System.out.println("##" + actionVarMan.getVariable("p"));
+//		System.out.println("##" + actionVarMan.varList.get("p"));
+		try{
+			if(name.equals("CheckIsFinished")){
+		Player p = ((VarPlayer) actionVarMan.getVariable("p")).getValue();
+			}
+		}catch (NullPointerException e){System.err.println(e);}
+		
 		if (isAction && !satisfiesRequirements()) {
 			System.out.println("Unable to perform action " + name + " . Requirements were not met!");
 			return new CodeLineReturn(CodeLineReturnType.ActionInvalid, false);
@@ -143,5 +162,9 @@ public class ActionRound {
 
 	public int argumentNumber() {
 		return requiredArgumentNames.length;
+	}
+
+	public String[] getArguments() {
+		return requiredArgumentNames;
 	}
 }
