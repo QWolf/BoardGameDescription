@@ -1,66 +1,87 @@
 package boardGameSimulator.model.boardGameRecording;
 
+import java.util.ArrayList;
+
 import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 
 public class GameRecording {
-
 	
-	private ActionRecord[] ar;
+	//TODO: Incorporate Setup
+	
+	private ArrayList<Record> recordList = new ArrayList<Record>();
+
+	private ArrayList<ActionRecord> ar = new ArrayList<ActionRecord>();
 	private int nextAction = 0;
+
+	private ArrayList<RandomRecord> rr = new ArrayList<RandomRecord>();
+	private int nextRandom = 0;
 	
 	
-	
-	public GameRecording(){
+
+	public String getNextActionName() {
+		return ar.get(nextAction).getActionName();
+	}
+
+	public void writeRandom(int i, Variable value) {
+		RandomRecord record = new RandomRecord(i, value);
+		rr.add(record);
+		recordList.add(record);
 		
 	}
 	
-	
-	
-	public String getNextActionName(){
-		return ar[nextAction].getActionName();
-	}
-
-
-
-	public void writeRandom(Variable value) {
-		// TODO Auto-generated method stub
+	public void writeRandom(int i, String value) {
+		RandomRecord record = new RandomRecord(i, value);
+		rr.add(record);
+		recordList.add(record);
 		
 	}
-
-
 
 	public void advanceRandom() {
-		// TODO Auto-generated method stub
-		
+		nextRandom++;
 	}
 
-
-
-	public void writeAction(String actionround, String player, Variable[] parameters) {
-		// TODO Auto-generated method stub
-		
+	public void writeAction(String actionround, String player, String[] parameters) {
+		ActionRecord record = new ActionRecord(player, actionround, parameters);
+		ar.add(record);
+		recordList.add(record);
 	}
-
-
 
 	public void advanceActions() {
-		// TODO Auto-generated method stub
-		
+		nextAction++;
 	}
 
-
-
-	public Variable getNextRandomVariable() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getNextRandomVariable() {
+		return rr.get(nextRandom).getRandom();
 	}
 
-
-
-	public Variable[] getNextActionParameters() {
-		// TODO Auto-generated method stub
-		return null;
+	public String[] getNextActionParameters() {
+		return ar.get(nextAction).getArguments();
 	}
+
 	
+	public String printGameRecordSorted(){
+		
+		String result = "";
+		result += "Actions: \r\n";
+		for(ActionRecord a : ar){
+			result += a.recordToShortString() + "\r\n";
+		}
+
+		result += "Random: \r\n";
+		for(RandomRecord r : rr){
+			result += r.recordToShortString() + "\r\n";
+		}
+		
+		return result;
+	}
+	public String printGameRecordUnsorted(){
+		
+		String result = "";
+		for(Record r : recordList){
+			result += r.recordToString() + "\r\n";
+		}
+		
+		return result;
+	}	
 	
 }

@@ -12,6 +12,7 @@ import boardGameSimulator.model.boardGameStateMachine.stateModel.Game;
 
 /**
  * Mangages a CodeValue which is base level
+ * 
  * @author Peter
  *
  */
@@ -47,23 +48,31 @@ public class CodeValuePlainVariable extends CodeValue {
 	public Variable getValue(MultiScopeVariableManager scope) {
 		if ((idName == null)) {
 			return storedVariable;
-		} else if(scope.getVariable(idName) != null){			
+		} else if (idName.equals("CurrentTurn")) {
+//			System.out.println("CurrentTurn in CVPlain!");
+//			System.out.println(game.getCurrentTurn());
+			return new VarPlayer(game.getCurrentTurn());
+		} else if (scope.getVariable(idName) != null) {
 			return scope.getVariable(idName);
-		} else if(game.getPlayer(idName)!= null){
+		} else if (game.getPlayer(idName) != null) {
 			return new VarPlayer(game.getPlayer(idName));
-		} else if(game.getLocation(idName)!= null){
+		} else if (game.getLocation(idName) != null) {
 			return new VarLocation(game.getLocation(idName));
-		} else if(idName.equals("CurrentTurn")){
-			return new VarPlayer( game.getCurrentTurn());
 		}
-		System.out.println("-!-!CodeValuePlainVariable could not be resolved!");
-		System.out.println(scope.getRoundActionScope().getVariable(idName));
-		System.out.println(idName);
-		System.out.println(scope.getRoundActionScope());
-		System.out.println(scope.getRoundActionScope().getVariable("p"));
-		System.out.println("-!-!~~~~");
+//		System.out.println("-!-!CodeValuePlainVariable could not be resolved!");
+//		System.out.println(scope.getRoundActionScope().getVariable(idName));
+//		System.out.println(idName);
+//		System.out.println(scope.getRoundActionScope());
+//		System.out.println(scope.getRoundActionScope().getVariable("p"));
+//		System.out.println("-!-!~~~~");
 		return null;
 
+	}
+
+	public String toString() {
+		String output = "";
+		output += "Stored Variable: " + storedVariable + " Stored IDName: " + idName;
+		return output;
 	}
 
 }

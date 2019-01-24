@@ -1,5 +1,11 @@
 package boardGameSimulator.view;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -57,16 +63,93 @@ public class Main implements ViewInterface {
 		case ("Print"):
 			print(args);
 			break;
-		// case ("Action"):
-		//
-		// break;
-		// case ("Action"):
-		//
-		// break;
+
+		case ("Record"):
+			handleRecord(args);
+			break;
+
 		default:
 			System.out.println("Unkown input");
 		}
 
+	}
+
+	private void handleRecord(String[] args) {
+		if (args.length < 1) {
+			System.out.println("Unknown command, provide more arguments to 'Record'");
+		} else {
+			switch (args[1]) {
+			case ("Print"):
+				if (args.length == 3 && args[2].equals("Sorted")) {
+					System.out.println(smc.getGameRecordingSorted());
+				} else {
+					System.out.println(smc.getGameRecordingUnsorted());
+				}
+				break;
+			case ("Write"):
+				if (args.length < 3) {
+					System.out.println("Please provide a filename");
+					break;
+				} else {
+
+					String record = smc.getGameRecordingUnsorted();
+
+//					 BufferedWriter wr = null;
+//					         try {
+//					             // Open the file for writing, without removing its current content.
+//					             wr = new BufferedWriter(new FileWriter(new File(args[2])));
+//					             // Write a sample string to the end of the file.
+//					             wr.write(record);
+//					         }
+//					         catch(IOException e) {
+//					        	 //TODO fix errorhandling
+//					             e.printStackTrace();
+//					         }
+//					         finally {
+//					             // Close the file.
+//					             try {
+//					                 wr.close();
+//					             }
+//					             catch (IOException ex) {
+//						        	 //TODO fix errorhandling
+//					                 ex.printStackTrace();
+//					             }
+//					         }
+//					     }
+
+					
+					try {
+						FileWriter fileWriter = new FileWriter(args[2]);
+						fileWriter.write(record);
+						fileWriter.close();
+					} catch (IOException e) {
+						System.out.println("Could not create file at path " + args[2]);
+						System.err.println(e);
+					}
+				}
+				break;
+
+			case ("Load"):
+				if (args.length < 3) {
+					System.out.println("No file to load specified!");
+				} else {
+					try {
+						FileReader fr = new FileReader(args[2]);
+						smc.loadRecord(fr);
+
+					} catch (FileNotFoundException e) {
+						System.out.println("File not found, please try again");
+					}
+
+				}
+			break;
+ 
+			default:
+				System.out.println("Unknown command: " + args[1]);
+				break;
+			}
+
+		}
 	}
 
 	private void runSetup(String[] args) {
@@ -85,6 +168,10 @@ public class Main implements ViewInterface {
 	}
 
 	public void print(String[] args) {
+		if(args.length == 1){
+			System.out.println("Please specify whether you want to print the current turn or the gamestate");
+			return;
+		}
 		if (args[1].equals("Turn")) {
 			System.out.println("It is currently " + game.getCurrentTurn().getPlayerName() + "'s Turn ("
 					+ game.getCurrentTurn().getName() + ")");
@@ -154,7 +241,7 @@ public class Main implements ViewInterface {
 		Variable[] vars = new Variable[actionArguments.length];
 
 		for (int i = 0; i < vars.length; i++) {
-			vars[i] = parseVariable(actionArguments[i]);
+			vars[i] = parseVariable(game, actionArguments[i]);
 			if (vars[i] == null) {
 				return null;
 			}
@@ -167,7 +254,7 @@ public class Main implements ViewInterface {
 		Variable[] vars = new Variable[pars.length];
 
 		for (int i = 0; i < vars.length; i++) {
-			vars[i] = parseVariable(pars[i]);
+			vars[i] = parseVariable(game, pars[i]);
 			if (vars[i] == null) {
 				return null;
 			}
@@ -176,7 +263,7 @@ public class Main implements ViewInterface {
 		return vars;
 	}
 
-	private Variable parseVariable(String arg) {
+	public static Variable parseVariable(Game gameInstance, String arg) {
 		Variable v = null;
 		if (arg.equals("True")) {
 			v = new VarBool(true);
@@ -193,13 +280,13 @@ public class Main implements ViewInterface {
 				} catch (NumberFormatException e) {
 				}
 				if (v == null) {
-					if (game.getPlayer(arg) != null) {
+					if (gameInstance.getPlayer(arg) != null) {
 
-						v = new VarPlayer(game.getPlayer(arg));
-					} else if (game.getLocation(arg) != null) {
-						v = new VarLocation(game.getLocation(arg));
-					} else if (game.getGameObjectInstance(arg) != null) {
-						v = new VarGameObject(game.getGameObjectInstance(arg));
+						v = new VarPlayer(gameInstance.getPlayer(arg));
+					} else if (gameInstance.getLocation(arg) != null) {
+						v = new VarLocation(gameInstance.getLocation(arg));
+					} else if (gameInstance.getGameObjectInstance(arg) != null) {
+						v = new VarGameObject(gameInstance.getGameObjectInstance(arg));
 					}
 				}
 			}
@@ -212,7 +299,7 @@ public class Main implements ViewInterface {
 	public Variable[] getActionParameters() {
 		Variable[] arguments = new Variable[actionArguments.length];
 		for (int i = 0; i < arguments.length; i++) {
-			arguments[i] = parseVariable(actionArguments[i]);
+			arguments[i] = parseVariable(game, actionArguments[i]);
 		}
 
 		return arguments;

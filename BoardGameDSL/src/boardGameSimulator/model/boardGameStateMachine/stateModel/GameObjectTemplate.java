@@ -73,7 +73,7 @@ public class GameObjectTemplate {
 		//copy the randomizer, if any
 		if(randomizer != null){
 			instance.setRandomizer(new Randomizer(((VarList)randomizer.getVariableList()).getValue()));
-			instance.getRandomizer().setValue(randomizer.getValue());
+			instance.getRandomizer().setValue(randomizer.getValue(), randomizer.getCurrentIndex());
 		}
 		
 		if(ownerIsLocation){

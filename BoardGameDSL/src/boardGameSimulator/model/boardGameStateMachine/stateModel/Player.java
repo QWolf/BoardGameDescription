@@ -11,7 +11,7 @@ public class Player {
 	private SingleScopeVariableManager varManager = new SingleScopeVariableManager();
 	private Game game;
 	
-	private PlayerRanking ranking= new PlayerRanking();
+	private PlayerRanking ranking= new PlayerRanking(this);
 	private String playerName;
 	
 	

@@ -34,7 +34,7 @@ public class CodeValueActionRound extends CodeValue {
 
 	@Override
 	public Variable getValue(MultiScopeVariableManager scope) {
-		System.out.println("--------CVActionRound--123-");
+//		System.out.println("--------CVActionRound--123-");
 
 		
 		Variable[] calculatedParameters = new Variable[parameters.length];
@@ -42,10 +42,10 @@ public class CodeValueActionRound extends CodeValue {
 			calculatedParameters[i] = parameters[i].getValue(scope);
 		}
 		
-		System.out.println("--------CVActionRound---");
-		System.out.println(actionRound);
-		System.out.println(parameters);		
-		System.out.println(new VarList(calculatedParameters));
+//		System.out.println("--------CVActionRound---");
+//		System.out.println(actionRound);
+//		System.out.println(parameters);		
+//		System.out.println(new VarList(calculatedParameters));
 
 		executedSolution = actionRound.executeActionRound(calculatedParameters);
 		this.varType = executedSolution.getVariable().getVarType();

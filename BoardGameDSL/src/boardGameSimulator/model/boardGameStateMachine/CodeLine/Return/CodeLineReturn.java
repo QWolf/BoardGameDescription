@@ -9,7 +9,7 @@ public class CodeLineReturn {
 
 	/**
 	 * Signifies if more CodeLines after this should be considered. If true, no
-	 * more lines should be checked, as a Return or FinishGame has been hit
+	 * more lines should be checked, as a Return, Repeat or FinishGame has been hit
 	 */
 	private boolean isDone = false;
 	

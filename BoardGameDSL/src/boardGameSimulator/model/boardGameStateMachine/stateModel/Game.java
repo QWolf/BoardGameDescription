@@ -16,7 +16,11 @@ import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 public class Game {
 
 	private String gameName;
+
+	// Players: Actually contending for the win
 	private HashMap<String, Player> players = new HashMap<String, Player>();
+	// Entities: Both players contending for the win, as well as neutral forces
+	// which cannot win
 	private HashMap<String, Player> entities = new HashMap<String, Player>();
 	private Player[] turnOrder = new Player[0];
 	private int currentTurnIndex = 0;
@@ -114,11 +118,11 @@ public class Game {
 	}
 
 	public boolean addEntity(Player p) {
-		if(entities.put(p.getName(), p) == null){
+		if (entities.put(p.getName(), p) == null) {
 			varMan.addVariable(p.getName(), new VarPlayer(p));
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -229,6 +233,27 @@ public class Game {
 
 	public void print(String s) {
 		System.out.println(s);
+	}
+
+	public void printWinnersAndLosers() {
+
+		ArrayList<Player> winners = new ArrayList<Player>();
+		ArrayList<Player> losers = new ArrayList<Player>();
+
+		for (Player p : players.values()) {
+			if (p.getRanking().isWinner()) {
+				winners.add(p);
+			} else {
+				losers.add(p);
+			}
+		}
+		System.out.println("-----Results------");
+		for (Player p : winners) {
+			System.out.println(p.getRanking().getPlayerRankingAsString(true));
+		}
+		for (Player p : losers) {
+			System.out.println(p.getRanking().getPlayerRankingAsString(true));
+		}
 	}
 
 }

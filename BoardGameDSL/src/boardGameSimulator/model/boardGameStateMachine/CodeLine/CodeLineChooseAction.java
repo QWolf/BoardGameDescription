@@ -40,7 +40,7 @@ public class CodeLineChooseAction extends CodeLine{
 		StateMachineController smc = game.getStateMachineController();
 		
 		//Ask the SMC for a action to perform - either live or from a file
-		System.out.println("Asking for Action (CLChooseAction)");
+//		System.out.println("Asking for Action (CLChooseAction)");
 		
 		ActionRound ar = null;
 		Variable[] parameters = null;
@@ -54,7 +54,14 @@ public class CodeLineChooseAction extends CodeLine{
 		
 		
 		//Write action to the game log
-		smc.writeAction(ar.getName(), calculatedPlayer.getName(), parameters);
+		
+
+//		System.out.println("CodeLineChooseAction");
+//		System.out.println(ar.getName());
+//		System.out.println(calculatedPlayer.getName());
+//		System.out.println(smc.getNextActionParametersAsString(scope));
+		
+		smc.writeAction(ar.getName(), calculatedPlayer.getName(), smc.getNextActionParametersAsString(scope));
 		
 		return ret;
 	}

@@ -24,12 +24,12 @@ public class VarList extends Variable{
 	}
 	
 	public Variable getIndex(int i){
-		System.out.println("VarList");
-		System.out.println(value);
-		System.out.println(value.length);
-		for(Variable v : value){
-			System.out.println(v);
-		}
+//		System.out.println("------VarList");
+//		System.out.println(value);
+//		System.out.println(value.length);
+//		for(Variable v : value){
+//			System.out.println(v);
+//		}
 		
 		return value[i];
 	}
@@ -46,4 +46,5 @@ public class VarList extends Variable{
 			return new VarInt(value.length);
 		}
 	}
+	
 }

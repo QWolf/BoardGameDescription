@@ -1,12 +1,17 @@
 package boardGameSimulator.controller;
 
+import java.io.FileReader;
+
 import boardGameSimulator.model.boardGameRecording.GameRecording;
+import boardGameSimulator.model.boardGameRecording.RecordingParser;
 import boardGameSimulator.model.boardGameStateMachine.Variable.MultiScopeVariableManager;
 import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.ActionRound;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.Game;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.Player;
+import boardGameSimulator.view.Main;
 import boardGameSimulator.view.ViewInterface;
+
 
 public class StateMachineController {
 
@@ -35,18 +40,27 @@ public class StateMachineController {
 	public boolean usePredeterminedRandomResults() {
 		return usePredeterminedRandomResults;
 	}
-
+	
+	public void loadRecord(FileReader fr){
+		this.preRecorded = RecordingParser.parseFile(fr);
+		if(preRecorded == null){
+			return;
+		}
+		usePredeterminedActionsAndParameters = true;
+		usePredeterminedRandomResults = true;
+	}
+	
 	public boolean usePredeterminedActionsAndParameters() {
 		return usePredeterminedActionsAndParameters;
 	}
 
-	public Variable getNextRandomResult() {
+	public int getNextRandomResult() {
 		return preRecorded.getNextRandomVariable();
 
 	}
 
-	public void writeRandom(Variable value) {
-		currentRecording.writeRandom(value);
+	public void writeRandom(int i, Variable value) {
+		currentRecording.writeRandom(i, value);
 		if(usePredeterminedRandomResults){
 			preRecorded.advanceRandom();
 		}
@@ -71,7 +85,11 @@ public class StateMachineController {
 	public Variable[] getNextActionParameters(MultiScopeVariableManager scope) {
 		Variable [] parameters;
 		if (usePredeterminedActionsAndParameters) {
-			parameters = preRecorded.getNextActionParameters();
+			String[] stringParameters = preRecorded.getNextActionParameters();
+			parameters = new Variable[stringParameters.length];
+			for(int i = 0; i<parameters.length; i++){
+				parameters[i] = Main.parseVariable(game, stringParameters[i]);
+			}
 
 		} else {
 			parameters = view.getActionParameters();
@@ -79,8 +97,17 @@ public class StateMachineController {
 		}
 
 		return parameters;	}
+	
+	public String[] getNextActionParametersAsString(MultiScopeVariableManager scope){
+		Variable[] pars =  getNextActionParameters(scope);
+		String[] parAsString = new String[pars.length];
+		for(int i = 0; i<pars.length; i++){
+			parAsString[i] = pars[i].toString();
+		}
+		return parAsString;
+	}
 
-	public void writeAction(String actionround, String player, Variable[] parameters) {
+	public void writeAction(String actionround, String player, String[] parameters) {
 		currentRecording.writeAction(actionround, player, parameters);
 		if(usePredeterminedActionsAndParameters()){
 			preRecorded.advanceActions();
@@ -100,6 +127,16 @@ public class StateMachineController {
 	public void startGame() {
 		this.hasStarted = true;
 		game.getActionRound("Main").executeActionRound();
+		game.printWinnersAndLosers();
 	}
 
+	public String getGameRecordingSorted() {
+		return currentRecording.printGameRecordSorted();
+		
+	}
+
+	public String getGameRecordingUnsorted() {
+		return currentRecording.printGameRecordUnsorted();
+		
+	}
 }

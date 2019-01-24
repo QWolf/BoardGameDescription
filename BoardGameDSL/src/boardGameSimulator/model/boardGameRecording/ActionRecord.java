@@ -1,19 +1,19 @@
 package boardGameSimulator.model.boardGameRecording;
 
-import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
-
-public class ActionRecord {
+public class ActionRecord implements Record {
 
 	private String actionName;
-	private Variable[] arguments;
+	private String[] arguments;
+	private String player;
 
 	/**
 	 * A record of a single action
 	 * @param ar		The name of the Action that is to be performed, as action
 	 * @param arguments	The arguments that go with the action, as Variables
 	 */
-	public ActionRecord(String ar, Variable[] arguments) {
-		this.actionName = ar;
+	public ActionRecord(String player, String actionName, String[] arguments) {
+		this.player = player;
+		this.actionName = actionName;
 		this.arguments = arguments;
 
 	}
@@ -22,10 +22,31 @@ public class ActionRecord {
 		return actionName;
 	}
 	
-	public Variable[] getArguments(){
+	public String[] getArguments(){
 		return arguments;
 	}
 
+	public String getPlayer(){
+		return player;
+	}
+
+	public String recordToString() {
+		String action = "A " + player + " ";
+		action += actionName;
+		for(String a : arguments){
+			action += " " + a;
+		}
+		return action;
+	}
+
+	public String recordToShortString() {
+		String action = player + " ";
+		action += actionName;
+		for(String a : arguments){
+			action += " " + a;
+		}
+		return action;
+	}
 
 
 }

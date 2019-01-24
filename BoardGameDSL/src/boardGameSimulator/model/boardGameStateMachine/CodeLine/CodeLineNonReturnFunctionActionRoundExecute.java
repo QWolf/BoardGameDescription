@@ -7,6 +7,8 @@ import boardGameSimulator.model.boardGameStateMachine.Variable.MultiScopeVariabl
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarList;
 import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.ActionRound;
+import boardGameSimulator.model.boardGameStateMachine.stateModel.Game;
+import boardGameSimulator.model.boardGameStateMachine.stateModel.Player;
 
 public class CodeLineNonReturnFunctionActionRoundExecute extends CodeLine{
 	
@@ -20,28 +22,31 @@ public class CodeLineNonReturnFunctionActionRoundExecute extends CodeLine{
 	 * @param ar		The action which needs to be executed
 	 * @param arguments The arguments, expressed in CodeValues
 	 */
-	public CodeLineNonReturnFunctionActionRoundExecute(ActionRound ar, CodeValue[] arguments){
+	public CodeLineNonReturnFunctionActionRoundExecute(ActionRound ar, CodeValue[] arguments, Game g){
 		this.actionround = ar;
 		this.arguments = arguments;
-		System.out.println("=------ CL NonReturn Funct.ActionExecute");
-		System.out.println(ar.getName());
-		System.out.println(arguments);
-		for(CodeValue cv : arguments){
-			System.out.println(cv.getType());
-		}
-		System.out.println(arguments.length);
+//		System.out.println("=------ CL NonReturn Funct.ActionExecute");
+//		for (Player p : g.getTurnOrder()){
+//			System.out.println("Turnorder: " + p.toString());
+//		}
+//		System.out.println(ar.getName());
+//		System.out.println(arguments);
+//		for(CodeValue cv : arguments){
+//			System.out.println(cv.getType() +"" +  cv);
+//		}
+//		System.out.println(arguments.length);
 
 	}
 
 	@Override
 	public CodeLineReturn execute(MultiScopeVariableManager scope) {
-		System.out.println("------------CLNonReturnFunctionAction----");
-		System.out.println(actionround);
-		System.out.println(arguments);
+//		System.out.println("------------CLNonReturnFunctionAction----");
+//		System.out.println(actionround);
+//		System.out.println(arguments);
 
 		
 		Variable[] variables = new Variable[arguments.length];
-		System.out.println(new VarList(variables));
+//		System.out.println(new VarList(variables));
 		
 		if(actionround.executeActionRound(variables).isInvalidAction()){
 			System.out.println("NonReturnAction was invalid!");			

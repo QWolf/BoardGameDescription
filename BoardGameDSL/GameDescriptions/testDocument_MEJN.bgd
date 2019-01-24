@@ -3,7 +3,6 @@ Game = "Mens-erger-je-niet";
 Players{
 	MinPlayers = 2;
 	MaxPlayers = 4;
-	//Playnumbers = 2, 4;
 	
 	Human B{
 		//AI = true;
@@ -310,8 +309,7 @@ Objects{
 	Dice{
 		public Owner = public;	
 		public Randomizer{
-			//[1,2,3,4,5,6]
-			[6]
+			[1,2,3,4,5,6]
 		}
 	}	
 }
@@ -346,7 +344,7 @@ Rounds{
 		}
 	}
 	
-		Main(){
+	Main(){
 		
 		NextTurn;
 		Randomize NoLoc.D1;
@@ -396,7 +394,7 @@ Actions{
 			//}
 			//Move own pawn
 			move p goal;
-			CheckIsFinished(CurrentTurn);
+			//CheckIsFinished(CurrentTurn);
 		}
 	}
 }

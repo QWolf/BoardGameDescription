@@ -31,7 +31,7 @@ public class CodeLineRandomize extends CodeLine{
 		}else{
 			r.Randomize();
 		}
-		smc.writeRandom(r.getValue());
+		smc.writeRandom(r.getCurrentIndex(), r.getValue());
 		
 		return new CodeLineReturn(CodeLineReturnType.Empty,false);
 	}

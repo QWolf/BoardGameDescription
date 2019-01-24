@@ -451,8 +451,8 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 	public ParseReturn visitNonReturnFunctionActionRoundNoReturn(
 			@NotNull BGDParser.NonReturnFunctionActionRoundNoReturnContext ctx) {
 		CodeValue[] arguments = null;
-		System.out.println("-!VisitNOnReturnFunctionActionRoundNoRetunrn");
-		System.out.println(ctx.getText());
+//		System.out.println("-!VisitNOnReturnFunctionActionRoundNoRetunrn");
+//		System.out.println(ctx.getText());
 		if (ctx.performActionArguments() != null) {
 			arguments = new CodeValue[ctx.performActionArguments().codeValue().size()];
 			
@@ -464,15 +464,11 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 			arguments = new CodeValue[0];
 		}
 		
-		System.out.println(arguments);
-		for(CodeValue arg : arguments){
-			System.out.println(arg);
-			System.out.println(arg.toRawString());
-		}
+
 
 		
 		CodeLine codeLine = new CodeLineNonReturnFunctionActionRoundExecute(game.getActionRound(ctx.ID().getText()),
-				arguments);
+				arguments, game);
 
 		ParseReturn pr = new ParseReturn(ParseReturnValue.CodeLine);
 		pr.setCodeLine(codeLine);

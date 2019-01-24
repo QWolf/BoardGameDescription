@@ -23,13 +23,13 @@ public class CodeValueIDFromLocation extends CodeValue {
 
 	@Override
 	public Variable getValue(MultiScopeVariableManager scope) {
-		System.out.println("@"+"-------IDFromLoc: " + variableName);
+//		System.out.println("@"+"-------IDFromLoc: " + variableName);
 
 		Variable fromVariable = fromSpace.getValue(scope);
-		System.out.println("@"+fromSpace);
-		System.out.println("@"+fromSpace.getValue(scope));
-		System.out.println("@"+fromVariable);
-		System.out.println("@"+this.toRawString());
+//		System.out.println("@"+fromSpace);
+//		System.out.println("@"+fromSpace.getValue(scope));
+//		System.out.println("@"+fromVariable);
+//		System.out.println("@"+this.toRawString());
 
 		Variable toReturn = fromVariable.getGameObjectVariableManager().getVariable(variableName);
 		// System.out.println(toReturn);
