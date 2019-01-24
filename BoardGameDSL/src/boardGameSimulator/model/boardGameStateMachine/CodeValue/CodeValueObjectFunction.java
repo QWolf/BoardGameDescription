@@ -3,7 +3,6 @@ package boardGameSimulator.model.boardGameStateMachine.CodeValue;
 import boardGameSimulator.model.boardGameStateMachine.Variable.MultiScopeVariableManager;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarGameObject;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarLocation;
-import boardGameSimulator.model.boardGameStateMachine.Variable.VarOwner;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarType;
 import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.GameObjectInstance;

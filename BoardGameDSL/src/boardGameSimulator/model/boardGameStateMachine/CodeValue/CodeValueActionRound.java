@@ -2,7 +2,6 @@ package boardGameSimulator.model.boardGameStateMachine.CodeValue;
 
 import boardGameSimulator.model.boardGameStateMachine.CodeLine.Return.CodeLineReturn;
 import boardGameSimulator.model.boardGameStateMachine.Variable.MultiScopeVariableManager;
-import boardGameSimulator.model.boardGameStateMachine.Variable.VarList;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarType;
 import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.ActionRound;

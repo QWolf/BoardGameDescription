@@ -16,7 +16,7 @@ public class Location {
 	private boolean isSupply = false;
 	public GameObjectTemplate supplying = null;
 	private SingleScopeVariableManager varMan;
-	private Game g;
+//	private Game g;
 	
 	private boolean existVisibleEverybody = true;
 	private HashSet<Player> existVisiblePlayers = new HashSet<Player>();
@@ -34,7 +34,7 @@ public class Location {
 	public Location(String name, GameObjectTemplate objectTemplate, Game g) {
 		this.name = name;
 		this.varMan = new SingleScopeVariableManager();
-		this.g = g;
+//		this.g = g;
 		varMan.addVariable("Owner", new VarOwner());
 		g.addLocation(this);
 		

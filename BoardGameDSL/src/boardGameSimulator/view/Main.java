@@ -1,7 +1,5 @@
 package boardGameSimulator.view;
 
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -94,30 +92,31 @@ public class Main implements ViewInterface {
 
 					String record = smc.getGameRecordingUnsorted();
 
-//					 BufferedWriter wr = null;
-//					         try {
-//					             // Open the file for writing, without removing its current content.
-//					             wr = new BufferedWriter(new FileWriter(new File(args[2])));
-//					             // Write a sample string to the end of the file.
-//					             wr.write(record);
-//					         }
-//					         catch(IOException e) {
-//					        	 //TODO fix errorhandling
-//					             e.printStackTrace();
-//					         }
-//					         finally {
-//					             // Close the file.
-//					             try {
-//					                 wr.close();
-//					             }
-//					             catch (IOException ex) {
-//						        	 //TODO fix errorhandling
-//					                 ex.printStackTrace();
-//					             }
-//					         }
-//					     }
+					// BufferedWriter wr = null;
+					// try {
+					// // Open the file for writing, without removing its
+					// current content.
+					// wr = new BufferedWriter(new FileWriter(new
+					// File(args[2])));
+					// // Write a sample string to the end of the file.
+					// wr.write(record);
+					// }
+					// catch(IOException e) {
+					// //TODO fix errorhandling
+					// e.printStackTrace();
+					// }
+					// finally {
+					// // Close the file.
+					// try {
+					// wr.close();
+					// }
+					// catch (IOException ex) {
+					// //TODO fix errorhandling
+					// ex.printStackTrace();
+					// }
+					// }
+					// }
 
-					
 					try {
 						FileWriter fileWriter = new FileWriter(args[2]);
 						fileWriter.write(record);
@@ -142,8 +141,8 @@ public class Main implements ViewInterface {
 					}
 
 				}
-			break;
- 
+				break;
+
 			default:
 				System.out.println("Unknown command: " + args[1]);
 				break;
@@ -155,12 +154,28 @@ public class Main implements ViewInterface {
 	private void runSetup(String[] args) {
 		// Sets up which players are actually playing
 		if (game.getPlayer(args[1]) != null) {
+
+			System.out.println("Main - runSetup");
+			for (Player p : game.getTurnOrder()) {
+				System.out.print(p.getName() + ", ");
+			}
+			System.out.println();
+			System.out.println(game.getCurrentTurn());
+
 			game.getPlayer(args[1]).setIsPlaying(true);
 			game.getPlayer(args[1]).setPlayerName(args[2]);
 			Player[] newTurnOrder = new Player[game.getTurnOrder().length + 1];
 			System.arraycopy(game.getTurnOrder(), 0, newTurnOrder, 0, game.getTurnOrder().length);
 			newTurnOrder[newTurnOrder.length - 1] = game.getPlayer(args[1]);
 			game.setTurnOrder(newTurnOrder);
+
+			System.out.println("After");
+			for (Player p : game.getTurnOrder()) {
+				System.out.print(p.getName() + ", ");
+			}
+			System.out.println();
+			System.out.println(game.getCurrentTurn());
+
 		} else {
 			System.out.println(args[1] + " is not a Player!");
 		}
@@ -168,7 +183,7 @@ public class Main implements ViewInterface {
 	}
 
 	public void print(String[] args) {
-		if(args.length == 1){
+		if (args.length == 1) {
 			System.out.println("Please specify whether you want to print the current turn or the gamestate");
 			return;
 		}

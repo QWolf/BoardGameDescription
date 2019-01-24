@@ -2,14 +2,13 @@ package boardGameSimulator.model.boardGameStateMachine.stateModel;
 
 import boardGameSimulator.model.boardGameStateMachine.Variable.SingleScopeVariableManager;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarOwner;
-import boardGameSimulator.model.boardGameStateMachine.Variable.VarType;
 
 public class GameObjectInstance {
 
 	private String name;
 	private String objectType;
 	private Location currentLocation;
-	private Game g;
+//	private Game g;
 	private Randomizer randomizer;
 
 	private SingleScopeVariableManager varManager;
@@ -18,7 +17,7 @@ public class GameObjectInstance {
 		this.name = name;
 		this.objectType = objectType;
 		this.varManager = varman;
-		this.g = g;
+//		this.g = g;
 		currentLocation = l;
 		if (!varman.containsKey("Owner")) {
 			Owner locationOwner = ((VarOwner) l.getVarManager().getVariable("Owner")).getValue();

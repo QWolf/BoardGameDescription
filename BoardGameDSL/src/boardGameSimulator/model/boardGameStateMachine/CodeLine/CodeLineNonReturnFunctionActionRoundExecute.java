@@ -4,11 +4,9 @@ import boardGameSimulator.model.boardGameStateMachine.CodeLine.Return.CodeLineRe
 import boardGameSimulator.model.boardGameStateMachine.CodeLine.Return.CodeLineReturnType;
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValue;
 import boardGameSimulator.model.boardGameStateMachine.Variable.MultiScopeVariableManager;
-import boardGameSimulator.model.boardGameStateMachine.Variable.VarList;
 import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.ActionRound;
 import boardGameSimulator.model.boardGameStateMachine.stateModel.Game;
-import boardGameSimulator.model.boardGameStateMachine.stateModel.Player;
 
 public class CodeLineNonReturnFunctionActionRoundExecute extends CodeLine{
 	

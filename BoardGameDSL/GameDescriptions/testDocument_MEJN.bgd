@@ -344,11 +344,10 @@ Rounds{
 		}
 	}
 	
-	Main(){
-		
-		NextTurn;
+	Main(){	
 		Randomize NoLoc.D1;
 		Turn();
+		NextTurn;
 		Repeat;
 	}
 }

@@ -2,7 +2,6 @@ package boardGameSimulator.model.boardGameStateMachine.stateModel;
 
 import boardGameSimulator.model.boardGameStateMachine.Variable.SingleScopeVariableManager;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarList;
-import boardGameSimulator.model.boardGameStateMachine.Variable.VarLocation;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarOwner;
 import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
 

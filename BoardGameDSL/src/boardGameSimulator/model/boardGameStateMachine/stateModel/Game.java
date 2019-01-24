@@ -68,6 +68,9 @@ public class Game {
 	}
 
 	public Player getCurrentTurn() {
+		if(turnOrder.length == 0){
+			return null;
+		}
 		return turnOrder[currentTurnIndex];
 	}
 
@@ -254,6 +257,10 @@ public class Game {
 		for (Player p : losers) {
 			System.out.println(p.getRanking().getPlayerRankingAsString(true));
 		}
+	}
+
+	public int getMinPlayers() {
+		return minPlayers;
 	}
 
 }
