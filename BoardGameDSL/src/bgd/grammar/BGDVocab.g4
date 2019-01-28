@@ -79,6 +79,7 @@ REPEAT		:	'Repeat';
 WINNER		:	'Winner';
 LOSER		:	'Loser';
 FINISH		:	'FinishGame';
+TURNORDER	:	'TurnOrder';
 //LocationFunction
 CONTAINS	:	'contains';
 ISCONNECTEDTO:	'isConnectedTo';
@@ -110,7 +111,7 @@ COPY		:	'Copy';
 //Owner Keywords
 NONE		:	'None';
 OWNER		:	'Owner';
-HIDDEN		:	'Hidden';
+HIDDEN		:	'hidden';
 
 
 

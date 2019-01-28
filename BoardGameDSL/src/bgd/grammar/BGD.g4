@@ -170,8 +170,8 @@ nonReturnFunction
 //			|	MOVE2
 			|	MOVE codeValue codeValue	#nonReturnFunctionMoveObjectTo
 			|	ADVANCETURN					#nonReturnFunctionNextTurn
-			|	RANDOMIZE codeValue 	#nonReturnFunctionRandomize
-//			|	FINISHGAME		
+			|	TURNORDER IS codeValue		#nonReturnFunctionSetTurnOrder
+			|	RANDOMIZE codeValue 		#nonReturnFunctionRandomize
 			|	REPEAT						#nonReturnFunctionRepeat	
 //			|	variable					#nonReturnFunctionLocalVariable
 			|	WINNER codeValue			#nonReturnFunctionWin
@@ -270,7 +270,7 @@ effectStatement:
 
 //STARTING STATE - What non-deterministic things are done at game-start?
 //TODO
-startState	:	STARTSTATE;
+startState	:	STARTSTATE LBRACE codeBlock RBRACE;  
 
 
 

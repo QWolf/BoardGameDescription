@@ -126,6 +126,11 @@ public class StateMachineController {
 
 	public void startGame() {
 		this.hasStarted = true;
+		if(game.getActionRound("StartState")!= null){
+			game.getActionRound("StartState").executeActionRound();
+		}
+		
+		
 		game.getActionRound("Main").executeActionRound();
 		game.printWinnersAndLosers();
 	}

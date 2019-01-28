@@ -18,6 +18,7 @@ import boardGameSimulator.model.boardGameStateMachine.CodeLine.CodeLineNonReturn
 import boardGameSimulator.model.boardGameStateMachine.CodeLine.CodeLineRandomize;
 import boardGameSimulator.model.boardGameStateMachine.CodeLine.CodeLineRepeat;
 import boardGameSimulator.model.boardGameStateMachine.CodeLine.CodeLineReturnLine;
+import boardGameSimulator.model.boardGameStateMachine.CodeLine.CodeLineSetTurnOrder;
 import boardGameSimulator.model.boardGameStateMachine.CodeLine.CodeLineSetVariable;
 import boardGameSimulator.model.boardGameStateMachine.CodeLine.CodeLineWinLose;
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValue;
@@ -549,6 +550,15 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 		pr.setCodeLine(codeLine);
 		return pr;
 	}
+	
+	@Override
+	public ParseReturn visitNonReturnFunctionSetTurnOrder(@NotNull BGDParser.NonReturnFunctionSetTurnOrderContext ctx){
+		CodeLine codeLine = new CodeLineSetTurnOrder(visit(ctx.codeValue()).getCodeValue(), game);
+
+		ParseReturn pr = new ParseReturn(ParseReturnValue.CodeLine);
+		pr.setCodeLine(codeLine);
+		return pr;		
+	}
 
 	@Override
 	public ParseReturn visitPerformActionArguments(@NotNull BGDParser.PerformActionArgumentsContext ctx) {
@@ -888,6 +898,18 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 	@Override
 	public ParseReturn visitEffectStatement(@NotNull BGDParser.EffectStatementContext ctx) {
 		return visit(ctx.codeLine());
+	}
+	
+	
+	
+	@Override
+	public ParseReturn visitStartState(@NotNull BGDParser.StartStateContext ctx) {
+
+		CodeLine[] codeBlock = visit(ctx.codeBlock()).getCodeBlock();
+
+		ActionRound main = new ActionRound("StartState", game, codeBlock, new String[0]);
+		game.addActionRound(main);
+		return null;
 	}
 
 	/*

@@ -1,0 +1,322 @@
+Game = "Manilla";
+
+Players{
+	MinPlayers = 3;
+	MaxPlayers = 5;
+	
+	Human B{
+		SupplyLoc = BSupply;		
+	}
+	Human Y{
+		SupplyLoc = YSupply;	
+	}	
+	Human G{
+		SupplyLoc = GSupply;		
+	}	
+	Human R{
+		SupplyLoc = RSupply;
+	}
+	Human O{
+		SupplyLoc = OSupply;
+	}
+	Computer Bank;
+}
+
+Locations{
+	BSupply{
+		Owner = B;
+		Pesos = 30;
+		ValueVisible = B;
+		StartingInventory{
+			Pawn PawnB1;
+			Pawn PawnB2;
+			Pawn PawnB3;
+//			Pawn PawnB4;
+		}
+	}
+	YSupply{
+		Owner = Y;
+		Pesos = 30;
+		ValueVisible = Y;
+		StartingInventory{
+			Pawn PawnY1;
+			Pawn PawnY2;
+			Pawn PawnY3;
+//			Pawn PawnY4;
+		}
+	}
+	GSupply{
+		Owner = G;
+		Pesos = 30;
+		ValueVisible = G;
+		StartingInventory{
+			Pawn PawnG1;
+			Pawn PawnG2;
+			Pawn PawnG3;
+//			Pawn PawnG4;
+		}
+	}
+	RSupply{
+		Owner = R;
+		Pesos = 30;
+		ValueVisible = R;
+		StartingInventory{
+			Pawn PawnR1;
+			Pawn PawnR2;
+			Pawn PawnR3;
+//			Pawn PawnR4;
+		}
+	}
+	OSupply{
+		Owner = O;
+		Pesos = 30;
+		ValueVisible = O;
+		StartingInventory{
+			Pawn PawnO1;
+			Pawn PawnO2;
+			Pawn PawnO3;
+//			Pawn PawnO4;
+		}
+	}
+	Port1{
+		BoatIn = False;
+		Cost = 4;
+		Payout = 6;
+		Buyer = Public;
+	}
+	Port2{
+		BoatIn = False;
+		Cost = 3;
+		Payout = 8;
+		Buyer = Public;
+	}
+	Port3{
+		BoatIn = False;
+		Cost = 2;
+		Payout = 15;
+		Buyer = Public;
+	}
+	Shipyard1{
+		BoatIn = False;
+		Cost = 4;
+		Payout = 6;
+		Buyer = Public;
+	}
+	Shipyard2{
+		BoatIn = False;
+		Cost = 3;
+		Payout = 8;
+		Buyer = Public;
+	}
+	Shipyard3{
+		BoatIn = False;
+		Cost = 2;
+		Payout = 15;
+		Buyer = Public;
+	}
+	BoatNutmeg{
+		IsInPlay = False;
+		TotalPayout = 24;
+		Costs = [2,3,4];
+		Buyers = [];
+		StartingInventory{
+			Dice NutmegDice;
+		}
+	}
+	BoatSilk{
+		IsInPlay = False;
+		TotalPayout = 30;
+		Costs = [3,4,5];
+		Buyers = [];
+		StartingInventory{
+			Dice SilkDice;
+		}
+	}
+	BoatGinseng{
+		IsInPlay = False;
+		TotalPayout = 18;
+		Costs = [1,2,3];
+		Buyers = [];
+		StartingInventory{
+			Dice GinsengDice;
+		}
+	}
+	BoatJade{
+		IsInPlay = False;
+		TotalPayout = 36;
+		Costs = [3,4,5,5];
+		Buyers = [];
+		StartingInventory{
+			Dice JadeDice;
+		}
+	}
+	BoatNone{
+	}
+	Pirate{
+		Captain = Public;
+		Accomplice = Public;
+		Cost = 5;
+	}
+	PilotLarge{
+		Buyer = Public;
+		Cost = 5;
+		PilotStrength = 2;
+	}
+	PilotSmall{
+		Buyer = Public;
+		Cost = 2;
+		PilotStrength = 1;
+	}
+	Insurance{
+		Buyer = Public;
+		Cost = 0;
+		Income = 10;
+	}
+	BlackMarket{
+		ShareValue = [0,0,5,10,20,30];
+		SharePrices = [5,5,5,10,20,30];
+		NutmegShare = 0;
+		SilkShare = 0;
+		GinsengShare = 0;
+		JadeShare = 0;
+	}
+	SeaRoute1{
+		CurrentCargo = BoatNone;
+		CurrentProgress = 0;
+	}
+	SeaRoute2{
+		CurrentCargo = BoatNone;
+		CurrentProgress = 0;
+	}
+	SeaRoute3{
+		CurrentCargo = BoatNone;
+		CurrentProgress = 0;
+	}
+	UnsoldShares{
+		HarborMaster = Bank;
+		Owner = Bank;
+		ValueVisible = None;
+		StartingInventory {
+			Share NutmegShare1{
+				hidden IsNutmegShare = True;
+			}
+			Share NutmegShare2{
+				hidden IsNutmegShare = True;
+			}
+			Share NutmegShare3{
+				hidden IsNutmegShare = True;
+			}
+			Share NutmegShare4{
+				hidden IsNutmegShare = True;
+			}
+			Share NutmegShare5{
+				hidden IsNutmegShare = True;
+			}
+			Share SilkShare1{
+				hidden IsSilkShare = True;
+			}
+			Share SilkShare2{
+				hidden IsSilkShare = True;
+			}
+			Share SilkShare3{
+				hidden IsSilkShare = True;
+			}
+			Share SilkShare4{
+				hidden IsSilkShare = True;
+			}
+			Share SilkShare5{
+				hidden IsSilkShare = True;
+			}
+			Share GinsengShare1{
+				hidden IsGinsengShare = True;
+			}
+			Share GinsengShare2{
+				hidden IsGinsengShare = True;
+			}
+			Share GinsengShare3{
+				hidden IsGinsengShare = True;
+			}
+			Share GinsengShare4{
+				hidden IsGinsengShare = True;
+			}
+			Share GinsengShare5{
+				hidden IsGinsengShare = True;
+			}
+			Share JadeShare1{
+				hidden IsJadeShare = True;
+			}
+			Share JadeShare2{
+				hidden IsJadeShare = True;
+			}
+			Share JadeShare3{
+				hidden IsJadeShare = True;
+			}
+			Share JadeShare4{
+				hidden IsJadeShare = True;
+			}
+			Share JadeShare5{
+				hidden IsJadeShare = True;
+			}
+
+		}	
+	}
+		
+}
+
+Objects{
+	Pawn{
+		public Owner = Location;
+	}
+	
+	Dice{
+		public Owner = public;	
+		public Randomizer{
+			[1,2,3,4,5,6]
+		}
+	}	
+	Share{
+		hidden IsNutmegShare = False;
+		hidden IsSilkShare = False;
+		hidden IsGinsengShare = False;
+		hidden IsJadeShare = False;	
+		public IsEncumbered = False;
+		public EncumberenceValue = 12;
+		public BuyBackPrice = 15;
+	}
+}
+
+Rounds{
+
+
+
+Main(){	
+		AuctionHarborMaster();
+		PerformHarborMasterDuties();
+		PlaceAndRollRounds();
+		ProfitDistribution();
+		WareValueRise();
+		Repeat;
+	}
+}
+Actions{
+}
+StartState{
+	//Shuffle UnsoldShares;
+	move UnsoldShares.contains90[0] TurnOrder[0].SupplyLoc;
+	move UnsoldShares.contains90[0] TurnOrder[0].SupplyLoc;
+	move UnsoldShares.contains90[0] TurnOrder[1].SupplyLoc;
+	move UnsoldShares.contains90[0] TurnOrder[1].SupplyLoc;
+	move UnsoldShares.contains90[0] TurnOrder[2].SupplyLoc;
+	move UnsoldShares.contains90[0] TurnOrder[2].SupplyLoc;
+	if(count(TurnOrder) > 3){
+		move UnsoldShares.contains90[0] TurnOrder[3].SupplyLoc;
+		move UnsoldShares.contains90[0] TurnOrder[3].SupplyLoc;
+	}
+	if(count(TurnOrder > 4){
+		move UnsoldShares.contains90[0] TurnOrder[4].SupplyLoc;
+		move UnsoldShares.contains90[0] TurnOrder[4].SupplyLoc;
+	}
+	UnsoldShares.ValueVisible = public;
+	HarborMaster = TurnOrder[0];
+
+}

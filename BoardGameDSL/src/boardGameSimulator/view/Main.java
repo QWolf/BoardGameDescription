@@ -134,6 +134,7 @@ public class Main implements ViewInterface {
 				} else {
 					try {
 						FileReader fr = new FileReader(args[2]);
+						System.out.println("Loading file!");
 						smc.loadRecord(fr);
 
 					} catch (FileNotFoundException e) {
@@ -154,28 +155,12 @@ public class Main implements ViewInterface {
 	private void runSetup(String[] args) {
 		// Sets up which players are actually playing
 		if (game.getPlayer(args[1]) != null) {
-
-			System.out.println("Main - runSetup");
-			for (Player p : game.getTurnOrder()) {
-				System.out.print(p.getName() + ", ");
-			}
-			System.out.println();
-			System.out.println(game.getCurrentTurn());
-
 			game.getPlayer(args[1]).setIsPlaying(true);
 			game.getPlayer(args[1]).setPlayerName(args[2]);
 			Player[] newTurnOrder = new Player[game.getTurnOrder().length + 1];
 			System.arraycopy(game.getTurnOrder(), 0, newTurnOrder, 0, game.getTurnOrder().length);
 			newTurnOrder[newTurnOrder.length - 1] = game.getPlayer(args[1]);
 			game.setTurnOrder(newTurnOrder);
-
-			System.out.println("After");
-			for (Player p : game.getTurnOrder()) {
-				System.out.print(p.getName() + ", ");
-			}
-			System.out.println();
-			System.out.println(game.getCurrentTurn());
-
 		} else {
 			System.out.println(args[1] + " is not a Player!");
 		}
@@ -232,9 +217,6 @@ public class Main implements ViewInterface {
 		game.setStateMachineController(smc);
 	}
 
-	// public String checkForInput() {
-	// return null;
-	// }
 
 	public static void main(String[] args) {
 		new Main().launchProgram();
