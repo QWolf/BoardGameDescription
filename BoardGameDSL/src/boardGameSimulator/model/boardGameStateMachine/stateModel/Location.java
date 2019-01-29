@@ -9,6 +9,7 @@ import boardGameSimulator.model.boardGameStateMachine.Variable.VarList;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarLocation;
 import boardGameSimulator.model.boardGameStateMachine.Variable.VarOwner;
 import boardGameSimulator.model.boardGameStateMachine.Variable.Variable;
+import boardGameSimulator.model.util.VarUtil;
 
 
 public class Location {
@@ -16,7 +17,7 @@ public class Location {
 	private boolean isSupply = false;
 	public GameObjectTemplate supplying = null;
 	private SingleScopeVariableManager varMan;
-//	private Game g;
+	private Game g;
 	
 	private boolean existVisibleEverybody = true;
 	private HashSet<Player> existVisiblePlayers = new HashSet<Player>();
@@ -34,7 +35,7 @@ public class Location {
 	public Location(String name, GameObjectTemplate objectTemplate, Game g) {
 		this.name = name;
 		this.varMan = new SingleScopeVariableManager();
-//		this.g = g;
+		this.g = g;
 		varMan.addVariable("Owner", new VarOwner());
 		g.addLocation(this);
 		
@@ -82,6 +83,14 @@ public class Location {
 		}
 	}
 	
+	public VarList getExistVisibleList(){
+		if(existVisibleEverybody){
+			return g.getPlayers();
+		}else{
+			return VarUtil.playerArrayToVarList((Player[])existVisiblePlayers.toArray());
+		}
+	}
+	
 	public void addExistanceVisiblePlayer(Player player){
 		existVisiblePlayers.add(player);
 	}
@@ -114,6 +123,14 @@ public class Location {
 	public void removeValueVisiblePlayer(String player){
 		if (valueVisiblePlayers.contains(player)){
 			valueVisiblePlayers.remove(player);
+		}
+	}
+	
+	public VarList getValueVisibleList(){
+		if(valueVisibleEverybody){
+			return g.getPlayers();
+		}else{
+			return VarUtil.playerArrayToVarList((Player[])valueVisiblePlayers.toArray());
 		}
 	}
 	

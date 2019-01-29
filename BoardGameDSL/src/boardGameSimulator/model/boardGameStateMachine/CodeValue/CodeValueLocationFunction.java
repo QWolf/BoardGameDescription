@@ -9,7 +9,7 @@ import boardGameSimulator.model.boardGameStateMachine.stateModel.Location;
 
 public class CodeValueLocationFunction extends CodeValue {
 	public enum LocationFunction {
-		Contains, isConnected, Connections;
+		Contains, isConnected, Connections, ValueVisible, ExistVisible;
 
 		public static VarType getVarType(LocationFunction lf) {
 			switch (lf) {
@@ -18,6 +18,10 @@ public class CodeValueLocationFunction extends CodeValue {
 			case Contains:
 				return VarType.List;
 			case isConnected:
+				return VarType.Boolean;
+			case ExistVisible:
+				return VarType.Boolean;
+			case ValueVisible:
 				return VarType.Boolean;
 			default:
 				return null;
@@ -59,6 +63,10 @@ public class CodeValueLocationFunction extends CodeValue {
 		case isConnected:
 			Location calculatedPar1 = ((VarLocation) par1.getValue(scope)).getValue();
 			return new VarBool(calculatedLocation.isConnectedTo(calculatedPar1));
+		case ExistVisible:
+			return  calculatedLocation.getExistVisibleList();
+		case ValueVisible:
+			return calculatedLocation.getValueVisibleList();			
 		default:
 			return null;
 

@@ -74,6 +74,9 @@ public class Game {
 		return turnOrder[currentTurnIndex];
 	}
 
+	/**
+	 * Advances the turnorder by i 
+	 */
 	public void advanceTurn(int i) {
 		currentTurnIndex = (currentTurnIndex + i) % turnOrder.length;
 

@@ -29,6 +29,8 @@ import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueBoolCom
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueBoolCompare.CompareOperator;
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueBoolNot;
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueBoolOperator;
+import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueGlobalVariable;
+import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueGlobalVariable.GlobalFunction;
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueBoolOperator.BoolOperator;
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueIDFromLocation;
 import boardGameSimulator.model.boardGameStateMachine.CodeValue.CodeValueList;
@@ -74,7 +76,6 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 	private Game game = null;
 	MultiScopeVariableManager globalMultiScope = null;
 
-
 	public BGDChecker(Parser p) {
 		this.parser = p;
 	}
@@ -113,11 +114,11 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 	@Override
 	public ParseReturn visitPlayersSection(@NotNull BGDParser.PlayersSectionContext ctx) {
 		visit(ctx.playernum());
-		//Initialize the Game object now we have all required information to do so
+		// Initialize the Game object now we have all required information to do
+		// so
 		this.game = new Game(gamename, minplayers, maxplayers);
 		parser.setGame(game);
 		globalMultiScope = new MultiScopeVariableManager(game.getVarMan());
-
 
 		visit(ctx.players());
 		return null;
@@ -251,8 +252,8 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 		GameObjectTemplate template = new GameObjectTemplate(ctx.ID().getText(), game);
 		game.addGameObjectTemplate(template);
 		currentTemplate = template;
-		
-		for(ObjectVariableHelpContext ctxs : ctx.objectVariableHelp()){
+
+		for (ObjectVariableHelpContext ctxs : ctx.objectVariableHelp()) {
 			visit(ctxs);
 		}
 
@@ -265,7 +266,7 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 
 		return visit(ctx.objectVariable());
 	}
-	
+
 	@Override
 	public ParseReturn visitObjectVariableVariable(@NotNull BGDParser.ObjectVariableVariableContext ctx) {
 		ParseReturn variable = visit(ctx.variable().value());
@@ -273,8 +274,6 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 		currentTemplate.setVariable(ctx.variable().ID().getText(), v);
 		return null;
 	}
-
-
 
 	@Override
 	public ParseReturn visitObjectOwnerID(@NotNull BGDParser.ObjectOwnerIDContext ctx) {
@@ -328,16 +327,16 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 	// private CodeLine[] currentCodeBlock = new CodeLine[0];
 	private String[] currentArguments = new String[0];
 
-	
 	@Override
-	public ParseReturn visitRounds(@NotNull BGDParser.RoundsContext ctx){
-		for(AdditionalRoundContext actx : ctx.additionalRound()){
+	public ParseReturn visitRounds(@NotNull BGDParser.RoundsContext ctx) {
+		for (AdditionalRoundContext actx : ctx.additionalRound()) {
 			visit(actx);
 		}
 		visit(ctx.main());
-		
+
 		return null;
 	}
+
 	@Override
 	public ParseReturn visitMain(@NotNull BGDParser.MainContext ctx) {
 
@@ -452,22 +451,19 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 	public ParseReturn visitNonReturnFunctionActionRoundNoReturn(
 			@NotNull BGDParser.NonReturnFunctionActionRoundNoReturnContext ctx) {
 		CodeValue[] arguments = null;
-//		System.out.println("-!VisitNOnReturnFunctionActionRoundNoRetunrn");
-//		System.out.println(ctx.getText());
+		// System.out.println("-!VisitNOnReturnFunctionActionRoundNoRetunrn");
+		// System.out.println(ctx.getText());
 		if (ctx.performActionArguments() != null) {
 			arguments = new CodeValue[ctx.performActionArguments().codeValue().size()];
-			
-			for(int i = 0; i<arguments.length; i++){
+
+			for (int i = 0; i < arguments.length; i++) {
 				arguments[i] = visit(ctx.performActionArguments().codeValue(i)).getCodeValue();
 			}
-			
+
 		} else {
 			arguments = new CodeValue[0];
 		}
-		
 
-
-		
 		CodeLine codeLine = new CodeLineNonReturnFunctionActionRoundExecute(game.getActionRound(ctx.ID().getText()),
 				arguments, game);
 
@@ -475,7 +471,6 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 		pr.setCodeLine(codeLine);
 		return pr;
 	}
-
 
 	@Override
 	public ParseReturn visitNonReturnFunctionMoveObjectTo(@NotNull BGDParser.NonReturnFunctionMoveObjectToContext ctx) {
@@ -550,14 +545,14 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 		pr.setCodeLine(codeLine);
 		return pr;
 	}
-	
+
 	@Override
-	public ParseReturn visitNonReturnFunctionSetTurnOrder(@NotNull BGDParser.NonReturnFunctionSetTurnOrderContext ctx){
+	public ParseReturn visitNonReturnFunctionSetTurnOrder(@NotNull BGDParser.NonReturnFunctionSetTurnOrderContext ctx) {
 		CodeLine codeLine = new CodeLineSetTurnOrder(visit(ctx.codeValue()).getCodeValue(), game);
 
 		ParseReturn pr = new ParseReturn(ParseReturnValue.CodeLine);
 		pr.setCodeLine(codeLine);
-		return pr;		
+		return pr;
 	}
 
 	@Override
@@ -622,6 +617,23 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 		pr.setCodeValue(codeValue);
 		return pr;
 	}
+	
+	@Override 
+	public ParseReturn visitLocFunctionValueVisible(@NotNull BGDParser.LocFunctionValueVisibleContext ctx){
+		CodeValue codeValue = new CodeValueLocationFunction(LocationFunction.ValueVisible, currentLocationFunctionLocation, null);
+		ParseReturn pr = new ParseReturn(ParseReturnValue.CodeValue);
+		pr.setCodeValue(codeValue);
+		return pr;		
+		
+	}	
+	@Override 
+	public ParseReturn visitLocFunctionExistVisible(@NotNull BGDParser.LocFunctionExistVisibleContext ctx){
+		CodeValue codeValue = new CodeValueLocationFunction(LocationFunction.ExistVisible, currentLocationFunctionLocation, null);
+		ParseReturn pr = new ParseReturn(ParseReturnValue.CodeValue);
+		pr.setCodeValue(codeValue);
+		return pr;		
+		
+	}
 
 	/*
 	 * ##ObjectFunction##
@@ -649,6 +661,15 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 	public ParseReturn visitObjectFunctionValue(@NotNull BGDParser.ObjectFunctionValueContext ctx) {
 		CodeValue codeValue = new CodeValueObjectFunction(ObjectFunction.Value, currentObjectFunctionObject);
 
+		ParseReturn pr = new ParseReturn(ParseReturnValue.CodeValue);
+		pr.setCodeValue(codeValue);
+		return pr;
+	}
+
+	// GlobalVariables
+	@Override
+	public ParseReturn visitGlobalVariableTurnOrder(@NotNull BGDParser.GlobalVariableTurnOrderContext ctx) {
+		CodeValue codeValue = new CodeValueGlobalVariable(GlobalFunction.TurnOrder, game);
 		ParseReturn pr = new ParseReturn(ParseReturnValue.CodeValue);
 		pr.setCodeValue(codeValue);
 		return pr;
@@ -804,41 +825,40 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 		ParseReturn pr = new ParseReturn(ParseReturnValue.CodeValue);
 
 		if (ctx.ID() != null) {
-			CodeValuePlainVariable cvpv = new CodeValuePlainVariable(VarType.Unspecified, ctx.ID().getText(), game, ctx.getText());
+			CodeValuePlainVariable cvpv = new CodeValuePlainVariable(VarType.Unspecified, ctx.ID().getText(), game,
+					ctx.getText());
 			pr.setCodeValue(cvpv);
-//			System.out.println("IDNAME " + cvpv.idName);
+			// System.out.println("IDNAME " + cvpv.idName);
 		} else if (ctx.LOWID() != null) {
-			pr.setCodeValue(new CodeValuePlainVariable(VarType.Unspecified, ctx.LOWID().getText(), game, ctx.getText()));
-			CodeValuePlainVariable cvpv = new CodeValuePlainVariable(VarType.Unspecified, ctx.LOWID().getText(), game, ctx.getText());
+			pr.setCodeValue(
+					new CodeValuePlainVariable(VarType.Unspecified, ctx.LOWID().getText(), game, ctx.getText()));
+			CodeValuePlainVariable cvpv = new CodeValuePlainVariable(VarType.Unspecified, ctx.LOWID().getText(), game,
+					ctx.getText());
 			pr.setCodeValue(cvpv);
-//			System.out.println("IDNAME " + cvpv.idName);
-		
+			// System.out.println("IDNAME " + cvpv.idName);
+
 		} else if (ctx.bool() != null) {
 			return visit(ctx.bool());
 		} else {
 			return visit(ctx.number());
 		}
-		
-//		System.out.println("----Checker - CodeValueValue");
-//		System.out.println(ctx.getText());
-//		System.out.println(pr);
-//		System.out.println(parseReturnToVariable(pr));
-//		System.out.println(ctx.ID() == null);
-//		System.out.println(ctx.LOWID() == null);
-//		System.out.println(pr.getIDVar());
-//		
 		return pr;
 	}
-	
+
+	@Override
+	public ParseReturn visitCodeValueGlobalVariable(@NotNull BGDParser.CodeValueGlobalVariableContext ctx) {
+		return visit(ctx.globalVariable());
+
+	}
+
 	/*
-	 * ########################################
-	 * Actions
+	 * ######################################## Actions
 	 * #########################################
 	 */
 
 	@Override
 	public ParseReturn visitActions(@NotNull BGDParser.ActionsContext ctx) {
-		for(ActionContext ctxs : ctx.action()){
+		for (ActionContext ctxs : ctx.action()) {
 			visit(ctxs);
 		}
 		return null;
@@ -863,15 +883,15 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 	@Override
 	public ParseReturn visitRequires(@NotNull BGDParser.RequiresContext ctx) {
 		CodeValue[] cvList = new CodeValue[ctx.requireStatement().size()];
-		if(cvList.length > 0){
-			for(int i = 0; i < cvList.length; i++){
+		if (cvList.length > 0) {
+			for (int i = 0; i < cvList.length; i++) {
 				cvList[i] = visit(ctx.requireStatement(i)).getCodeValue();
-			}	
+			}
 		}
-		
+
 		ParseReturn pr = new ParseReturn(ParseReturnValue.CodeValueList);
 		pr.setCodeValueList(cvList);
-		
+
 		return pr;
 	}
 
@@ -883,15 +903,15 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 	@Override
 	public ParseReturn visitEffect(@NotNull BGDParser.EffectContext ctx) {
 		CodeLine[] codeBlock = new CodeLine[ctx.effectStatement().size()];
-		if(codeBlock.length > 0){
-			for(int i = 0; i < codeBlock.length; i++){
+		if (codeBlock.length > 0) {
+			for (int i = 0; i < codeBlock.length; i++) {
 				codeBlock[i] = visit(ctx.effectStatement(i)).getCodeLine();
-			}	
+			}
 		}
-		
+
 		ParseReturn pr = new ParseReturn(ParseReturnValue.CodeBlock);
 		pr.setCodeBlock(codeBlock);
-		
+
 		return pr;
 	}
 
@@ -899,9 +919,7 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 	public ParseReturn visitEffectStatement(@NotNull BGDParser.EffectStatementContext ctx) {
 		return visit(ctx.codeLine());
 	}
-	
-	
-	
+
 	@Override
 	public ParseReturn visitStartState(@NotNull BGDParser.StartStateContext ctx) {
 
@@ -917,12 +935,12 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 	 * # Values #
 	 * #########################################################################
 	 */
-	
-//	@Override
-//	public ParseReturn visitVariable(@NotNull BGDParser.VariableContext ctx){
-//		ParseReturn ret = visit(ctx.v)
-//		return null;
-//	}
+
+	// @Override
+	// public ParseReturn visitVariable(@NotNull BGDParser.VariableContext ctx){
+	// ParseReturn ret = visit(ctx.v)
+	// return null;
+	// }
 
 	@Override
 	public ParseReturn visitValueBool(@NotNull BGDParser.ValueBoolContext ctx) {
@@ -952,18 +970,19 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 		return pr;
 
 	}
-	
+
 	@Override
 	public ParseReturn visitListFilled(@NotNull BGDParser.ListFilledContext ctx) {
 		Variable[] list = new Variable[ctx.nonListValue().size()];
-		
-		for(int i = 0; i< list.length; i++){
+
+		for (int i = 0; i < list.length; i++) {
 			list[i] = visit(ctx.nonListValue(i)).getVar();
 		}
 
 		ParseReturn pr = new ParseReturn(ParseReturnValue.Variable);
 		pr.setVar(new VarList(list));
-		return pr;	}
+		return pr;
+	}
 
 	@Override
 	public ParseReturn visitNonListValueBool(@NotNull BGDParser.NonListValueBoolContext ctx) {
@@ -1021,7 +1040,7 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 		pr.setCodeValue(new CodeValuePlainVariable(Double.parseDouble(raw)));
 		return pr;
 	}
-	
+
 	@Override
 	public ParseReturn visitBoolOpAnd(@NotNull BGDParser.BoolOpAndContext ctx) {
 
@@ -1111,15 +1130,15 @@ public class BGDChecker extends BGDBaseVisitor<ParseReturn> {
 		Variable v = null;
 		if (ret.getVar() != null) {
 			v = ret.getVar();
-		} else if(ret.getCodeValue()!= null){
+		} else if (ret.getCodeValue() != null) {
 			v = ret.getCodeValue().getValue(ssvm);
-		}else if (game.getPlayer(ret.getIDVar()) != null) {
+		} else if (game.getPlayer(ret.getIDVar()) != null) {
 			v = new VarPlayer(game.getPlayer(ret.getIDVar()));
 		} else if (game.getLocation(ret.getIDVar()) != null) {
 			v = new VarLocation(game.getLocation(ret.getIDVar()));
 		} else if (game.getGameObjectInstance(ret.getIDVar()) != null) {
 			v = new VarGameObject(game.getGameObjectInstance(ret.getIDVar()));
-		} else{
+		} else {
 			System.out.println("Error, parsereturn could not be converted to Variable");
 		}
 		return v;

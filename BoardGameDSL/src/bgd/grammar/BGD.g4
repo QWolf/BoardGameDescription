@@ -195,6 +195,8 @@ locationFunction
 //			|	CONTAINS LPAR ID RPAR 				#locFunctionContainsType
 			|	ISCONNECTEDTO LPAR codeValue RPAR	#locFunctionIsConnectedTo
 			|	CONNECTIONS LPAR RPAR				#locFunctionConnections
+			|	VALUEVISIBLE						#locFunctionValueVisible
+			|	EXISTVISIBLE						#locFunctionExistVisible
 			;
 			
 //playerFunction
@@ -205,6 +207,10 @@ objectFunction
 			:	LOCATION	#objectFunctionLocation
 			|	OWNER  		#objectFunctionOwner
 			|	VALUE		#objectFunctionValue
+			;
+			
+globalVariable
+			:	TURNORDER	#globalVariableTurnOrder
 			;
 			
 codeValue	:	codeValueValue								#codeValuePlainValue
@@ -222,6 +228,7 @@ codeValue	:	codeValueValue								#codeValuePlainValue
 			|	LBLOCK codeValue (COMMA codeValue)* RBLOCK	#codeValueList
 			|	codeValue multOp codeValue					#codeValueMultOp
 			|	codeValue addOp codeValue					#codeValueAddOp
+			|	globalVariable								#codeValueGlobalVariable
 			;
 			
 		

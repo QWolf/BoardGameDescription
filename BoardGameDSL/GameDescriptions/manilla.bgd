@@ -5,19 +5,31 @@ Players{
 	MaxPlayers = 5;
 	
 	Human B{
-		SupplyLoc = BSupply;		
+		SupplyLoc = BSupply;	
+		HarborMasterInRunning = True;
+		EncumberedShares = 0;	
 	}
 	Human Y{
 		SupplyLoc = YSupply;	
+		HarborMasterInRunning = True;
+		EncumberedShares = 0;	
+			
 	}	
 	Human G{
 		SupplyLoc = GSupply;		
+		HarborMasterInRunning = True;
+		EncumberedShares = 0;	
+			
 	}	
 	Human R{
 		SupplyLoc = RSupply;
+		HarborMasterInRunning = True;
+		EncumberedShares = 0;		
 	}
 	Human O{
 		SupplyLoc = OSupply;
+		HarborMasterInRunning = True;
+		EncumberedShares = 0;	
 	}
 	Computer Bank;
 }
@@ -194,7 +206,16 @@ Locations{
 	}
 	UnsoldShares{
 		HarborMaster = Bank;
+		HarborMasterInRunning = 0;
+		AuctionIsGoingOn = True;
+		AuctionHighestBid = 0;
 		Owner = Bank;
+		NewTurnOrder = [Y,O,B];
+		
+	}
+	
+	ShufflePile{
+		EncumberingPlayer = Bank;
 		ValueVisible = None;
 		StartingInventory {
 			Share NutmegShare1{
@@ -287,9 +308,90 @@ Objects{
 
 Rounds{
 
+	//Helper Functions
+	SpendingLimit(Player p){
+		return p.Pesos + (count(p.SupplyLoc)*(p.SupplyLoc.contains[0].EncumberenceValue));
+	}
+	
+	EncumberUntilOutOfDebt(Player p){
+		if(p.EncumberedShares == count(p.SupplyLoc.contains())){
+			//Bankrupt!
+			p.Pesos = 0;
+		}else{
+			ShufflePile.EncumberingPlayer = p;
+			ChooseAction(p);
+			if(p.Pesos < 0){
+				EncumberUntilOutOfDebt(p);
+			}
+		}
+	}
+	
+	Pay(Player p, int amnt){
+		p.Pesos = p.Pesos - amnt;
+		if(p.Pesos < 0){
+			UnsoldShares.IsEncumbering == True;
+			EncumberUntilOutOfDebt(p);
+			UnsoldShares.IsEncumbering == False;
+		}
+	}
+	
+	GetTurnOrderStartingWithCurrentTurn(){
+		UnsoldShares.NewTurnOrder = TurnOrder;
+		UnsoldShares.NewTurnOrder[0] = CurrentTurn;
+		NextTurn;
+		UnsoldShares.NewTurnOrder[1] = CurrentTurn;
+		NextTurn;
+		UnsoldShares.NewTurnOrder[2] = CurrentTurn;
+		NextTurn;
+		
+		if(count(TurnOrder > 3)){
+			UnsoldShares.NewTurnOrder[3] = CurrentTurn;
+			NextTurn;
+		}
+		if(count(TurnOrder < 4)){
+			UnsoldShares.NewTurnOrder[4] = CurrentTurn;
+			NextTurn;
+		}
+		TurnOrder = UnsoldShares.NewTurnOrder;
+	}
+
+	AuctionRound(){
+		//If current player is not bidding, get to next player
+		if(CurrentTurn.HarborMasterInRunning){
+		
+			//If more people in auction, do action and repeat. Else, get paying
+			if(UnsoldShares.HarborMasterInRunning > 1){
+				ChooseAction CurrentTurn;
+				NextTurn;
+				Repeat;	
+			} else {
+				GetTurnOrderStartingWithCurrentTurn();
+				Pay(CurrentTurn, UnsoldShares.AuctionHighestBid);
+			}
+		} else {
+			NextTurn;
+			Repeat;
+		}
+	}
+	
+	
+	AuctionHarborMaster(){
+		TurnOrder = TurnOrder;
+		UnsoldShares.AuctionIsGoingOn = True;
+		UnsoldShares.AuctionHighestBid = 0;
+		AuctionRound();
+		UnsoldShares.AuctionIsGoingOn = False;	
+	}
+	
+	PerformHarborMasterDuties(){
+		//Buy Shares
+		//Send Ships to sea
+	}
+	
 
 
-Main(){	
+
+	Main(){	
 		AuctionHarborMaster();
 		PerformHarborMasterDuties();
 		PlaceAndRollRounds();
@@ -299,24 +401,94 @@ Main(){
 	}
 }
 Actions{
+
+//Auction
+	AuctionBid(int bid){
+		requires{
+			AuctionIsGoingOn == True;
+			bid > UnsoldShares.AuctionHighestBid;
+			SpendingLimit(CurrentTurn) >= bid;
+			UnsoldShares.IsEncumbering == False;
+		}effect{
+			UnsoldShares.AuctionHighestBid = bid;
+		}
+	}
+	
+	AuctionPass(){
+		requires{
+			AuctionIsGoingOn == True;
+			UnsoldShares.IsEncumbering == False;
+		}effect{
+			CurrentTurn.HarborMasterInRunning = False;
+		}
+	}
+	
+	
+	//Encumbering Shares
+	EncumberShare(Share s){
+		requires{
+			UnsoldShares.IsEncumbering == True;
+			s.Location.Owner == ShufflePile.EncumberingPlayer;
+			s.IsEncumbered == False;
+		
+		}effect{
+			s.IsEncumbered = True;
+			ShufflePile.EncumberingPlayer.EncumberedShares = ShufflePile.EncumberingPlayer.EncumberedShares + 1;
+		
+		}
+	}
+	
+	UnencumberShare(Share s){
+		requires{
+			s.IsEncumbered == True;
+			s.Location.Owner == CurrentTurn;
+		}effect{
+			Pay(CurrentTurn, s.BuyBackPrice);
+			s.IsEncumbered = False;
+			CurrentTurn.EncumberedShares = CurrentTurn.EncumberedShares - 1;
+			ChooseAction(CurrentTurn);
+		}
+	}
+	
 }
+
+
 StartState{
 	//Shuffle UnsoldShares;
-	move UnsoldShares.contains90[0] TurnOrder[0].SupplyLoc;
-	move UnsoldShares.contains90[0] TurnOrder[0].SupplyLoc;
-	move UnsoldShares.contains90[0] TurnOrder[1].SupplyLoc;
-	move UnsoldShares.contains90[0] TurnOrder[1].SupplyLoc;
-	move UnsoldShares.contains90[0] TurnOrder[2].SupplyLoc;
-	move UnsoldShares.contains90[0] TurnOrder[2].SupplyLoc;
+	move ShufflePile.contains()[0] TurnOrder[0].SupplyLoc;
+	move ShufflePile.contains()[0] TurnOrder[0].SupplyLoc;
+	move ShufflePile.contains()[0] TurnOrder[1].SupplyLoc;
+	move ShufflePile.contains()[0] TurnOrder[1].SupplyLoc;
+	move ShufflePile.contains()[0] TurnOrder[2].SupplyLoc;
+	move ShufflePile.contains()[0] TurnOrder[2].SupplyLoc;
 	if(count(TurnOrder) > 3){
-		move UnsoldShares.contains90[0] TurnOrder[3].SupplyLoc;
-		move UnsoldShares.contains90[0] TurnOrder[3].SupplyLoc;
+		move ShufflePile.contains()[0] TurnOrder[3].SupplyLoc;
+		move ShufflePile.contains()[0] TurnOrder[3].SupplyLoc;
+	} else {
+		move ShufflePile.contains()[0] UnsoldShares;
+		move ShufflePile.contains()[0] UnsoldShares;
 	}
-	if(count(TurnOrder > 4){
-		move UnsoldShares.contains90[0] TurnOrder[4].SupplyLoc;
-		move UnsoldShares.contains90[0] TurnOrder[4].SupplyLoc;
-	}
-	UnsoldShares.ValueVisible = public;
-	HarborMaster = TurnOrder[0];
+	
+	if(count(TurnOrder) > 4){
+		move ShufflePile.contains()[0] TurnOrder[4].SupplyLoc;
+		move ShufflePile.contains()[0] TurnOrder[4].SupplyLoc;
+	} else {
+		move ShufflePile.contains()[0] UnsoldShares;
+		move ShufflePile.contains()[0] UnsoldShares;
+	}	
+	
+	//Move rest of shares to public marketplace
+	move ShufflePile.contains()[0] UnsoldShares;
+	move ShufflePile.contains()[0] UnsoldShares;
+	move ShufflePile.contains()[0] UnsoldShares;
+	move ShufflePile.contains()[0] UnsoldShares;
+	move ShufflePile.contains()[0] UnsoldShares;
+	move ShufflePile.contains()[0] UnsoldShares;
+	move ShufflePile.contains()[0] UnsoldShares;
+	move ShufflePile.contains()[0] UnsoldShares;
+	move ShufflePile.contains()[0] UnsoldShares;
+	move ShufflePile.contains()[0] UnsoldShares;	
 
+
+	HarborMaster = TurnOrder[0];
 }
