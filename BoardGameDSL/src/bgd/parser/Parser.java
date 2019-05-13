@@ -27,6 +27,7 @@ public class Parser {
 	private Game game;
 
 	private Lexer lexer;
+	public boolean hasError = false;
 
 	public void compile(String file) {
 		CharStream chars = null;
@@ -58,12 +59,15 @@ public class Parser {
 
 				// TODO make tree
 			}
+			hasError = false;
 
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found, please try again");
 			e.printStackTrace();
+			hasError=true;
 		} catch (IOException e) {
 			e.printStackTrace();
+			hasError=true;
 		}
 	}
 

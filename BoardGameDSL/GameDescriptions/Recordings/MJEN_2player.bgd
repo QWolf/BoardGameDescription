@@ -1,0 +1,25 @@
+R 2 - Int: 3
+A Y Pass
+R 0 - Int: 1
+A G Pass
+R 0 - Int: 1
+A Y Pass
+R 3 - Int: 4
+A G Pass
+R 5 - Int: 6
+A Y StartPawn Location: YSupply
+R 5 - Int: 6
+A Y MovePawn Object: PawnY1 Location: Y7
+R 5 - Int: 6
+A G StartPawn Location: GSupply
+R 3 - Int: 4
+A G MovePawn Object: PawnG1 Location: G5
+R 3 - Int: 4
+A Y MovePawn Object: PawnY1 Location: R1
+R 0 - Int: 1
+A G MovePawn Object: PawnG1 Location: G6
+R 5 - Int: 6
+A Y StartPawn Location: YSupply
+R 0 - Int: 1
+A Y MovePawn Object: PawnY2 Location: Y2
+R 2 - Int: 3

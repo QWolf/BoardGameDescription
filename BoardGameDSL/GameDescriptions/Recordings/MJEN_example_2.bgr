@@ -1,0 +1,37 @@
+S B Peter
+S G Klaas
+
+R 2: Int: 3
+A B Pass
+R 1: Int: 2
+A G Pass
+R 5: Int: 6
+A B StartPawn Object: PawnB1 Location: B3
+R 1: Int: 2
+A B MovePawn Object: PawnB1 Location: B3
+R 2: Int: 3
+A G Pass
+R 3: Int: 4
+A B MovePawn Object: PawnB1 Location: B7
+R 3: Int: 4
+A G Pass
+R 0: Int: 1
+A B MovePawn Object: PawnB1 Location: B8
+R 4: Int: 5
+A G Pass
+R 5: Int: 6
+A B StartPawn Object: PawnB2 Location: B7
+R 5: Int: 6
+A B MovePawn Object: PawnB2 Location: B7
+R 4: Int: 5
+A G Pass
+R 3: Int: 4
+A B MovePawn Object: PawnB2 Location: G1
+R 1: Int: 2
+A G Pass
+R 1: Int: 2
+A B MovePawn Object: PawnB1 Location: B10
+R 3: Int: 4
+A G Pass
+R 0: Int: 1
+A B Pass

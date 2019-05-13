@@ -49,19 +49,9 @@ public class CodeLineChooseAction extends CodeLine{
 		while(ret.isInvalidAction()){
 			ar = smc.getNextAction(calculatedPlayer);
 			parameters = smc.getNextActionParameters(scope);
+			smc.writeAction(ar.getName(), calculatedPlayer.getName(), smc.getNextActionParametersAsString(scope));
 			ret = ar.executeActionRound(parameters);
 		}
-		
-		
-		//Write action to the game log
-		
-
-//		System.out.println("CodeLineChooseAction");
-//		System.out.println(ar.getName());
-//		System.out.println(calculatedPlayer.getName());
-//		System.out.println(smc.getNextActionParametersAsString(scope));
-		
-		smc.writeAction(ar.getName(), calculatedPlayer.getName(), smc.getNextActionParametersAsString(scope));
 		
 		return ret;
 	}

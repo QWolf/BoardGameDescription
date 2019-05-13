@@ -80,11 +80,10 @@ public class Main implements ViewInterface {
 			case ("Print"):
 				if (args.length == 3 && args[2].equals("Sorted")) {
 					System.out.println(smc.getGameRecordingSorted());
-				} else{
+				} else {
 					System.out.println(smc.getGameRecordingUnsorted());
 				}
-			
-				
+
 				break;
 			case ("Write"):
 				if (args.length < 3) {
@@ -214,11 +213,12 @@ public class Main implements ViewInterface {
 
 		p = new Parser();
 		p.compile(args[1]);
-		this.smc = new StateMachineController(p.getGame(), this);
-		this.game = p.getGame();
-		game.setStateMachineController(smc);
+		if (!p.hasError) {
+			this.smc = new StateMachineController(p.getGame(), this);
+			this.game = p.getGame();
+			game.setStateMachineController(smc);
+		}
 	}
-
 
 	public static void main(String[] args) {
 		new Main().launchProgram();
