@@ -18,9 +18,9 @@ public class RecordingParser {
 			String line = br.readLine();
 			String error;
 			while (line != null) {
-				parseLine(line, record);
+				error = parseLine(line, record);
 
-				error = br.readLine();
+				line = br.readLine();
 				if(error != null){
 					System.out.println(error);
 					return null;
@@ -46,7 +46,7 @@ public class RecordingParser {
 			if (args.length < 2) {
 				return "Invalid recording, Random line without int";
 			} else if (!StringUtil.isInteger(args[1])) {
-				return "Invalid recording, Random line argument could not be resolved to integer";
+				return "Invalid recording, Random line argument could not be resolved to integer: ";
 			} else {
 				String value = "?";
 				if (args.length > 2) {

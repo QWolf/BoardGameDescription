@@ -80,9 +80,11 @@ public class Main implements ViewInterface {
 			case ("Print"):
 				if (args.length == 3 && args[2].equals("Sorted")) {
 					System.out.println(smc.getGameRecordingSorted());
-				} else {
+				} else{
 					System.out.println(smc.getGameRecordingUnsorted());
 				}
+			
+				
 				break;
 			case ("Write"):
 				if (args.length < 3) {

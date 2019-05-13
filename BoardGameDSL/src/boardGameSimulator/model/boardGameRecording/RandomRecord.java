@@ -35,13 +35,13 @@ public class RandomRecord implements Record{
 	}
 
 	public String recordToString() {
-		String r ="R "+ random + ": " + v.toString();
+		String r ="R "+ random + " - " + v.toString();
 
 		return r;
 	}
 
 	public String recordToShortString() {
-		String r = random + ": " + v.toString();
+		String r = random + " - " + v.toString();
 
 		return r;
 	}

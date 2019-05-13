@@ -5,29 +5,34 @@ Players{
 	MaxPlayers = 5;
 	
 	Human B{
-		SupplyLoc = BSupply;	
+		SupplyLoc = BSupply;
+		SharesLoc = BShares;
 		HarborMasterInRunning = True;
 		EncumberedShares = 0;	
 	}
 	Human Y{
 		SupplyLoc = YSupply;	
+		SharesLoc = YShares;
 		HarborMasterInRunning = True;
 		EncumberedShares = 0;	
 			
 	}	
 	Human G{
 		SupplyLoc = GSupply;		
+		SharesLoc = GShares;
 		HarborMasterInRunning = True;
 		EncumberedShares = 0;	
 			
 	}	
 	Human R{
 		SupplyLoc = RSupply;
+		SharesLoc = RShares;
 		HarborMasterInRunning = True;
 		EncumberedShares = 0;		
 	}
 	Human O{
 		SupplyLoc = OSupply;
+		SharesLoc = OShares;
 		HarborMasterInRunning = True;
 		EncumberedShares = 0;	
 	}
@@ -43,8 +48,12 @@ Locations{
 			Pawn PawnB1;
 			Pawn PawnB2;
 			Pawn PawnB3;
-//			Pawn PawnB4;
+			Pawn PawnB4;
 		}
+	}
+	BShares{
+		Owner = B;
+		ValueVisible = B;
 	}
 	YSupply{
 		Owner = Y;
@@ -54,8 +63,12 @@ Locations{
 			Pawn PawnY1;
 			Pawn PawnY2;
 			Pawn PawnY3;
-//			Pawn PawnY4;
+			Pawn PawnY4;
 		}
+	}
+	YShares{
+		Owner = Y;
+		ValueVisible = Y;
 	}
 	GSupply{
 		Owner = G;
@@ -65,8 +78,12 @@ Locations{
 			Pawn PawnG1;
 			Pawn PawnG2;
 			Pawn PawnG3;
-//			Pawn PawnG4;
+			Pawn PawnG4;
 		}
+	}
+	GShares{
+		Owner = G;
+		ValueVisible = G;
 	}
 	RSupply{
 		Owner = R;
@@ -76,8 +93,12 @@ Locations{
 			Pawn PawnR1;
 			Pawn PawnR2;
 			Pawn PawnR3;
-//			Pawn PawnR4;
+			Pawn PawnR4;
 		}
+	}
+	RShares{
+		Owner = R;
+		ValueVisible = R;
 	}
 	OSupply{
 		Owner = O;
@@ -87,77 +108,81 @@ Locations{
 			Pawn PawnO1;
 			Pawn PawnO2;
 			Pawn PawnO3;
-//			Pawn PawnO4;
+			Pawn PawnO4;
 		}
 	}
+	OShares{
+		Owner = O;
+		ValueVisible = O;
+	}
 	Port1{
+		IsPort = True;
 		BoatIn = False;
 		Cost = 4;
 		Payout = 6;
-		Buyer = Public;
 	}
 	Port2{
+		IsPort = True;
 		BoatIn = False;
 		Cost = 3;
 		Payout = 8;
-		Buyer = Public;
 	}
 	Port3{
+		IsPort = True;
 		BoatIn = False;
 		Cost = 2;
 		Payout = 15;
-		Buyer = Public;
 	}
 	Shipyard1{
+		IsShipyard = True;
 		BoatIn = False;
 		Cost = 4;
 		Payout = 6;
-		Buyer = Public;
 	}
 	Shipyard2{
+		IsShipyard = True;
 		BoatIn = False;
 		Cost = 3;
 		Payout = 8;
-		Buyer = Public;
 	}
 	Shipyard3{
+		IsShipyard = True;
 		BoatIn = False;
 		Cost = 2;
 		Payout = 15;
-		Buyer = Public;
 	}
 	BoatNutmeg{
-		IsInPlay = False;
+		IsBoat = True;
 		TotalPayout = 24;
 		Costs = [2,3,4];
-		Buyers = [];
+		CurrentSeaRoute = SeaRouteNone;
 		StartingInventory{
 			Dice NutmegDice;
 		}
 	}
 	BoatSilk{
-		IsInPlay = False;
+		IsBoat = True;
 		TotalPayout = 30;
 		Costs = [3,4,5];
-		Buyers = [];
+		CurrentSeaRoute = SeaRouteNone;
 		StartingInventory{
 			Dice SilkDice;
 		}
 	}
 	BoatGinseng{
-		IsInPlay = False;
+		IsBoat = True;
 		TotalPayout = 18;
 		Costs = [1,2,3];
-		Buyers = [];
+		CurrentSeaRoute = SeaRouteNone;
 		StartingInventory{
 			Dice GinsengDice;
 		}
 	}
 	BoatJade{
-		IsInPlay = False;
+		IsBoat = True;
 		TotalPayout = 36;
 		Costs = [3,4,5,5];
-		Buyers = [];
+		CurrentSeaRoute = SeaRouteNone;
 		StartingInventory{
 			Dice JadeDice;
 		}
@@ -165,22 +190,22 @@ Locations{
 	BoatNone{
 	}
 	Pirate{
+		PirateBoardingOngoing = False;
+		PiratePlunderOngoing = False;
 		Captain = Public;
 		Accomplice = Public;
 		Cost = 5;
 	}
 	PilotLarge{
-		Buyer = Public;
+		PilotingInProgress = False;
 		Cost = 5;
 		PilotStrength = 2;
 	}
 	PilotSmall{
-		Buyer = Public;
 		Cost = 2;
 		PilotStrength = 1;
 	}
 	Insurance{
-		Buyer = Public;
 		Cost = 0;
 		Income = 10;
 	}
@@ -193,16 +218,22 @@ Locations{
 		JadeShare = 0;
 	}
 	SeaRoute1{
+		IsSeaRoute = True;
 		CurrentCargo = BoatNone;
 		CurrentProgress = 0;
 	}
 	SeaRoute2{
+		IsSeaRoute = True;
 		CurrentCargo = BoatNone;
 		CurrentProgress = 0;
 	}
 	SeaRoute3{
+		IsSeaRoute = True;
 		CurrentCargo = BoatNone;
 		CurrentProgress = 0;
+	}
+	SeaRouteNone{
+		HarborMasterIsSendingShipsToSea = False;
 	}
 	UnsoldShares{
 		HarborMaster = Bank;
@@ -216,6 +247,10 @@ Locations{
 	
 	ShufflePile{
 		EncumberingPlayer = Bank;
+		HarborMasterIsBuyingShares = False;
+		PlacementRoundOngoing = False;
+		
+		
 		ValueVisible = None;
 		StartingInventory {
 			Share NutmegShare1{
@@ -310,7 +345,7 @@ Rounds{
 
 	//Helper Functions
 	SpendingLimit(Player p){
-		return p.Pesos + (count(p.SupplyLoc)*(p.SupplyLoc.contains[0].EncumberenceValue));
+		return p.Pesos + (count(p.SupplyLoc)*(p.SupplyLoc.contains()[0].EncumberenceValue));
 	}
 	
 	EncumberUntilOutOfDebt(Player p){
@@ -326,12 +361,38 @@ Rounds{
 		}
 	}
 	
+	ShareBuyPrice(Share s){
+		if(s.IsNutmegShare){
+			return BlackMarket.SharePrices[NutmegShare];
+		}
+		if(s.IsSilkShare){
+			return BlackMarket.SharePrices[SilkShare];
+		}
+		if(s.IsGinsengShare){
+			return BlackMarket.SharePrices[GinsengShare];
+		}
+		if(s.IsJadeShare){
+			return BlackMarket.SharePrices[JadeShare];
+		}
+	}
+	
 	Pay(Player p, int amnt){
-		p.Pesos = p.Pesos - amnt;
-		if(p.Pesos < 0){
+		p.SupplyLoc.Pesos = p.SupplyLoc.Pesos - amnt;
+		if(p.SupplyLoc.Pesos < 0){
 			UnsoldShares.IsEncumbering == True;
 			EncumberUntilOutOfDebt(p);
 			UnsoldShares.IsEncumbering == False;
+		}
+	}
+	
+	Payout(Player p, int amnt){
+		p.SupplyLoc.Pesos = p.SupplyLoc.Pesos + amnt;
+	}
+	
+	AdvanceUntilCurrentTurn(Player p){
+		if(CurrentTurn != p){
+			NextTurn;
+			Repeat;
 		}
 	}
 	
@@ -354,7 +415,20 @@ Rounds{
 		}
 		TurnOrder = UnsoldShares.NewTurnOrder;
 	}
+	
+	ReturnToSupply(Pawn p){
+		Move p p.Owner.SupplyLoc;
+	}
+	
+	ReturnLocationToSupply(Location l){
+		if(count(l.contains()) > 0){
+			ReturnToSupply(l.contains()[0]);
+			Repeat;
+		}
+	}
+	
 
+	//Auction Rounds
 	AuctionRound(){
 		//If current player is not bidding, get to next player
 		if(CurrentTurn.HarborMasterInRunning){
@@ -383,9 +457,310 @@ Rounds{
 		UnsoldShares.AuctionIsGoingOn = False;	
 	}
 	
+	//HarborDuty Rounds
 	PerformHarborMasterDuties(){
-		//Buy Shares
-		//Send Ships to sea
+		ShufflePile.HarborMasterIsBuyingShares = True;	
+		ChooseAction CurrentTurn;
+		ShufflePile.HarborMasterIsBuyingShares = False;
+		SeaRoute1.CurrentCargo = BoatNone;
+		SeaRoute2.CurrentCargo = BoatNone;
+		SeaRoute3.CurrentCargo = BoatNone;
+		BoatGinseng.SeaRoute = SeaRouteNone;
+		BoatJade.SeaRoute = SeaRouteNone;
+		BoatSilk.SeaRoute = SeaRouteNone;
+		BoatNutmeg.SeaRoute = SeaRouteNone;
+		
+		SeaRouteNone.HarborMasterIsSendingShipsToSea = True;
+		ChooseAction CurrentTurn;
+		ChooseAction CurrentTurn;
+		ChooseAction CurrentTurn;
+		SeaRouteNone.HarborMasterIsSendingShipsToSea = False;	
+	}
+	
+	//PlaceAndRollRounds
+	RoundOfPlacements(){
+		ShufflePile.PlacementRoundOngoing = True;
+		ChooseTurn CurrentTurn;
+		NextTurn;
+		ChooseTurn CurrentTurn;
+		NextTurn;
+		ChooseTurn CurrentTurn;
+		NextTurn;
+		if(count(TurnOrder) > 3){	
+			ChooseTurn CurrentTurn;
+			NextTurn;	
+		}
+		if(count(TurnOrder) > 4){	
+			ChooseTurn CurrentTurn;
+			NextTurn;	
+		}
+		ShufflePile.PlacementRoundOngoing = False;
+	
+	}
+	
+	
+
+	
+	MoveBoatToPort(Boat b){
+		b.CurrentSeaRoute = SeaRouteNone;
+		if(Port1.BoatIn == False){
+			Port1.BoatIn = True;
+		}else{
+			if(Port2.BoatIn == False){
+				Port2.BoatIn = True;
+			}else{
+			Port3.BoatIn = True;
+			}
+		}
+	}
+	
+	MoveBoatToShipyard(Boat b){
+		b.CurrentSeaRoute = SeaRouteNone;
+		if(Shipyard1.BoatIn == False){
+			Shipyard1.BoatIn = True;
+		}else{
+			if(Shipyard2.BoatIn == False){
+				Shipyard2.BoatIn = True;
+			}else{
+			Shipyard3.BoatIn = True;
+			}
+		}
+	}
+	
+	PilotsTakeAction(){
+		PilotLarge.PilotingInProgress = True;
+		if(count(PilotLarge.contains()) != 0){
+			AdvanceUntilCurrentTurn(PilotLarge.contains()[0].Owner);
+			ChooseAction CurrentTurn;
+			ChooseAction CurrentTurn;
+		}
+		if(count(PilotSmall.contains()) != 0){
+			AdvanceUntilCurrentTurn(PilotSmall.contains()[0].Owner);
+			ChooseAction CurrentTurn;
+		}		
+		AdvanceUntilCurrentTurn(UnsoldShares.HarborMaster);
+		PilotLarge.PilotingInProgress = False;
+
+	
+	
+	}
+	
+	PiratePlunderShip(SeaRoute s){
+		EmptyLocationToSupply(s.CurrentCargo);
+		if(Pirate.Accomplice != public){
+			Pirate.Accomplice.SupplyLoc = Pirate.Accomplice.SupplyLoc + (s.CurrentCargo.TotalPayout /2);
+			Pirate.Captain.SupplyLoc = Pirate.Captain.SupplyLoc + (s.CurrentCargo.TotalPayout /2);
+		}else{
+			Pirate.Captain.SupplyLoc = Pirate.Captain.SupplyLoc + (s.CurrentCargo.TotalPayout);
+		}	
+	}
+	
+	PirateAction(int round){
+		if(count(Pirate.contains()) > 0){
+		
+			if(round == 2){
+				Pirate.PirateBoardOngoing = True;
+				ChooseTurn Pirate.Captain;
+				if(Pirate.Accomplice != public){
+					ChooseTurn Pirate.Accomplice;
+				}
+				if(Pirate.Captain == public && Pirate.Accomplice != public){
+					Pirate.Captain = Pirate.Accomplice;
+					Pirate.Accomplice = public;
+				}			
+				Pirate.PirateBoardOngoing = False;
+			}else{
+				Pirate.PiratePlunderOngoing = True;
+				if(SeaRoute1.CurrentProgress == 13){
+					PiratePlunderShip(SeaRoute1)
+				}				
+				if(SeaRoute2.CurrentProgress == 13){
+					PiratePlunderShip(SeaRoute2)
+				}				
+				if(SeaRoute3.CurrentProgress == 13){
+					PiratePlunderShip(SeaRoute3)
+				}
+
+				AdvanceUntilCurrentTurn(Pirate.Captain);
+				ChooseTurn CurrentTurn;
+				if((SeaRoute1.CurrentProgress == 13)||(SeaRoute2.CurrentProgress == 13)||(SeaRoute3.CurrentProgress == 13)){
+					ChooseTurn CurrentTurn;
+				}
+				if((SeaRoute1.CurrentProgress == 13)||(SeaRoute2.CurrentProgress == 13)||(SeaRoute3.CurrentProgress == 13)){
+					ChooseTurn CurrentTurn;
+				}
+				
+				Pirate.PiratePlunderOngoing = False;
+
+			}
+		}
+		AdvanceUntilCurrentTurn(UnsoldShares.HarborMaster);
+	
+		
+	}
+	
+	RollBoat(SeaRoute s){
+		if(s.CurrentProgress <= 13){
+			Randomize s.CurrentCargo.contains()[0];
+			s.CurrentProgress = s.CurrentProgress + s.CurrentCargo.contains()[0].Value;
+			if(s.CurrentProgress > 13){
+				MoveBoatToPort(s.CurrentCargo);
+			}
+		}
+	}
+	
+	RollBoats(int round){
+		RollBoat(SeaRoute1.CurrentCargo);
+		RollBoat(SeaRoute2.CurrentCargo);
+		RollBoat(SeaRoute3.CurrentCargo);
+		if((SeaRoute1.CurrentProgress == 13)||(SeaRoute2.CurrentProgress == 13)||(SeaRoute3.CurrentProgress == 13)){
+			PirateAction(round);
+		}
+
+
+	
+	
+	PlaceAndRollRounds(){
+		RoundOfPlacements();
+		if(count(TurnOrder) == 3){
+			RoundOfPlacements();
+		}
+		RollBoats(1);
+		
+		//Round2
+		RoundOfPlacements();
+		RollBoats(2);
+		
+		
+		//Round3
+		RoundOfPlacements();
+		PilotsTakeAction();
+		RollBoats(3);
+	
+	}
+	
+	DistributePortsAndShipyards(){
+		if(Port1.BoatIn){
+			if(count(Port1.contains())>0){
+				Port1.contains()[0].Owner.SupplyLoc.Pesos = Port1.contains()[0].Owner.SupplyLoc.Pesos + Port1.Payout;
+			}
+			Port1.BoatIn = False;
+		}else{
+			if(count(Shipyard3.contains())>0){
+				Shipyard3.contains()[0].Owner.SupplyLoc.Pesos = Shipyard3.contains()[0].Owner.SupplyLoc.Pesos + Shipyard3.Payout;
+			}
+			if(count(Insurance.contains()) > 0){
+				Insurance.contains()[0].Owner.SupplyLoc.Pesos = Insurance.contains()[0].Owner.SupplyLoc.Pesos - Shipyard3.Payout;
+			}
+			
+			Shipyard3.BoatIn = False;
+		}
+		if(Port2.BoatIn){
+			if(count(Port2.contains())>0){
+				Port2.contains()[0].Owner.SupplyLoc.Pesos = Port2.contains()[0].Owner.SupplyLoc.Pesos + Port1.Payout;
+			}
+			Port2.BoatIn = False;
+		}else{
+			if(count(Shipyard2.contains())>0){
+				Shipyard2.contains()[0].Owner.SupplyLoc.Pesos = Shipyard2.contains()[0].Owner.SupplyLoc.Pesos + Shipyard2.Payout;
+			}
+			Shipyard2.BoatIn = False;
+			if(count(Insurance.contains()) > 0){
+				Insurance.contains()[0].Owner.SupplyLoc.Pesos = Insurance.contains()[0].Owner.SupplyLoc.Pesos - Shipyard2.Payout;
+			}
+		}
+		if(Port3.BoatIn){
+			if(count(Port3.contains())>0){
+				Port3.contains()[0].Owner.SupplyLoc.Pesos = Port3.contains()[0].Owner.SupplyLoc.Pesos + Port3.Payout;
+			}
+			Port3.BoatIn = False;
+		}else{
+			if(count(Shipyard1.contains())>0){
+				Shipyard1.contains()[0].Owner.SupplyLoc.Pesos = Shipyard1.contains()[0].Owner.SupplyLoc.Pesos + Shipyard1.Payout;
+			}
+			if(count(Insurance.contains()) > 0){
+				Insurance.contains()[0].Owner.SupplyLoc.Pesos = Insurance.contains()[0].Owner.SupplyLoc.Pesos - Shipyard3.Payout;
+			}
+			Shipyard1.BoatIn = False;
+		}
+	}
+	
+	InsuranceHasPositiveMoneyCheck(){
+		if(count(Insurance.contains())>0){
+			if(Insurance.contains()[0].Owner.SupplyLoc.Pesos < 0){
+				Pay(Insurance.contains()[0].Owner, 0);	
+			}
+		}
+	}
+	
+	PayoutShipHelp(Pawns ps, int amnt, int index){
+		ps[index].Owner.SupplyLoc.Pesos = ps[index].Owner.SupplyLoc.Pesos + (amnt/count(ps));
+		if(count(ps)> (index+1)){
+			PayoutShipHelp(ps, amnt, index+1);
+		}
+	}
+	
+	PayoutShip(Boat b){
+		if(count(b.contains()) > 0){
+			PayoutShipHelp(b.contains(), b.TotalPayout, 0);
+		}
+		if(b == BoatNutmeg){
+			BlackMarket.NutmegShare = BlackMarket.NutmegShare + 1;
+		}
+		if(b == BoatSilk){
+			BlackMarket.SilkShare = BlackMarket.SilkShare + 1;
+		}
+		if(b == BoatGinseng){
+			BlackMarket.GinsengShare = BlackMarket.GinsengShare + 1;
+		}
+		if(b == BoatJade){
+			BlackMarket.JadeShare = BlackMarket.JadeShare + 1;
+		}
+		
+		
+	}
+	
+	PayoutOfShipsAndIncreaseStock(){
+		if(SeaRoute1.CurrentProgress > 13){
+			PayoutShip(SeaRoute1.CurrentCargo);
+		}
+		if(SeaRoute2.CurrentProgress > 13){
+			PayoutShip(SeaRoute2.CurrentCargo);
+		}
+		if(SeaRoute3.CurrentProgress > 13){
+			PayoutShip(SeaRoute3.CurrentCargo);
+		}
+	
+	}
+
+	MoveAllPawnsBack(){
+		Move PawnB1 BSupply;
+		Move PawnB2 BSupply;
+		Move PawnB3 BSupply;
+		Move PawnB4 BSupply;
+		Move PawnY1 YSupply;
+		Move PawnY2 YSupply;
+		Move PawnY3 YSupply;
+		Move PawnY4 YSupply;
+		Move PawnG1 GSupply;
+		Move PawnG2 GSupply;
+		Move PawnG3 GSupply;
+		Move PawnG4 GSupply;		
+		Move PawnR1 RSupply;
+		Move PawnR2 RSupply;
+		Move PawnR3 RSupply;
+		Move PawnR4 RSupply;
+		Move PawnO1 OSupply;
+		Move PawnO2 OSupply;
+		Move PawnO3 OSupply;
+		Move PawnO4 OSupply;	
+	}
+	
+	ProfitDistribution(){
+		PayoutOfShips();
+		DistributePortsAndShipyards();
+		InsuranceHasPositiveMoneyCheck();
+		MoveAllPawnsBack();
 	}
 	
 
@@ -396,7 +771,7 @@ Rounds{
 		PerformHarborMasterDuties();
 		PlaceAndRollRounds();
 		ProfitDistribution();
-		WareValueRise();
+		CheckGameEnding();
 		Repeat;
 	}
 }
@@ -422,6 +797,228 @@ Actions{
 			CurrentTurn.HarborMasterInRunning = False;
 		}
 	}
+	
+	
+	//HarborMasterDuties
+	
+	BuyShare(Share s){
+		requires{
+			ShufflePile.HarborMasterIsBuyingShares == True;
+			SpendingLimit(CurrentTurn) >= ShareBuyPrice(s);
+			s.Location == UnsoldShares;
+		}effect{
+			Move s CurrentTurn.SharesLocLoc;
+			Pay(CurrentTurn, ShareBuyPrice(s));
+		}	
+	}
+	
+	DontBuyShare(){
+		requires{
+			ShufflePile.HarborMasterIsBuyingShares == True;
+		}effect{
+		}
+	}
+	
+	SendShipToSea(Location sea, Location ship){
+		requires{
+			SeaRouteNone.HarborMasterIsSendingShipsToSea == True;
+			sea.IsSeaRoute == True;
+			sea.CurrentCargo == BoatNone;
+			ship.SeaRoute == SeaRouteNone;
+		}effect{
+			sea.CurrentCargo = ship;
+			ship.SeaRoute = sea;
+		}
+	}
+	
+	//Placement Rounds
+	BuyPort(Location l){
+		requires{
+			ShufflePile.PlacementRoundOngoing == True;
+			l.IsPort;
+			l.BoatIn == False;
+			SpendingLimit(CurrentTurn) >= l.Cost;
+			count(l.contains()) == 0;
+		
+		}effect{
+			Pay(CurrentTurn, l.Cost);
+			l.Buyer = CurrentTurn;
+			Move CurrentTurn.SupplyLoc.contains()[0] l;
+		}		
+	}	
+	BuyShipyard(Location l){
+		requires{
+			ShufflePile.PlacementRoundOngoing ==True;
+			l.IsShipyard;
+			l.BoatIn == False;
+			SpendingLimit(CurrentTurn) >= l.Cost;
+			count(l.contains()) == 0;
+		
+		}effect{
+			Pay(CurrentTurn, l.Cost);
+			l.Buyer = CurrentTurn;
+			Move CurrentTurn.SupplyLoc.contains()[0] l;
+		}		
+	}
+	BuyBoat(Boat b){
+		requires{
+			ShufflePile.PlacementRoundOngoing == True;
+			b.isBoat;
+			b.CurrentSeaRoute != SeaRouteNone;
+			b.CurrentSeaRoute.CurrentProgress < 14;
+			count(b.contains()) < count(b.Costs);
+			SpendingLimit(CurrentTurn) >= b.Costs[count(b.contains())];
+		}effect{
+			Pay(CurrentTurn, b.Costs[count(b.contains())]);
+			Move CurrentTurn.SupplyLoc.contains()[0] b;			
+		}
+	}
+	BuyPirate(){
+		requires{
+			ShufflePile.PlacementRoundOngoing = True;
+			count(Pirate.contains()) < 2;
+			SpendingLimit(CurrentTurn) >= Pirate.Cost;
+		}effect{
+			Pay(CurrentTurn, Pirate.Cost);
+			Move CurrentTurn.SupplyLoc.contains()[0] Pirate;
+			if(Pirate.Captain = public){
+				Pirate.Captain = CurrentTurn;
+			}else{
+				Pirate.Accomplice = CurrentTurn;
+			}
+		}		
+	}
+	BuyLargePilot(){
+		requires{
+			ShufflePile.PlacementRoundOngoing == True;
+			count(PilotLarge.contains()) < 1;
+			SpendingLimit(CurrentTurn) >= PilotLarge.Cost;			
+		}effect{
+			Pay(CurrentTurn, PilotLarge.Cost);
+			Move CurrentTurn.SupplyLoc.contains()[0] PilotLarge;
+		}
+	}
+	BuySmallPilot(){
+		requires{
+			ShufflePile.PlacementRoundOngoing == True;
+			count(PilotSmall.contains()) < 1;
+			SpendingLimit(CurrentTurn) >= PilotSmall.Cost;			
+		}effect{
+			Pay(CurrentTurn, PilotSmall.Cost);
+			Move CurrentTurn.SupplyLoc.contains()[0] PilotSmall;
+		}
+	}
+	BuyInsurance(){
+		requires{
+			ShufflePile.PlacementRoundOngoing == True;
+			count(Insurance.contains()) < 1;
+		} effect {
+			CurrentTurn.SupplyLoc.Pesos = CurrentTurn.SupplyLoc.Pesos + 10;
+			Move CurrentTurn.SupplyLoc.contains()[0] Insurance;
+		}
+	}
+	
+	HijackShip(Boat b){
+		requires{
+			ShufflePile.PlacementRoundOngoing == True;
+			b.isBoat;
+			b.CurrentSeaRoute != SeaRouteNone;
+			b.CurrentSeaRoute.CurrentProgress < 14;
+			count(b.contains()) < count(b.Costs);
+			SpendingLimit(CurrentTurn) < b.Costs[count(b.contains())];
+		}effect{
+			CurrentTurn.SupplyLoc.Pesos = 0;
+			Move CurrentTurn.SupplyLoc.contains()[0] b;			
+		}
+	}
+	
+	DontSendAccomplice(){
+		requires{
+			ShufflePile.PlacementRoundOngoing == True;
+		}effect{
+			
+		}
+	}
+	
+	//PirateActions
+	
+	BoardShip(Boat b){
+		requires{
+			Pirate.PirateBoardOngoing == True;
+			b.CurrentSeaRoute.CurrentProgress == 13;
+			count(b.contains()) < count(b.Costs);
+			(Pirate.Captain == CurrentTurn) || (Pirate.Accomplice == CurrentTurn);
+		}effect{
+			if(Pirate.contains()[0].Owner == CurrentTurn){
+				Move Pirate.contains()[0] b;
+			}else{
+				Move Pirate.contains()[1] b;			
+			}
+		}
+	}
+	
+	DontBoardShip(){
+		requires{
+			Pirate.PirateBoardOngoing == True;
+		}effect{
+		
+		}
+	}
+	
+	PlunderToPort(Boat b){
+		requires{
+			Pirate.PiratePlunderOngoing == True;
+			b.CurrentSeaRoute != SeaRouteNone;
+			b.CurrentSeaRoute.CurrentProgress == 13;
+		}effect{
+			MoveBoatToPort(b);
+			b.CurrentSeaRoute.CurrentProgress = 14;
+		}
+	}
+	
+	PlunderToShipyard(Boat b){
+	requires{
+			Pirate.PiratePlunderOngoing == True;
+			b.CurrentSeaRoute != SeaRouteNone;
+			b.CurrentSeaRoute.CurrentProgress == 13;
+		}effect{
+			MoveBoatToShipyard(b);
+		}
+	}
+	
+	//PilotActions
+	
+	PilotForward(Boat b){
+		requires{
+			PilotLarge.PilotingInProgress == True;
+			b.CurrentSeaRoute != SeaRouteNone;
+			b.CurrentSeaRoute.CurrentProgress <= 13;
+		}effect{
+			b.CurrentSeaRoute.CurrentProgress = b.CurrentSeaRoute.CurrentProgress + 1;
+			if(b.CurrentSeaRoute.CurrentProgress > 13){
+				MoveBoatToPort(b);
+			}
+			
+		}
+	
+	}
+	PilotBackwards(Boat b){
+		requires{
+			PilotLarge.PilotingInProgress == True;
+			b.CurrentSeaRoute != SeaRouteNone;
+			b.CurrentSeaRoute.CurrentProgress >= 1;
+		}effect{
+			b.CurrentSeaRoute.CurrentProgress = b.CurrentSeaRoute.CurrentProgress - 1;
+		}
+	
+	}	
+	PilotPass(){
+		requires{
+			PilotLarge.PilotingInProgress == True;
+		}effect{	
+		}	
+	}
+	
 	
 	
 	//Encumbering Shares
@@ -455,23 +1052,23 @@ Actions{
 
 StartState{
 	//Shuffle UnsoldShares;
-	move ShufflePile.contains()[0] TurnOrder[0].SupplyLoc;
-	move ShufflePile.contains()[0] TurnOrder[0].SupplyLoc;
-	move ShufflePile.contains()[0] TurnOrder[1].SupplyLoc;
-	move ShufflePile.contains()[0] TurnOrder[1].SupplyLoc;
-	move ShufflePile.contains()[0] TurnOrder[2].SupplyLoc;
-	move ShufflePile.contains()[0] TurnOrder[2].SupplyLoc;
+	move ShufflePile.contains()[0] TurnOrder[0].SharesLoc;
+	move ShufflePile.contains()[0] TurnOrder[0].SharesLoc;
+	move ShufflePile.contains()[0] TurnOrder[1].SharesLoc;
+	move ShufflePile.contains()[0] TurnOrder[1].SharesLoc;
+	move ShufflePile.contains()[0] TurnOrder[2].SharesLoc;
+	move ShufflePile.contains()[0] TurnOrder[2].SharesLoc;
 	if(count(TurnOrder) > 3){
-		move ShufflePile.contains()[0] TurnOrder[3].SupplyLoc;
-		move ShufflePile.contains()[0] TurnOrder[3].SupplyLoc;
+		move ShufflePile.contains()[0] TurnOrder[3].SharesLoc;
+		move ShufflePile.contains()[0] TurnOrder[3].SharesLoc;
 	} else {
 		move ShufflePile.contains()[0] UnsoldShares;
 		move ShufflePile.contains()[0] UnsoldShares;
 	}
 	
 	if(count(TurnOrder) > 4){
-		move ShufflePile.contains()[0] TurnOrder[4].SupplyLoc;
-		move ShufflePile.contains()[0] TurnOrder[4].SupplyLoc;
+		move ShufflePile.contains()[0] TurnOrder[4].SharesLoc;
+		move ShufflePile.contains()[0] TurnOrder[4].SharesLoc;
 	} else {
 		move ShufflePile.contains()[0] UnsoldShares;
 		move ShufflePile.contains()[0] UnsoldShares;

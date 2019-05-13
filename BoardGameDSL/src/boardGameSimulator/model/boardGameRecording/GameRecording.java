@@ -51,6 +51,7 @@ public class GameRecording {
 	}
 
 	public int getNextRandomVariable() {
+		System.out.println(nextRandom);
 		return rr.get(nextRandom).getRandom();
 	}
 
